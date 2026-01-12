@@ -308,9 +308,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         wrapper: scroller,
         content: scroller.querySelector('.scroll-stack-inner') as HTMLElement,
         ...defaultOpts,
-        gestureOrientation: 'vertical',
-        normalizeWheel: true,
-        touchInertia: 0.6
+        gestureOrientation: 'vertical'
       });
 
       lenis.on('scroll', handleScroll);
