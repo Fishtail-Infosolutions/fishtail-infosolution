@@ -12,11 +12,11 @@ import Image from "next/image";
 
 export default function TeamMemberSection() {
     return (
-        <section className="w-full bg-black  sm:py-20  px-4 md:px-8">
+        <section className="w-full bg-black py-12 sm:py-20 px-8 md:px-16">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{ duration: 0.6 }}
                 className="max-w-7xl mx-auto flex flex-col items-center"
             >
@@ -30,24 +30,26 @@ export default function TeamMemberSection() {
                     <GradientBanner text="Meet Our Team" />
                 </motion.div>
 
-                <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full">
+                <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full">
                     {TeamMembers.map((member, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            transition={{
-                                duration: 0.5,
-                                delay: index * 0.1,
-                                ease: "easeOut"
-                            }}
-                        >
-                            <GridItem
-                                icon={<User2 className="h-6 w-6 text-black dark:text-neutral-400" />}
-                                member={member}
-                            />
-                        </motion.div>
+                        <li key={index} className="list-none">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.1 }}
+                                transition={{
+                                    duration: 0.5,
+                                    delay: index % 3 * 0.1,
+                                    ease: "easeOut"
+                                }}
+                                className="h-full"
+                            >
+                                <GridItem
+                                    icon={<User2 className="h-6 w-6 text-black dark:text-neutral-400" />}
+                                    member={member}
+                                />
+                            </motion.div>
+                        </li>
                     ))}
                 </ul>
             </motion.div>
@@ -62,7 +64,7 @@ interface GridItemProps {
 
 const GridItem = ({ icon, member }: GridItemProps) => {
     return (
-        <li className="list-none min-h-[14rem] h-full">
+        <div className="min-h-[14rem] h-full">
             <motion.div
                 className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-neutral-900 border-neutral-800"
                 whileHover={{ scale: 1.05 }}
@@ -124,6 +126,6 @@ const GridItem = ({ icon, member }: GridItemProps) => {
                     </div>
                 </div>
             </motion.div>
-        </li>
+        </div>
     );
 };

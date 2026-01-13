@@ -163,7 +163,7 @@ const textVariants = {
     opacity: 1,
   },
   right: {
-    x: 20,
+    x: 0,
     opacity: 1,
   },
 };

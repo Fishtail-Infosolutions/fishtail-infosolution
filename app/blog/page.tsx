@@ -16,7 +16,7 @@ const BlogPage = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="w-full flex gap-6 flex-col items-center justify-center text-center px-9 mb-16"
+        className="w-full flex gap-6 flex-col items-center justify-center text-center px-9 mb-12"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

@@ -79,12 +79,8 @@ export default function CareerPostPage() {
                     )}
                 />
 
-                <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-8">
-                    {/* Logo/Icon */}
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-zinc-900/80 border border-white/20 flex items-center justify-center backdrop-blur-sm shadow-xl">
-                        {/* Assuming simple text fallback if no image or standard icon logic, matching index.ts structure */}
-                        <span className="text-3xl font-bold text-white">{job.fallbackInitial}</span>
-                    </div>
+                <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-8">
+                    /
 
                     {/* Title with Sparkles */}
                     <div className="scale-110 sm:scale-125 md:scale-150">
