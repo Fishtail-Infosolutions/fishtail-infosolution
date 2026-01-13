@@ -17,7 +17,7 @@ const cardGradients = [
 export default function ProjectsSection() {
   return (
     <section className="w-full bg-black sm:mt-20 mt-30">
-      <div className="mx-auto max-w-6xl px-4">
+      <div className="mx-auto max-w-5xl px-4">
         <div className="flex flex-col items-center text-center">
           <GradientBanner text="Our Projects" />
 
@@ -33,7 +33,7 @@ export default function ProjectsSection() {
                   bg={cardGradients[i % cardGradients.length]}
                   minHeight="22rem"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center h-auto md:h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-[0.8fr_1.2fr] gap-6 md:gap-8 items-center h-auto md:h-full">
                     {/* 1. Title */}
                     <h3 className="text-2xl md:text-4xl font-semibold text-white tracking-tight text-center md:text-left md:col-start-1 md:row-start-1">
                       {project.title}
