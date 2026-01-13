@@ -113,7 +113,7 @@ const ContactUs = () => {
                 <IconPhone className="h-5 w-5 text-blue-400" />
                 <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Phone number</h3>
               </div>
-              <p className="text-neutral-300">+123 456 7890</p>
+              <p className="text-neutral-300">+977 9806673560</p>
             </div>
 
             {/* Contact Location */}

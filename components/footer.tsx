@@ -38,7 +38,7 @@ export default function Footer() {
                 <div className="w-10 h-10 min-w-[2.5rem] rounded-full flex items-center justify-center mr-4 transition-colors duration-500">
                   <Phone className="w-5 h-5" />
                 </div>
-                <span className="text-sm sm:text-base">061-458909</span>
+                <span className="text-sm sm:text-base">+977 9806673560</span>
               </div>
 
               <a href="mailto:info@fishtailinfosolutions.com/" target="_blank" rel="noopener noreferrer">
@@ -55,7 +55,7 @@ export default function Footer() {
                   <Clock className="w-5 h-5" />
                 </div>
                 <div className="text-sm sm:text-base">
-                  <p>Sun to Fri: 10AM - 6PM</p>
+                  <p>Sun to Fri: 9AM - 6PM</p>
                 </div>
               </div>
             </div>
