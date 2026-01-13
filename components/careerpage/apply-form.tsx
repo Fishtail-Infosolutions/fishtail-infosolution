@@ -90,7 +90,7 @@ export default function ApplyForm() {
                 stepCircleContainerClassName="bg-black border-zinc-800"
                 stepContainerClassName=" bg-black  "
                 contentClassName=" m-9"
-                footerClassName="bg-zinc-900/50 border-t border-zinc-800"
+                footerClassName=" border-t border-zinc-800"
                 className="justify-start h-auto min-h-0 aspect-auto"
             >
                 {/* Step 1: Personal Information */}

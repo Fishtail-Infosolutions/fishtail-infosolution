@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/">
-              <Image src="/fishtail-infosolutions-logo.png" alt="Logo" width={40} height={40} className="w-40 h-12" />
+              <Image src="/logo.svg" alt="Logo" width={50} height={50} className="w-40 h-12" />
             </Link>
           </div>
 
@@ -144,18 +144,18 @@ const Navbar: React.FC = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
+
+      {/* {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-md z-100 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
-      )}
+      )} */}
 
       {/* Mobile Menu with Glassmorphism */}
       <div
         className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto
- w-72 bg-black/40 backdrop-blur-xl border-l border-b border-white/10 z-40 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+ w-72 bg-black/40 backdrop-blur-md border-l border-b border-white/10 z-100 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col p-6 space-y-2">

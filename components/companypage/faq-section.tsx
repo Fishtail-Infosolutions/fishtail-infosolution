@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Plus } from "lucide-react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { MessageFAQ } from "@/constants";
@@ -13,18 +13,38 @@ export default function FAQSection() {
 
     return (
         <section className="w-full bg-black py-20 px-4 md:px-8">
-            <div className="max-w-4xl mx-auto flex flex-col items-center">
-                <div className="mb-12">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6 }}
+                className="max-w-4xl mx-auto flex flex-col items-center"
+            >
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="mb-12"
+                >
                     <GradientBanner text="Frequently Asked Questions" />
-                </div>
+                </motion.div>
 
                 {/* Tabs */}
-                <Tabs
-                    tabs={MessageFAQ.map(c => c.category)}
-                    activeTab={activeTab}
-                    onTabChange={setActiveTab}
-                    className="mb-12"
-                />
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="w-full flex justify-center"
+                >
+                    <Tabs
+                        tabs={MessageFAQ.map(c => c.category)}
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                        className="mb-12"
+                    />
+                </motion.div>
 
                 {/* Questions Accordion */}
                 <div className="w-full space-y-4">
@@ -38,12 +58,23 @@ export default function FAQSection() {
                             className="space-y-4"
                         >
                             {MessageFAQ[activeTab].items.map((item, index) => (
-                                <FAQItem key={index} question={item.question} answer={item.answer} />
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{
+                                        duration: 0.4,
+                                        delay: index * 0.1,
+                                        ease: "easeOut"
+                                    }}
+                                >
+                                    <FAQItem question={item.question} answer={item.answer} />
+                                </motion.div>
                             ))}
                         </motion.div>
                     </AnimatePresence>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 }
@@ -52,10 +83,14 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="border border-neutral-700 rounded-2xl overflow-hidden">
+        <motion.div
+            className="border border-neutral-700 rounded-2xl overflow-hidden"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+        >
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center justify-between p-6 text-left"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-neutral-900/30 transition-colors"
             >
                 <span className="text-lg text-white">{question}</span>
                 <motion.div
@@ -79,6 +114,6 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 };

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { motion } from "motion/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -58,23 +59,48 @@ const ContactUs = () => {
   return (
     <div className="relative overflow-hidden h-full mt-40 bg-black text-white flex flex-col md:px-40 px-4">
       {/* Gradient Banner */}
-      <div className="flex flex-col items-center justify-center gap-2">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col items-center justify-center gap-2"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <GradientBanner text="Contact Us" />
+        </motion.div>
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-3xl font-semibold mb-4 text-center"
+        >
+          Get in Touch
+        </motion.h3>
+      </motion.div>
 
-        <GradientBanner text="Contact Us" />
-        <h3 className="text-3xl font-semibold mb-4 text-center">Get in Touch</h3>
 
-      </div>
-
-
-      <div className="relative p-6 z-10 flex flex-col lg:flex-row md:gap-9 gap-5 justify- items-start">
+      <div className="relative p-8 sm:px-20  z-10 flex flex-col lg:flex-row md:gap-9 gap-5 justify- items-start">
         {/* Left Card */}
-        <div className="w-full lg:w-1/3 p-6  bg-black border border-neutral-800 rounded-xl shadow-lg relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full lg:w-1/3 p-6  bg-black border border-neutral-800 rounded-xl shadow-lg relative overflow-hidden"
+        >
           <div className="space-y-8">
             {/* Contact Email */}
             <div className="flex flex-col space-y-4">
               <div className="flex items-center gap-2">
-                <IconMail className="h-5 w-5 text-violet-500" />
-                <h3 className="text-lg font-semibold  text-violet-500">Email</h3>
+                <IconMail className="h-5 w-5 text-blue-400" />
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Email</h3>
               </div>
               <a href="mailto:info@fishtailinfosolutions.com/" target="_blank" rel="noopener noreferrer">
                 <p className="text-neutral-300 hover:text-white cursor-pointer">info@fishtailinfosolutions.com</p>
@@ -84,8 +110,8 @@ const ContactUs = () => {
             {/* Contact Phone */}
             <div className="flex flex-col space-y-4">
               <div className="flex items-center gap-2">
-                <IconPhone className="h-5 w-5 text-violet-500" />
-                <h3 className="text-lg font-semibold  text-violet-500">Phone number</h3>
+                <IconPhone className="h-5 w-5 text-blue-400" />
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Phone number</h3>
               </div>
               <p className="text-neutral-300">+123 456 7890</p>
             </div>
@@ -93,8 +119,8 @@ const ContactUs = () => {
             {/* Contact Location */}
             <div className="flex flex-col space-y-4">
               <div className="flex items-center gap-2">
-                <IconMapPin className="h-5 w-5 text-violet-400" />
-                <h3 className="text-lg font-semibold  text-violet-500">Location</h3>
+                <IconMapPin className="h-5 w-5 text-blue-400" />
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Location</h3>
               </div>
               <a href='https://www.google.com/maps/place/Fishtail+Infosolutions/@28.2211603,83.9819452,691m/data=!3m1!1e3!4m7!3m6!1s0xaf8712d0425aa3e7:0x528c4e6c8c86ffbf!4b1!8m2!3d28.2207887!4d83.9840869!16s%2Fg%2F11yq1r478s?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' target="_blank" rel="noopener noreferrer">
                 <p className="text-neutral-300 hover:text-white cursor-pointer">Pokhara-8, Bagaletol</p>
@@ -105,8 +131,8 @@ const ContactUs = () => {
             <div className="space-y-2">
 
               <div className="flex items-center gap-2">
-                <Globe className="h-5 w-5 text-violet-400" />
-                <h3 className="text-lg font-semibold text-violet-500">Social Media</h3>
+                <Globe className="h-5 w-5 text-blue-400" />
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Social Media</h3>
               </div>
               <div className="flex justify-start gap-6">
                 {Socials.map((social) => (
@@ -126,10 +152,16 @@ const ContactUs = () => {
             </div>
 
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Card (Form) */}
-        <div className="w-full lg:w-2/3 bg-black p-6 border border-neutral-800 space-y-6 rounded-lg shadow-lg mt-8 md:mt-0 relative">
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="w-full lg:w-2/3 bg-black p-6 border border-neutral-800 space-y-6 rounded-lg shadow-lg mt-8 md:mt-0 relative"
+        >
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
@@ -222,9 +254,9 @@ const ContactUs = () => {
               </Button>
             </form>
           </Form>
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </div >
   );
 };
 

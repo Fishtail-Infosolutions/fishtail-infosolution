@@ -150,8 +150,8 @@ export default function CareerPostPage() {
                         {/* Right Column */}
                         <div className="space-y-4">
                             <div className="flex justify-between md:justify-start items-center border-b border-white/5 pb-2">
-                                <span className="text-gray-400 w-40">Job Type:</span>
-                                <span className="text-white font-medium">{job.type} ({job.location})</span>
+                                <span className="text-gray-400 w-24 md:w-40 whitespace-nowrap">Job Type:</span>
+                                <span className="text-white font-medium text-right md:text-left">{job.type} ({job.location})</span>
                             </div>
                             <div className="flex justify-between md:justify-start items-center border-b border-white/5 pb-2">
                                 <span className="text-gray-400 w-40">Salary:</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "motion/react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { TeamMembers, TeamMember } from "@/constants";
@@ -11,22 +12,45 @@ import Image from "next/image";
 
 export default function TeamMemberSection() {
     return (
-        <section className="w-full bg-black py-20 px-4 md:px-8">
-            <div className="max-w-7xl mx-auto flex flex-col items-center">
-                <div className="mb-12">
+        <section className="w-full bg-black  sm:py-20  px-4 md:px-8">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6 }}
+                className="max-w-7xl mx-auto flex flex-col items-center"
+            >
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="mb-12"
+                >
                     <GradientBanner text="Meet Our Team" />
-                </div>
+                </motion.div>
 
                 <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full">
                     {TeamMembers.map((member, index) => (
-                        <GridItem
+                        <motion.div
                             key={index}
-                            icon={<User2 className="h-6 w-6 text-black dark:text-neutral-400" />}
-                            member={member}
-                        />
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{
+                                duration: 0.5,
+                                delay: index * 0.1,
+                                ease: "easeOut"
+                            }}
+                        >
+                            <GridItem
+                                icon={<User2 className="h-6 w-6 text-black dark:text-neutral-400" />}
+                                member={member}
+                            />
+                        </motion.div>
                     ))}
                 </ul>
-            </div>
+            </motion.div>
         </section>
     );
 }
@@ -39,7 +63,11 @@ interface GridItemProps {
 const GridItem = ({ icon, member }: GridItemProps) => {
     return (
         <li className="list-none min-h-[14rem] h-full">
-            <div className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-neutral-900 border-neutral-800">
+            <motion.div
+                className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-neutral-900 border-neutral-800"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+            >
                 <GlowingEffect
                     blur={0}
                     borderWidth={3}
@@ -89,13 +117,13 @@ const GridItem = ({ icon, member }: GridItemProps) => {
 
                         {/* 4. Description */}
                         <div className="text-center">
-                            <h2 className="font-sans text-sm text-neutral-500 line-clamp-3">
+                            <h2 className="font-sans text-sm text-neutral-500 line-clamp-2">
                                 {member.description}
                             </h2>
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </li>
     );
 };

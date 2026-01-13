@@ -68,7 +68,7 @@ const itemVariants: Variants = {
 export default function ServicesSection() {
   const router = useRouter();
   return (
-    <section className="w-full bg-black py-12 lg:py-24">
+    <section className="w-full bg-black  lg:py-24">
       <div className="mx-auto max-w-7xl px-9">
         <div className="flex flex-col items-center">
           <GradientBanner text="Our Services" />
@@ -121,14 +121,14 @@ export default function ServicesSection() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="mt-8 w-full flex justify-center"
           >
-            <HoverBorderGradient
+            {/* <HoverBorderGradient
               className="max-w-xs md:w-auto flex items-center justify-center gap-2"
               onClick={() => router.push('#services')}
               as="button"
               aria-label="Explore services">
               <span>Explore Services</span>
               <ArrowRightIcon className="w-3 h-3" />
-            </HoverBorderGradient>
+            </HoverBorderGradient> */}
           </motion.div>
         </div>
       </div>

@@ -103,7 +103,7 @@ export default function BlogPostPage() {
                         variant="outline"
                         size="sm"
                         onClick={handleCopyLink}
-                        className="rounded-full bg-white text-white hover:bg-gray-200 border-none px-6"
+                        className="rounded-full bg-white text-white hover:bg-gray-200 border-none px-6 w-fit"
                     >
                         {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                         {copied ? "Copied" : "Copy Link"}

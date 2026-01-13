@@ -10,10 +10,10 @@ interface BlogCardProps {
 
 export const BlogCard = ({ blog }: BlogCardProps) => {
     return (
-        <Link href={`/blog/${blog.id}`} className="block group w-full max-w-[350px] mx-auto sm:mx-0">
+        <Link href={`/blog/${blog.id}`} className="block group w-full mx-auto sm:mx-0">
             <GlareHover
                 width="100%"
-                height="400px"
+                height="350px"
                 borderRadius="15px"
                 glareOpacity={0.3}
                 transitionDuration={900}
