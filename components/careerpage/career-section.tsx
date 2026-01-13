@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import GradientBanner from "../self-made-ui/gradeint-banner";
 import Tabs from "@/components/tab";
 
-const categories = ["All", "Sales & support", "Developer", "Marketing", "Design"];
+const categories = ["All", "Developer", "Designer", "SEO", "Content Writer"];
 
 export default function CareerSection() {
     const [activeCategory, setActiveCategory] = useState("All");

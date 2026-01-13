@@ -18,6 +18,7 @@ import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { cn } from "@/lib/utils";
 import ApplyForm from "@/components/careerpage/apply-form";
+import Image from "next/image";
 
 export default function CareerPostPage() {
     const { careerId } = useParams();
@@ -67,7 +68,7 @@ export default function CareerPostPage() {
 
 
             {/* Hero / Header Section */}
-            <div className="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden border-b border-white/10 pt-24 pb-12 px-4 sm:px-6">
+            <div className="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden border-b border-white/10 pt-28 pb-12 px-4 sm:px-6">
                 <AnimatedGridPattern
                     numSquares={30}
                     maxOpacity={0.1}
@@ -80,7 +81,20 @@ export default function CareerPostPage() {
                 />
 
                 <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-8">
-                    /
+                    {/* Logo/Icon */}
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-zinc-900/80 border border-white/20 flex items-center justify-center backdrop-blur-sm shadow-xl overflow-hidden">
+                        {job.icon ? (
+                            <Image
+                                src={job.icon}
+                                alt={job.title}
+                                width={80}
+                                height={80}
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <span className="text-3xl font-bold text-white">{job.fallbackInitial}</span>
+                        )}
+                    </div>
 
                     {/* Title with Sparkles */}
                     <div className="scale-110 sm:scale-125 md:scale-150">

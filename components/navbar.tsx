@@ -166,7 +166,7 @@ const Navbar: React.FC = () => {
                 key={item.path}
                 href={item.path}
                 onClick={handleNavClick}
-                className={`flex items-center space-x-4 px-4 py-3 rounded-lg transition-all ${pathname === item.path
+                className={`flex items-center space-x-4 px-4 py-3 rounded-lg transition-all ${isActive(item.path)
                   ? 'bg-white/10 text-white border border-gray-600'
                   : 'text-gray-400 hover:text-white hover:bg-white/5'
                   }`}

@@ -36,7 +36,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                 }
             >
                 <div className="relative overflow-hidden h-full rounded-2xl transition duration-200 group bg-black hover:shadow-xl border border-neutral-800">
-                    <Link href={`/career/${job.id}`} className="block h-full">
+                    <Link href={`/career/${job.id}`} className="block h-full cursor-none">
                         {/* Dot Pattern Background */}
                         <div className="absolute inset-0 pointer-events-none">
                             <DotPattern
@@ -51,7 +51,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                             {/* Header */}
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-10 w-10 text-xl font-bold rounded-lg bg-red-600 flex items-center justify-center text-white shrink-0 overflow-hidden relative">
+                                    <div className="h-10 w-10 text-xl font-bold rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white shrink-0 overflow-hidden relative">
                                         {job.postIcon && job.postIcon.startsWith("/") ? (
                                             <Image
                                                 src={job.postIcon}
@@ -99,7 +99,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                                 </div>
 
                                 <Button
-                                    className="rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors md:hidden"
+                                    className="rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors md:hidden cursor-none"
                                     size="sm"
                                 >
                                     Apply Now

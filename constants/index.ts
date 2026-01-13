@@ -281,7 +281,7 @@ export interface JobOpening {
   openings: number;
   location: string;
   type: string;
-  category: "Sales & support" | "Developer" | "Marketing" | "Design";
+  category: "Developer" | "Designer" | "SEO" | "Content Writer";
   icon?: any; // For company logo/icon if needed
   postIcon?: string; // Image path from public folder e.g. "/icons/sales.png"
   salary: string;
@@ -295,136 +295,173 @@ export interface JobOpening {
 export const JobOpenings: JobOpening[] = [
   {
     id: 1,
-    icon: "/nextjs image career section.webp",
-    title: "Software Sales Representative",
+    icon: "/career posting images/nextjs logo.png",
+    title: "Mid-Level Frontend Developer (Next.js)",
     role: "Mid Level",
-    deadline: "2026-01-31",
-    description: "You'll help restaurants grow by introducing them to the best restaurant software in Nepal. From finding potential customers to closing deals, you'll lead the full sales journey and be the voice of RestroX.",
-    openings: 3,
-    location: "Onsite",
-    type: "Full Time",
-    category: "Sales & support",
-    postIcon: "/icons/sales.png",
-    salary: "Negotiable",
-    datePosted: "2026-01-01",
-    responsibilities: [
-      "Identify and pursue new business opportunities in the restaurant sector.",
-      "Conduct product demonstrations and presentations to potential clients.",
-      "Negotiate contracts and close deals to meet sales targets.",
-      "Maintain strong relationships with existing clients to ensure satisfaction and retention."
-    ],
-    requirements: [
-      "Proven experience in B2B sales, preferably in software or SaaS.",
-      "Excellent communication and presentation skills.",
-      "Strong negotiation and closing skills.",
-      "Self-motivated and results-oriented."
-    ],
-    benefits: [
-      "Competitive salary and commission structure.",
-      "Health insurance and paid time off.",
-      "Opportunity for career growth and advancement.",
-      "Dynamic and supportive work environment."
-    ],
-    fallbackInitial: "S"
-  },
-  {
-    id: 2,
-    title: "Mid-Level Frontend Developer",
-    role: "Mid Level",
-    deadline: "2026-01-31",
-    description: "We're hiring a Mid-Level Frontend Developer! Build dynamic, high-performance web apps with React, Next.js, and real-time tech in a fast-moving, collaborative team.",
+    deadline: "2026-02-28",
+    description: "We are looking for a skilled Frontend Developer proficient in Next.js and React to build high-performance web applications.",
     openings: 2,
     location: "Onsite",
     type: "Full Time",
     category: "Developer",
-    postIcon: "/icons/developer.png",
+    postIcon: "/career posting images/nextjs logo.png",
     salary: "Negotiable",
-    datePosted: "2026-01-05",
+    datePosted: "2026-01-15",
     responsibilities: [
-      "Develop and maintain high-quality web applications using React and Next.js.",
-      "Collaborate with designers and backend developers to implement new features.",
-      "Optimize applications for maximum speed and scalability.",
-      "Write clean, maintainable, and testable code."
+      "Develop and maintain complex frontend applications using Next.js.",
+      "Ensuring high performance and responsiveness of web pages.",
+      "Collaborating with backend developers and designers.",
+      "Code review and mentoring junior developers."
     ],
     requirements: [
-      "Strong proficiency in JavaScript, TypeScript, React, and Next.js.",
-      "Experience with state management libraries (e.g., Redux, Zustand).",
-      "Familiarity with modern CSS frameworks (e.g., Tailwind CSS).",
-      "Understanding of REST APIs and GraphQL."
+      "2+ years of experience with React and Next.js.",
+      "Strong understanding of TypeScript and Tailwind CSS.",
+      "Knowledge of SEO principles in web development.",
+      "Excellent problem-solving skills."
     ],
     benefits: [
-      "Remote work options and flexible hours.",
-      "Professional development budget.",
-      "Stock options and performance bonuses.",
-      "Latest hardware and software tools."
+      "Competitive salary and growth opportunities.",
+      "Creative and flexible workspace.",
+      "Health benefits and regular team outings.",
+      "Access to the latest learning resources."
     ],
-    fallbackInitial: "M"
+    fallbackInitial: "N"
+  },
+  {
+    id: 5,
+    icon: "/career posting images/nodejs logo.png",
+    title: "Backend Developer (Node.js)",
+    role: "Mid Level",
+    deadline: "2026-03-05",
+    description: "Looking for a Backend Developer to join our core team and build scalable server-side systems using Node.js and Express.",
+    openings: 1,
+    location: "Onsite",
+    type: "Full Time",
+    category: "Developer",
+    postIcon: "/career posting images/nodejs logo.png",
+    salary: "Negotiable",
+    datePosted: "2026-01-18",
+    responsibilities: [
+      "Design and implement scalable RESTful APIs.",
+      "Optimize server performance and database queries.",
+      "Integrate third-party services and payment gateways.",
+      "Maintain code quality and documentation."
+    ],
+    requirements: [
+      "2+ years of experience with Node.js and Express.",
+      "Proficient in PostgreSQL and MongoDB.",
+      "Familiarity with containerization (Docker).",
+      "Strong understanding of server-side logic."
+    ],
+    benefits: [
+      "High-impact role in a growing startup.",
+      "Modern tech stack and developer-friendly culture.",
+      "Flexible working arrangements.",
+      "Generous stock options."
+    ],
+    fallbackInitial: "B"
+  },
+  {
+    id: 2,
+    icon: "/career posting images/ui ux logo.png",
+    title: "Senior UI/UX Designer",
+    role: "Senior Level",
+    deadline: "2026-03-15",
+    description: "Join us to create visually stunning and highly functional user interfaces for our global client base.",
+    openings: 1,
+    location: "Onsite",
+    type: "Full Time",
+    category: "Designer",
+    postIcon: "/career posting images/ui ux logo.png",
+    salary: "Negotiable",
+    datePosted: "2026-01-20",
+    responsibilities: [
+      "Gather and evaluate user requirements in collaboration with product managers.",
+      "Illustrate design ideas using storyboards, process flows, and sitemaps.",
+      "Design graphic user interface elements, like menus, tabs, and widgets.",
+      "Develop UI mockups and prototypes."
+    ],
+    requirements: [
+      "Proven work experience as a UI/UX Designer.",
+      "Portfolio of design projects.",
+      "Knowledge of wireframe tools (e.g. Figma, Adobe XD).",
+      "Up-to-date knowledge of design software."
+    ],
+    benefits: [
+      "Collaborative and innovative environment.",
+      "Performance-based bonuses.",
+      "Professional development opportunities.",
+      "Dynamic team culture."
+    ],
+    fallbackInitial: "U"
   },
   {
     id: 3,
-    title: "Senior UI/UX Designer",
-    role: "Senior Level",
-    deadline: "2026-02-15",
-    description: "Shape the visual identity of our products. We are looking for a creative mind to design intuitive and beautiful user interfaces that delight our customers.",
-    openings: 1,
+    icon: "/career posting images/seo logo.png",
+    title: "SEO Specialist",
+    role: "Mid Level",
+    deadline: "2026-02-20",
+    description: "Manage all SEO activities and marketing, including content strategy, link building, and keyword strategy.",
+    openings: 2,
     location: "Hybrid",
     type: "Full Time",
-    category: "Design",
-    postIcon: "/icons/design.png",
+    category: "SEO",
+    postIcon: "/career posting images/seo logo.png",
     salary: "Negotiable",
     datePosted: "2026-01-10",
     responsibilities: [
-      "Create intuitive and visually appealing user interfaces for web and mobile apps.",
-      "Conduct user research and usability testing to gather feedback.",
-      "Create wireframes, prototypes, and high-fidelity mockups.",
-      "Collaborate with developers to ensure design consistency."
+      "Perform ongoing keyword discovery, expansion, and optimization.",
+      "Research and implement search engine optimization recommendations.",
+      "Develop and implement link building strategy.",
+      "Work with the development team to ensure SEO best practices are properly implemented."
     ],
     requirements: [
-      "Proven experience as a UI/UX Designer with a strong portfolio.",
-      "Proficiency in design tools such as Figma, Sketch, or Adobe XD.",
-      "Understanding of user-centered design principles.",
-      "Excellent communication and teamwork skills."
+      "Proven SEO experience.",
+      "In-depth experience with website analytics tools.",
+      "Knowledge of ranking factors and search engine algorithms.",
+      "Solid understanding of performance marketing, conversion, and online customer acquisition."
     ],
     benefits: [
-      "Creative and collaborative work environment.",
-      "Health and wellness programs.",
-      "Annual company retreats.",
-      "Paid parental leave."
+      "Learning-centric environment.",
+      "Health insurance coverage.",
+      "Paid workshops and certifications.",
+      "Flexible working model."
     ],
     fallbackInitial: "S"
   },
   {
     id: 4,
-    title: "Digital Marketing Specialist",
-    role: "Mid Level",
-    deadline: "2026-02-28",
-    description: "Drive growth through innovative marketing strategies. You'll manage campaigns, analyze performance, and optimize our digital presence across all channels.",
-    openings: 2,
-    location: "Remote",
+    icon: "/career posting images/content writer logo.png",
+    title: "Content Writer",
+    role: "Junior Level",
+    deadline: "2026-03-10",
+    description: "Create compelling articles, blog posts, and website content to engage our audience and improve search visibility.",
+    openings: 3,
+    location: "Onsite",
     type: "Full Time",
-    category: "Marketing",
-    postIcon: "/icons/marketing.png",
+    category: "Content Writer",
+    postIcon: "/career posting images/content writer logo.png",
     salary: "Negotiable",
-    datePosted: "2026-01-08",
+    datePosted: "2026-01-25",
     responsibilities: [
-      "Plan and execute digital marketing campaigns.",
-      "Monitor and analyze campaign performance metrics.",
-      "Manage social media accounts and content calendar.",
-      "Conduct market research to identify trends and opportunities."
+      "Produce various content types, including email, social media posts, blogs, and white papers.",
+      "Collaborate with marketing and design teams to illustrate articles.",
+      "Identify customers' needs and gaps in our content and recommend new topics.",
+      "Ensure all-around consistency (style, fonts, images, and tone)."
     ],
     requirements: [
-      "Experience in digital marketing or related field.",
-      "Knowledge of SEO/SEM and social media marketing.",
-      "Analytical mindset and data-driven approach.",
-      "Creativity and ability to generate new ideas."
+      "Exceptional writing and editing skills.",
+      "Knowledge of SEO and digital marketing.",
+      "Ability to meet deadlines.",
+      "Bachelor's degree in Journalism, English, or related field preferred."
     ],
     benefits: [
-      "Flexible working hours.",
-      "Performance-based bonuses.",
-      "Learning and development opportunities.",
-      "Team building events."
+      "Guided mentorship from senior writers.",
+      "Exposure to diverse industry topics.",
+      "Fun and energetic office environment.",
+      "Performance incentives."
     ],
-    fallbackInitial: "D"
+    fallbackInitial: "C"
   }
 ];
 
