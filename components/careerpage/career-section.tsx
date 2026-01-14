@@ -19,7 +19,7 @@ export default function CareerSection() {
             : JobOpenings.filter((job) => job.category === activeCategory);
 
     return (
-        <section className="w-full bg-black py-32 px-4 md:px-8">
+        <section className="w-full bg-background py-32 px-4 md:px-8 transition-colors duration-500">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -37,11 +37,11 @@ export default function CareerSection() {
                     className="text-center mb-12"
                 >
                     <GradientBanner text="Current Opening" />
-                    <h1 className="text-3xl md:text-4xl font-medium text-center text-white my-3">
+                    <h1 className="text-3xl md:text-4xl font-medium text-center text-foreground my-3">
                         Join our Team
                     </h1>
-                    <p className="text-neutral-400 text-sm md:text-base max-w-lg mx-auto">
-                        Feel free to email <a href="mailto:hr@fishtailinfosolutions.com.np" className="text-transparent bg-clip-text bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] hover:underline">hr@fishtailinfosolutions.com.np</a> if you believe you would be a fantastic fit.
+                    <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
+                        Feel free to email <a href="mailto:hr@fishtailinfosolutions.com.np" className="text-transparent bg-clip-text bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF] hover:underline">hr@fishtailinfosolutions.com.np</a> if you believe you would be a fantastic fit.
                     </p>
                 </motion.div>
 

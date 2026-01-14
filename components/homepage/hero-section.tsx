@@ -8,15 +8,24 @@ import { ArrowRightIcon, ChartNoAxesColumnIncreasingIcon } from 'lucide-react';
 import GradientBanner from '../self-made-ui/gradeint-banner';
 import { LayoutTextFlip } from '../ui/layout-text-flip';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 import { FreeQuoteDialog } from "./free-quote-dialog";
 
 export default function HeroSection() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <section className="w-full ">
-      <div className="h-[40rem] w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden">
-        <Spotlight />
+      <div className="h-[40rem] w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-background">
+        {mounted && theme === 'dark' && <Spotlight />}
 
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -28,14 +37,14 @@ export default function HeroSection() {
             <GradientBanner text="Trusted SEO and Digital Partner" />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-foreground">
             <LayoutTextFlip
               text="Elevate Your Digital Presence with"
               words={['Web Development', 'Search Optimization', 'Lead Generation']}
             />
           </h1>
 
-          <p className="mt-4 text-md md:text-lg text-white/70 mx-auto">
+          <p className="mt-4 text-md md:text-lg text-muted-foreground mx-auto">
             We build SEO, web, and marketing strategies that drive measurable growth—clear, focused, and performance-driven.
           </p>
 

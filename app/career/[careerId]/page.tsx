@@ -45,15 +45,15 @@ export default function CareerPostPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-black text-white flex items-center justify-center">
-                <div className="animate-pulse">Loading...</div>
+            <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+                <div className="animate-pulse text-foreground">Loading...</div>
             </div>
         );
     }
 
     if (!job) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-4">
+            <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4">
                 <h1 className="text-2xl font-bold">Job Post Not Found</h1>
                 <Link href="/career">
                     <Button variant="outline">Back to Careers</Button>
@@ -63,12 +63,12 @@ export default function CareerPostPage() {
     }
 
     return (
-        <div className="min-h-screen bg-black text-slate-200 font-sans selection:bg-purple-500/30">
+        <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30 transition-colors duration-500">
 
 
 
             {/* Hero / Header Section */}
-            <div className="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden border-b border-white/10 pt-28 pb-12 px-4 sm:px-6">
+            <div className="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden border-b border-border pt-28 pb-12 px-4 sm:px-6">
                 <AnimatedGridPattern
                     numSquares={30}
                     maxOpacity={0.1}
@@ -82,7 +82,7 @@ export default function CareerPostPage() {
 
                 <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-8">
                     {/* Logo/Icon */}
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-zinc-900/80 border border-white/20 flex items-center justify-center backdrop-blur-sm shadow-xl overflow-hidden">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-accent/50 border border-border flex items-center justify-center backdrop-blur-sm shadow-xl overflow-hidden">
                         {job.icon ? (
                             <Image
                                 src={job.icon}
@@ -92,37 +92,37 @@ export default function CareerPostPage() {
                                 className="w-full h-full object-cover"
                             />
                         ) : (
-                            <span className="text-3xl font-bold text-white">{job.fallbackInitial}</span>
+                            <span className="text-3xl font-bold text-foreground">{job.fallbackInitial}</span>
                         )}
                     </div>
 
                     {/* Title with Sparkles */}
                     <div className="scale-110 sm:scale-125 md:scale-150">
-                        <SparklesText className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white text-center">
+                        <SparklesText className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground text-center">
                             {job.title}
                         </SparklesText>
                     </div>
 
                     {/* Breadcrumb & Copy Link */}
                     <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
-                        <div className="bg-zinc-900/50 backdrop-blur-md border border-white/10 rounded-full px-6 py-2">
+                        <div className="bg-accent/50 dark:bg-zinc-900/50 backdrop-blur-md border border-border rounded-full px-6 py-2">
                             <Breadcrumb>
                                 <BreadcrumbList>
                                     <BreadcrumbItem>
                                         <BreadcrumbLink asChild>
-                                            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+                                            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">Home</Link>
                                         </BreadcrumbLink>
                                     </BreadcrumbItem>
                                     <BreadcrumbSeparator />
                                     <BreadcrumbItem>
                                         <BreadcrumbLink asChild>
-                                            <Link href="/career" className="hover:text-white transition-colors">Careers</Link>
+                                            <Link href="/career" className="text-muted-foreground hover:text-foreground transition-colors">Careers</Link>
                                         </BreadcrumbLink>
                                     </BreadcrumbItem>
                                     <BreadcrumbSeparator />
                                     {/* <BreadcrumbItem>
-                                        <BreadcrumbPage className="text-gray-400 max-w-[150px] truncate">
-                                            {job.role}
+                                        <BreadcrumbPage className="text-foreground/60 max-w-[150px] truncate">
+                                            {job.title}
                                         </BreadcrumbPage>
                                     </BreadcrumbItem> */}
                                 </BreadcrumbList>
@@ -132,7 +132,7 @@ export default function CareerPostPage() {
                         <Button
                             onClick={handleCopyLink}
                             variant="outline"
-                            className="rounded-full bg-white text-white hover:bg-gray-200 border-none px-6"
+                            className="rounded-full bg-accent text-foreground hover:bg-accent/80 border-border px-6"
                         >
                             {copied ? <Check className="w-4 h-4 mr-2 text-green-500" /> : <Copy className="w-4 h-4 mr-2" />}
                             {copied ? "Copied" : "Share"}
@@ -140,36 +140,36 @@ export default function CareerPostPage() {
                     </div>
 
                     {/* 6 Info Grid */}
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mt-12 text-left bg-zinc-900/30 p-8 rounded-2xl border border-white/5 backdrop-blur-sm max-w-4xl">
+                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mt-12 text-left bg-accent/20 dark:bg-accent/10 p-8 rounded-2xl border border-border backdrop-blur-sm max-w-4xl">
                         {/* Left Column */}
                         <div className="space-y-4">
-                            <div className="flex justify-between md:justify-start items-center border-b border-white/5 pb-2">
-                                <span className="text-gray-400 w-40">Job Level:</span>
-                                <span className="text-white font-medium">{job.role}</span>
+                            <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
+                                <span className="text-muted-foreground w-40">Job Level:</span>
+                                <span className="text-foreground font-medium">{job.role}</span>
                             </div>
-                            <div className="flex justify-between md:justify-start items-center border-b border-white/5 pb-2">
-                                <span className="text-gray-400 w-40">Required:</span>
-                                <span className="text-white font-medium">{job.openings} Candidates</span>
+                            <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
+                                <span className="text-muted-foreground w-40">Required:</span>
+                                <span className="text-foreground font-medium">{job.openings} Candidates</span>
                             </div>
                             <div className="flex justify-between md:justify-start items-center pb-2">
-                                <span className="text-gray-400 w-40">Date Posted:</span>
-                                <span className="text-white font-medium">{job.datePosted}</span>
+                                <span className="text-muted-foreground w-40">Date Posted:</span>
+                                <span className="text-foreground font-medium">{job.datePosted}</span>
                             </div>
                         </div>
 
                         {/* Right Column */}
                         <div className="space-y-4">
-                            <div className="flex justify-between md:justify-start items-center border-b border-white/5 pb-2">
-                                <span className="text-gray-400 w-24 md:w-40 whitespace-nowrap">Job Type:</span>
-                                <span className="text-white font-medium text-right md:text-left">{job.type} ({job.location})</span>
+                            <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
+                                <span className="text-muted-foreground w-24 md:w-40 whitespace-nowrap">Job Type:</span>
+                                <span className="text-foreground font-medium text-right md:text-left">{job.type} ({job.location})</span>
                             </div>
-                            <div className="flex justify-between md:justify-start items-center border-b border-white/5 pb-2">
-                                <span className="text-gray-400 w-40">Salary:</span>
-                                <span className="text-white font-medium">{job.salary}</span>
+                            <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
+                                <span className="text-muted-foreground w-40">Salary:</span>
+                                <span className="text-foreground font-medium">{job.salary}</span>
                             </div>
                             <div className="flex justify-between md:justify-start items-center pb-2">
-                                <span className="text-gray-400 w-40">Deadline:</span>
-                                <span className="text-white font-medium">{job.deadline}</span>
+                                <span className="text-muted-foreground w-40">Deadline:</span>
+                                <span className="text-foreground font-medium">{job.deadline}</span>
                             </div>
                         </div>
                     </div>
@@ -180,15 +180,15 @@ export default function CareerPostPage() {
             <div className="max-w-4xl mx-auto px-6 py-16 space-y-16 ">
                 {/* Job Summary */}
                 <section className="space-y-4">
-                    <h3 className="text-2xl font-bold text-white">Job Summary</h3>
-                    <p className="text-gray-300 leading-relaxed text-lg">{job.description}</p>
+                    <h3 className="text-2xl font-bold text-foreground">Job Summary</h3>
+                    <p className="text-muted-foreground leading-relaxed text-lg">{job.description}</p>
                 </section>
 
                 {/* Responsibilities */}
                 {job.responsibilities && job.responsibilities.length > 0 && (
                     <section className="space-y-4">
-                        <h3 className="text-2xl font-bold text-white">Responsibilities</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                        <h3 className="text-2xl font-bold text-foreground">Responsibilities</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
                             {job.responsibilities.map((item, idx) => (
                                 <li key={idx} className="leading-relaxed">{item}</li>
                             ))}
@@ -199,8 +199,8 @@ export default function CareerPostPage() {
                 {/* Requirements */}
                 {job.requirements && job.requirements.length > 0 && (
                     <section className="space-y-4">
-                        <h3 className="text-2xl font-bold text-white">Requirements</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                        <h3 className="text-2xl font-bold text-foreground">Requirements</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
                             {job.requirements.map((item, idx) => (
                                 <li key={idx} className="leading-relaxed">{item}</li>
                             ))}
@@ -211,8 +211,8 @@ export default function CareerPostPage() {
                 {/* Benefits */}
                 {job.benefits && job.benefits.length > 0 && (
                     <section className="space-y-4">
-                        <h3 className="text-2xl font-bold text-white">Benefits</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                        <h3 className="text-2xl font-bold text-foreground">Benefits</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
                             {job.benefits.map((item, idx) => (
                                 <li key={idx} className="leading-relaxed">{item}</li>
                             ))}
@@ -223,9 +223,9 @@ export default function CareerPostPage() {
                 {/* Apply Form */}
                 <section id="apply" className="pt-8">
                     <div className="flex items-center gap-4 mb-12">
-                        <div className="h-px bg-white/20 grow"></div>
-                        <h2 className="text-3xl font-bold text-white text-center">Apply Now</h2>
-                        <div className="h-px bg-white/20 grow"></div>
+                        <div className="h-px bg-border grow"></div>
+                        <h2 className="text-3xl font-bold text-foreground text-center">Apply Now</h2>
+                        <div className="h-px bg-border grow"></div>
                     </div>
                     <ApplyForm />
                 </section>

@@ -8,8 +8,7 @@ import { Blogs } from "@/constants";
 
 const BlogPage = () => {
   return (
-    <main className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] pt-32 
-    pb-12">
+    <main className="min-h-screen bg-background antialiased pt-32 transition-colors duration-500 pb-12">
       {/* Banner Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -32,7 +31,7 @@ const BlogPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-3xl md:text-4xl font-semibold text-white tracking-tight"
+          className="text-3xl md:text-4xl font-semibold text-foreground tracking-tight"
         >
           Tech Insights
         </motion.h2>
@@ -41,7 +40,7 @@ const BlogPage = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-neutral-400 max-w-2xl mx-auto text-sm md:text-base"
+          className="text-muted-foreground max-w-2xl mx-auto text-sm md:text-base"
         >
           Latest news, updates, and insights from our team of experts.
         </motion.p>

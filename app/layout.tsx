@@ -14,6 +14,8 @@ import Footer from "@/components/footer";
 //   subsets: ["latin"],
 // });
 
+import { ThemeProvider } from "@/components/theme-provider";
+
 const inter = Inter({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -31,17 +33,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-  <body
-    className={`${inter.variable} bg-black dark suppressHydrationWarning`}
-    
-  >
-    <Navbar />
-    {children}
-    <Footer />
-  </body>
-</html>
-
-
- );
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.variable} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

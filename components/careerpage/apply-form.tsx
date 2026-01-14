@@ -66,12 +66,12 @@ export default function ApplyForm() {
 
     if (isSuccess) {
         return (
-            <div className="flex flex-col items-center justify-center p-10 bg-zinc-900 border border-zinc-800 rounded-3xl text-center">
+            <div className="flex flex-col items-center justify-center p-10 bg-card border border-border rounded-3xl text-center">
                 <h3 className="text-2xl font-bold text-green-500 mb-2">Application Submitted!</h3>
-                <p className="text-zinc-400">Thank you for applying. We will review your application and get back to you shortly.</p>
+                <p className="text-muted-foreground">Thank you for applying. We will review your application and get back to you shortly.</p>
                 <button
                     onClick={() => window.location.reload()}
-                    className="mt-6 px-6 py-2 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-colors"
+                    className="mt-6 px-6 py-2 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors"
                 >
                     Apply for another position
                 </button>
@@ -87,57 +87,57 @@ export default function ApplyForm() {
                 onFinalStepCompleted={handleSubmit(onSubmit)}
                 backButtonText="Previous"
                 nextButtonText="Next Step"
-                stepCircleContainerClassName="bg-black border-zinc-800"
-                stepContainerClassName=" bg-black  "
-                contentClassName=" m-9"
-                footerClassName=" border-t border-zinc-800"
+                stepCircleContainerClassName="!bg-background !border-border"
+                stepContainerClassName="!bg-background"
+                contentClassName="m-9"
+                footerClassName="border-t border-border"
                 className="justify-start h-auto min-h-0 aspect-auto"
             >
                 {/* Step 1: Personal Information */}
                 <div className="space-y-6">
-                    <h2 className="text-xl font-semibold text-white mb-4">Personal Information</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-4">Personal Information</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <Label htmlFor="fullName" className="text-zinc-400">Full Name <span className="text-red-500">*</span></Label>
+                            <Label htmlFor="fullName" className="text-muted-foreground">Full Name <span className="text-red-500">*</span></Label>
                             <Input
                                 id="fullName"
                                 placeholder="John Doe"
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("fullName")}
                             />
                             {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message as string}</p>}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="email" className="text-zinc-400">Email Address <span className="text-red-500">*</span></Label>
+                            <Label htmlFor="email" className="text-muted-foreground">Email Address <span className="text-red-500">*</span></Label>
                             <Input
                                 id="email"
                                 type="email"
                                 placeholder="john@example.com"
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("email")}
                             />
                             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message as string}</p>}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="phone" className="text-zinc-400">Phone Number <span className="text-red-500">*</span></Label>
+                            <Label htmlFor="phone" className="text-muted-foreground">Phone Number <span className="text-red-500">*</span></Label>
                             <Input
                                 id="phone"
                                 placeholder="+1 (555) 000-0000"
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("phone")}
                             />
                             {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message as string}</p>}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="address" className="text-zinc-400">Address <span className="text-red-500">*</span></Label>
+                            <Label htmlFor="address" className="text-muted-foreground">Address <span className="text-red-500">*</span></Label>
                             <Input
                                 id="address"
                                 placeholder="City, Country"
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("address")}
                             />
                             {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message as string}</p>}
@@ -147,11 +147,11 @@ export default function ApplyForm() {
 
                 {/* Step 2: Professional Information */}
                 <div className="space-y-6">
-                    <h2 className="text-xl font-semibold text-white mb-4">Professional Details</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-4">Professional Details</h2>
 
                     {/* Work Experience */}
                     <div className="space-y-3">
-                        <Label className="text-zinc-400">Work Experience <span className="text-red-500">*</span></Label>
+                        <Label className="text-muted-foreground">Work Experience <span className="text-red-500">*</span></Label>
                         <Controller
                             control={control}
                             name="workExperience"
@@ -162,9 +162,9 @@ export default function ApplyForm() {
                                     className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3"
                                 >
                                     {["None", "0-1 year", "1-2 years", "2-5 years", "5+ years"].map((exp) => (
-                                        <div key={exp} className="flex items-center space-x-2 p-3 rounded-lg border border-zinc-800 hover:bg-zinc-800/50 has-checked:border-white has-checked:bg-zinc-800 transition-colors">
-                                            <RadioGroupItem value={exp} id={exp} className="border-zinc-600 text-white" />
-                                            <Label htmlFor={exp} className="text-sm text-zinc-300 cursor-pointer w-full h-full flex items-center">{exp}</Label>
+                                        <div key={exp} className="flex items-center space-x-2 p-3 rounded-lg border border-border hover:bg-accent/50 has-checked:border-primary has-checked:bg-accent transition-colors">
+                                            <RadioGroupItem value={exp} id={exp} className="border-border text-foreground" />
+                                            <Label htmlFor={exp} className="text-sm text-foreground cursor-pointer w-full h-full flex items-center">{exp}</Label>
                                         </div>
                                     ))}
                                 </RadioGroup>
@@ -175,41 +175,41 @@ export default function ApplyForm() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <Label htmlFor="expectedSalary" className="text-zinc-400">Expected Salary</Label>
+                            <Label htmlFor="expectedSalary" className="text-muted-foreground">Expected Salary</Label>
                             <Input
                                 id="expectedSalary"
                                 placeholder="e.g. $50k - $70k"
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("expectedSalary")}
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="portfolioLink" className="text-zinc-400">Portfolio Link</Label>
+                            <Label htmlFor="portfolioLink" className="text-muted-foreground">Portfolio Link</Label>
                             <Input
                                 id="portfolioLink"
                                 placeholder="https://..."
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("portfolioLink")}
                             />
                             {errors.portfolioLink && <p className="text-red-500 text-xs mt-1">{errors.portfolioLink.message as string}</p>}
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="githubLink" className="text-zinc-400">GitHub Link</Label>
+                            <Label htmlFor="githubLink" className="text-muted-foreground">GitHub Link</Label>
                             <Input
                                 id="githubLink"
                                 placeholder="https://github.com/..."
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white"
+                                className="bg-secondary"
                                 {...register("githubLink")}
                             />
                             {errors.githubLink && <p className="text-red-500 text-xs mt-1">{errors.githubLink.message as string}</p>}
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="cv" className="text-zinc-400">CV / Resume <span className="text-red-500">*</span></Label>
+                            <Label htmlFor="cv" className="text-muted-foreground">CV / Resume <span className="text-red-500">*</span></Label>
                             <Input
                                 id="cv"
                                 type="file"
                                 accept=".pdf,.doc,.docx"
-                                className="bg-zinc-900/50 border-zinc-700 focus:border-white text-white file:text-white file:bg-zinc-800 file:border-0 file:rounded-md file:mr-4 file:px-4 file:py-1 cursor-pointer"
+                                className="cursor-pointer bg-secondary"
                                 {...register("cv")}
                             />
                             {errors.cv && <p className="text-red-500 text-xs mt-1">{errors.cv.message as string}</p>}
@@ -217,12 +217,12 @@ export default function ApplyForm() {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="coverLetter" className="text-zinc-400">Cover Letter</Label>
+                        <Label htmlFor="coverLetter" className="text-muted-foreground">Cover Letter</Label>
                         <Textarea
                             id="coverLetter"
                             rows={4}
-                            className="flex w-full rounded-md border border-zinc-700 bg-zinc-900/50 px-3 py-2 text-sm text-white placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white disabled:cursor-not-allowed disabled:opacity-50"
                             placeholder="Tell us why you're a great fit..."
+                            className="bg-secondary"
                             {...register("coverLetter")}
                         />
                     </div>

@@ -27,13 +27,13 @@ export default function Tabs({
                     onClick={() => onTabChange(index)}
                     className={cn(
                         "relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 z-10",
-                        activeTab === index ? "text-white" : "text-gray-400 hover:text-gray-200"
+                        activeTab === index ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                     )}
                 >
                     {activeTab === index && (
                         <motion.div
                             layoutId={layoutId}
-                            className="absolute inset-0 bg-neutral-900 rounded-full"
+                            className="absolute inset-0 bg-accent rounded-full border border-border"
                             transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                             style={{ zIndex: -1 }}
                         />

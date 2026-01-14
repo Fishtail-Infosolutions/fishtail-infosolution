@@ -8,12 +8,21 @@ import { ArrowRightIcon } from "lucide-react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import BlurText from "@/components/BlurText";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function AboutSection() {
+    const { theme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
-        <section className="w-full bg-black">
+        <section className="w-full bg-background transition-colors duration-500">
             <BackgroundLines className="flex items-center justify-center w-full flex-col px-4 h-fit py-40 relative overflow-hidden">
-                <Spotlight />
+                {mounted && theme === 'dark' && <Spotlight />}
                 <div>
                     <GradientBanner text="About Us" />
                 </div>
@@ -22,7 +31,7 @@ export default function AboutSection() {
                     delay={150}
                     animateBy="words"
                     direction="top"
-                    className="text-4xl md:text-5xl lg:text-6xl text-white font-medium text-center relative z-20 mb-7 mt-5 "
+                    className="text-4xl md:text-5xl lg:text-6xl text-foreground font-medium text-center relative z-20 mb-7 mt-5 "
                 />
                 <p className="max-w-4xl mx-auto text-sm md:text-lg text-neutral-700 dark:text-gray-300 text-center mb-8 bg-transparent z-20 relative">
                     At Fishtail Infosolutions, we go beyond being a digital agency to become your strategic partner in growth. <br className="hidden md:block" />

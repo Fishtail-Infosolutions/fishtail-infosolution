@@ -66,7 +66,7 @@ export function TestimonialsSection() {
           className="text-center max-w-4xl"
         >
           <GradientBanner text="Testimonials" />
-          <h2 className="mt-6 mb-6 text-center text-3xl font-medium tracking-tight text-white sm:text-3xl md:text-4xl">
+          <h2 className="mt-6 mb-6 text-center text-3xl font-medium tracking-tight text-foreground sm:text-3xl md:text-4xl">
             What Clients Say About Us
           </h2>
         </motion.div>

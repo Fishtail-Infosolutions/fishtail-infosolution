@@ -12,7 +12,7 @@ export default function FAQSection() {
     const [activeTab, setActiveTab] = useState(0);
 
     return (
-        <section className="w-full bg-black py-20 px-4 md:px-8">
+        <section className="w-full bg-background py-20 px-4 md:px-8 transition-colors duration-500">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -84,20 +84,20 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 
     return (
         <motion.div
-            className="border border-neutral-700 rounded-2xl overflow-hidden"
+            className="border border-border rounded-2xl overflow-hidden"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
         >
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-neutral-900/30 transition-colors"
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-accent/50 transition-colors"
             >
-                <span className="text-lg text-white">{question}</span>
+                <span className="text-lg text-foreground">{question}</span>
                 <motion.div
                     animate={{ rotate: isOpen ? 45 : 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
-                    <Plus className="w-6 h-6 text-neutral-400" />
+                    <Plus className="w-6 h-6 text-muted-foreground" />
                 </motion.div>
             </button>
             <AnimatePresence>
@@ -108,7 +108,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                        <div className="px-6 pb-6 text-neutral-400 leading-relaxed">
+                        <div className="px-6 pb-6 text-muted-foreground leading-relaxed">
                             {answer}
                         </div>
                     </motion.div>

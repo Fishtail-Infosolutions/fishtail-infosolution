@@ -9,6 +9,8 @@ import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { RainbowButton } from "./ui/rainbow-button";
 import { Button } from "./ui/button";
 import { FreeQuoteDialog } from "./homepage/free-quote-dialog";
+import { ThemeToggle } from "./theme-toggle";
+import { useTheme } from "next-themes";
 
 interface NavItem {
   name: string;
@@ -37,6 +39,12 @@ const Navbar: React.FC = () => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const navItemsRef = useRef<(HTMLAnchorElement | null)[]>([]);
   const prevPathnameRef = useRef<string | null>(null);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
 
 
@@ -86,12 +94,18 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Navbar with Glassmorphism */}
-      <nav className="fixed top-0 left-0 w-full bg-black/30 backdrop-blur-lg border-b border-white/10 z-50">
+      <nav className="fixed top-0 left-0 w-full bg-background/60 backdrop-blur-lg border-b border-border/40 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/">
-              <Image src="/logo 2.svg" alt="Logo" width={50} height={50} className="w-40 h-12 text" />
+              <Image
+                src={mounted && theme === 'light' ? "/fishtail-blue.png" : "/logo 2.svg"}
+                alt="Logo"
+                width={50}
+                height={50}
+                className="w-40 h-14 object-contain"
+              />
             </Link>
           </div>
 
@@ -114,7 +128,7 @@ const Navbar: React.FC = () => {
                 ref={(el) => {
                   navItemsRef.current[index] = el;
                 }}
-                className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${isActive(item.path) ? 'text-white' : 'text-gray-400 hover:text-gray-200'
+                className={`relative px-6 py-2 rounded-full text-sm font-medium transition-colors duration-300 z-10 ${isActive(item.path) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
                   }`}
               >
                 {item.name}
@@ -124,18 +138,21 @@ const Navbar: React.FC = () => {
 
           {/* Right Side - CTA & Mobile Menu */}
           <div className="flex items-center space-x-3">
+            <ThemeToggle />
 
-            <FreeQuoteDialog>
-              <Button >
-                <ChartNoAxesColumnIncreasingIcon />
-                Free Quote
-              </Button>
-            </FreeQuoteDialog>
+            <div className="hidden sm:block">
+              <FreeQuoteDialog>
+                <Button >
+                  <ChartNoAxesColumnIncreasingIcon />
+                  Free Quote
+                </Button>
+              </FreeQuoteDialog>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition"
+              className="lg:hidden text-foreground p-2 hover:bg-accent rounded-lg transition"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -155,7 +172,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu with Glassmorphism */}
       <div
         className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto
- w-72 bg-black/40 backdrop-blur-md border-l border-b border-white/10 z-100 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+ w-72 bg-background/80 backdrop-blur-md border-l border-b border-border/40 z-40 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col p-6 space-y-2">
@@ -167,8 +184,8 @@ const Navbar: React.FC = () => {
                 href={item.path}
                 onClick={handleNavClick}
                 className={`flex items-center space-x-4 px-4 py-3 rounded-lg transition-all ${isActive(item.path)
-                  ? 'bg-white/10 text-white border border-gray-600'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-accent text-foreground border border-border/40'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                   }`}
               >
                 <Icon size={20} />
@@ -176,6 +193,14 @@ const Navbar: React.FC = () => {
               </Link>
             );
           })}
+          <div className="pt-4 sm:hidden">
+            <FreeQuoteDialog>
+              <Button className="w-full" onClick={handleNavClick}>
+                <ChartNoAxesColumnIncreasingIcon />
+                Free Quote
+              </Button>
+            </FreeQuoteDialog>
+          </div>
         </div>
       </div>
     </>

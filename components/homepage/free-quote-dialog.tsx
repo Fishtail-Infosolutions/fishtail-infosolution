@@ -114,7 +114,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
             </DialogTrigger>
             <DialogContent
                 data-lenis-prevent
-                className="sm:max-w-[700px] w-[95vw] max-h-[85vh] overflow-y-auto bg-black/90 border-white/10 text-white backdrop-blur-xl"
+                className="sm:max-w-[700px] w-[95vw] max-h-[85vh] overflow-y-auto bg-background/90 border-border text-foreground backdrop-blur-xl"
             >
                 <DialogTitle className="sr-only">Free Quote Request</DialogTitle>
                 <Form {...form}>
@@ -138,7 +138,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <h2 className="text-2xl font-bold">Website Information</h2>
-                                        <p className="text-gray-400">Let's start by analyzing your website for free</p>
+                                        <p className="text-muted-foreground">Let's start by analyzing your website for free</p>
                                     </div>
 
                                     <FormField
@@ -149,8 +149,8 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                 <FormLabel className="text-base">Website URL <span className="text-red-500">*</span></FormLabel>
                                                 <FormControl>
                                                     <div className="relative">
-                                                        <Globe className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                                        <Input placeholder="https://www.yourwebsite.com" className="pl-9 bg-white/5 border-white/10 text-white focus:border-purple-500" {...field} />
+                                                        <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                        <Input placeholder="https://www.yourwebsite.com" className="pl-9 dark:bg-secondary" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage className="text-red-400 flex items-center gap-1">
@@ -169,7 +169,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                 <FormControl>
                                                     <Textarea
                                                         placeholder="Tell us about your goals or challenges..."
-                                                        className="min-h-[120px] bg-white/5 border-white/10 text-white focus:border-purple-500"
+                                                        className="min-h-[120px] dark:bg-secondary"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -184,7 +184,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <h2 className="text-2xl font-bold">Contact Information</h2>
-                                        <p className="text-gray-400">How can we reach you?</p>
+                                        <p className="text-muted-foreground">How can we reach you?</p>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -196,8 +196,8 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormLabel>Name <span className="text-red-500">*</span></FormLabel>
                                                     <FormControl>
                                                         <div className="relative">
-                                                            <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                                            <Input placeholder="John Doe" className="pl-9 bg-white/5 border-white/10 text-white" {...field} />
+                                                            <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                            <Input placeholder="John Doe" className="pl-9 dark:bg-secondary" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage className="text-red-400" />
@@ -213,8 +213,8 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormLabel>Email <span className="text-red-500">*</span></FormLabel>
                                                     <FormControl>
                                                         <div className="relative">
-                                                            <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                                            <Input placeholder="john@example.com" className="pl-9 bg-white/5 border-white/10 text-white" {...field} />
+                                                            <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                            <Input placeholder="john@example.com" className="pl-9 dark:bg-secondary" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage className="text-red-400" />
@@ -229,11 +229,11 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                             name="phone"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Phone Number <span className="text-gray-500 text-xs">(optional)</span></FormLabel>
+                                                    <FormLabel>Phone Number <span className="text-muted-foreground/60 text-xs">(optional)</span></FormLabel>
                                                     <FormControl>
                                                         <div className="relative">
-                                                            <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                                            <Input placeholder="+1 234 567 890" className="pl-9 bg-white/5 border-white/10 text-white" {...field} />
+                                                            <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                            <Input placeholder="+1 234 567 890" className="pl-9 dark:bg-secondary" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />
@@ -246,11 +246,11 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                             name="company"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Company <span className="text-gray-500 text-xs">(optional)</span></FormLabel>
+                                                    <FormLabel>Company <span className="text-muted-foreground/60 text-xs">(optional)</span></FormLabel>
                                                     <FormControl>
                                                         <div className="relative">
-                                                            <Building className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                                            <Input placeholder="Acme Inc." className="pl-9 bg-white/5 border-white/10 text-white" {...field} />
+                                                            <Building className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                                                            <Input placeholder="Acme Inc." className="pl-9 dark:bg-secondary" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />
@@ -265,30 +265,30 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <h2 className="text-2xl font-bold">Confirm Your Information</h2>
-                                        <p className="text-gray-400">Review and submit your request</p>
+                                        <p className="text-muted-foreground">Review and submit your request</p>
                                     </div>
 
-                                    <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-3">
+                                    <div className="rounded-lg border border-border bg-accent/10 p-4 space-y-3">
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                                            <span className="text-gray-400">Website:</span>
+                                            <span className="text-muted-foreground">Website:</span>
                                             <span className="sm:col-span-2 font-medium break-all">{form.getValues("websiteUrl")}</span>
 
-                                            <span className="text-gray-400">Name:</span>
+                                            <span className="text-muted-foreground">Name:</span>
                                             <span className="sm:col-span-2 font-medium">{form.getValues("name")}</span>
 
-                                            <span className="text-gray-400">Email:</span>
+                                            <span className="text-muted-foreground">Email:</span>
                                             <span className="sm:col-span-2 font-medium break-all">{form.getValues("email")}</span>
 
                                             {form.getValues("phone") && (
                                                 <>
-                                                    <span className="text-gray-400">Phone:</span>
+                                                    <span className="text-muted-foreground">Phone:</span>
                                                     <span className="sm:col-span-2 font-medium">{form.getValues("phone")}</span>
                                                 </>
                                             )}
 
                                             {form.getValues("company") && (
                                                 <>
-                                                    <span className="text-gray-400">Company:</span>
+                                                    <span className="text-muted-foreground">Company:</span>
                                                     <span className="sm:col-span-2 font-medium">{form.getValues("company")}</span>
                                                 </>
                                             )}
@@ -297,8 +297,8 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
 
                                     {form.getValues("seoGoals") && (
                                         <div className="space-y-1">
-                                            <Label className="text-gray-400">SEO Goals:</Label>
-                                            <p className="text-sm bg-white/5 p-3 rounded-md italic text-gray-300 break-words">
+                                            <Label className="text-muted-foreground">SEO Goals:</Label>
+                                            <p className="text-sm bg-accent/10 p-3 rounded-md italic text-muted-foreground break-words">
                                                 &quot;{form.getValues("seoGoals")}&quot;
                                             </p>
                                         </div>
@@ -309,7 +309,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                             <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 shrink-0" />
                                             <div className="space-y-2">
                                                 <h4 className="font-semibold text-green-400">What Happens Next?</h4>
-                                                <ul className="text-sm text-green-100/80 space-y-1 list-disc pl-4">
+                                                <ul className="text-sm text-green-800 dark:text-green-100/80 space-y-1 list-disc pl-4">
                                                     <li>SEO analysis will be done in 2-3 business days.</li>
                                                     <li>A report with actionable recommendations will be provided.</li>
                                                     <li>Opportunities for improving rankings and traffic will be identified.</li>

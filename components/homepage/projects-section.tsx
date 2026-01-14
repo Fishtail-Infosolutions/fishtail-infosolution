@@ -16,12 +16,12 @@ const cardGradients = [
 
 export default function ProjectsSection() {
   return (
-    <section className="w-full bg-black sm:mt-20 mt-30">
+    <section className="w-full bg-background sm:mt-20 mt-30 transition-colors duration-500">
       <div className="mx-auto max-w-5xl px-4">
         <div className="flex flex-col items-center text-center">
           <GradientBanner text="Our Projects" />
 
-          <h2 className="mt-6 text-3xl sm:text-3xl md:text-4xl font-medium tracking-tight text-white mb-4">
+          <h2 className="mt-6 text-3xl sm:text-3xl md:text-4xl font-medium tracking-tight text-foreground mb-4">
             Transforming Ideas into Reality
           </h2>
 

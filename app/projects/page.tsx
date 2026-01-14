@@ -7,7 +7,7 @@ import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 
 export default function ProjectsPage() {
   return (
-    <main className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] mt-32">
+    <main className="min-h-screen bg-background antialiased transition-colors duration-500 mt-32">
 
       {/* Banner Section */}
       <motion.div
@@ -31,7 +31,7 @@ export default function ProjectsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-3xl md:text-4xl font-semibold"
+          className="text-3xl md:text-4xl font-semibold text-foreground"
         >
           Some of our recent work
         </motion.h2>

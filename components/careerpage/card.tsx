@@ -22,7 +22,7 @@ export default function CareerCard({ job }: CareerCardProps) {
         title: string;
     }) => (
         <div className="flex space-x-2 items-center">
-            <p className="text-sm font-bold text-white transition duration-200">{title}</p>
+            <p className="text-sm font-bold text-foreground transition duration-200">{title}</p>
         </div>
     );
 
@@ -35,14 +35,14 @@ export default function CareerCard({ job }: CareerCardProps) {
                     />
                 }
             >
-                <div className="relative overflow-hidden h-full rounded-2xl transition duration-200 group bg-black hover:shadow-xl border border-neutral-800">
+                <div className="relative overflow-hidden h-full rounded-2xl transition duration-200 group bg-card dark:bg-transparent hover:shadow-lg border border-border">
                     <Link href={`/career/${job.id}`} className="block h-full cursor-none">
                         {/* Dot Pattern Background */}
                         <div className="absolute inset-0 pointer-events-none">
                             <DotPattern
                                 className={cn(
                                     "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
-                                    "opacity-20"
+                                    "opacity-20 dark:opacity-10 text-blue-500 dark:text-white"
                                 )}
                             />
                         </div>
@@ -51,7 +51,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                             {/* Header */}
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="h-10 w-10 text-xl font-bold rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white shrink-0 overflow-hidden relative">
+                                    <div className="h-10 w-10 text-xl font-bold rounded-lg bg-accent/20 border border-border flex items-center justify-center text-foreground shrink-0 overflow-hidden relative">
                                         {job.postIcon && job.postIcon.startsWith("/") ? (
                                             <Image
                                                 src={job.postIcon}
@@ -64,26 +64,26 @@ export default function CareerCard({ job }: CareerCardProps) {
                                         )}
                                     </div>
                                     <div>
-                                        <h2 className="font-bold text-lg text-white line-clamp-1 transition-colors">{job.title}</h2>
-                                        <p className="text-neutral-400 text-sm font-medium">{job.role}</p>
+                                        <h2 className="font-bold text-lg text-foreground line-clamp-1 transition-colors">{job.title}</h2>
+                                        <p className="text-muted-foreground text-sm font-medium">{job.role}</p>
                                     </div>
                                 </div>
-                                <div className="text-xs text-neutral-500 font-mono whitespace-nowrap hidden sm:block">
+                                <div className="text-xs text-muted-foreground font-mono whitespace-nowrap hidden sm:block">
                                     Deadline: {job.deadline}
                                 </div>
                             </div>
 
                             {/* Description */}
                             <div className="flex-grow">
-                                <p className="text-neutral-400 text-sm leading-relaxed line-clamp-3 mb-6">
+                                <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-6">
                                     {job.description}
                                 </p>
                             </div>
 
 
                             {/* Footer / Meta */}
-                            <div className="flex flex-wrap items-center justify-between gap-4 mt-auto border-t border-neutral-800 pt-4">
-                                <div className="flex gap-4 text-xs text-neutral-400 font-medium">
+                            <div className="flex flex-wrap items-center justify-between gap-4 mt-auto border-t border-border pt-4">
+                                <div className="flex gap-4 text-xs text-muted-foreground font-medium">
                                     <div className="flex items-center gap-1">
                                         <User className="w-3 h-3" />
                                         <span>{job.openings} - Openings</span>
@@ -99,7 +99,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                                 </div>
 
                                 <Button
-                                    className="rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors md:hidden cursor-none"
+                                    className="rounded-full bg-primary text-primary-foreground font-bold hover:bg-primary/90 transition-colors md:hidden cursor-none"
                                     size="sm"
                                 >
                                     Apply Now

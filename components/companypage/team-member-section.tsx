@@ -12,7 +12,7 @@ import Image from "next/image";
 
 export default function TeamMemberSection() {
     return (
-        <section className="w-full bg-black py-12 sm:py-20 px-8 md:px-16">
+        <section className="w-full bg-background py-12 sm:py-20 px-8 md:px-16 transition-colors duration-500">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ export default function TeamMemberSection() {
                                 className="h-full"
                             >
                                 <GridItem
-                                    icon={<User2 className="h-6 w-6 text-black dark:text-neutral-400" />}
+                                    icon={<User2 className="h-6 w-6 text-foreground/60 dark:text-neutral-400" />}
                                     member={member}
                                 />
                             </motion.div>
@@ -66,7 +66,7 @@ const GridItem = ({ icon, member }: GridItemProps) => {
     return (
         <div className="min-h-[14rem] h-full">
             <motion.div
-                className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-neutral-900 border-neutral-800"
+                className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-accent/20 dark:bg-neutral-900 border-border"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
             >
@@ -79,11 +79,11 @@ const GridItem = ({ icon, member }: GridItemProps) => {
                     proximity={64}
                     inactiveZone={0.01}
                 />
-                <div className="border-0.75 relative flex h-full flex-col items-center justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-black">
+                <div className="border-0.75 relative flex h-full flex-col items-center justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-card">
                     <div className="flex flex-col items-center gap-4 w-full">
                         {/* 1. Image (Circle) */}
                         {member.imageUrl ? (
-                            <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-neutral-800 shrink-0">
+                            <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-border shrink-0">
                                 <Image
                                     src={member.imageUrl}
                                     alt={member.name}
@@ -92,7 +92,7 @@ const GridItem = ({ icon, member }: GridItemProps) => {
                                 />
                             </div>
                         ) : (
-                            <div className="w-32 h-32 rounded-full border-2 border-neutral-800 p-4 bg-neutral-900 flex items-center justify-center shrink-0">
+                            <div className="w-32 h-32 rounded-full border-2 border-border p-4 bg-accent/20 flex items-center justify-center shrink-0">
                                 {icon}
                             </div>
                         )}
@@ -102,7 +102,7 @@ const GridItem = ({ icon, member }: GridItemProps) => {
                             {member.socials?.map((social, idx) => {
                                 const Icon = social.icon;
                                 return (
-                                    <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                                    <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
                                         <Icon className="w-5 h-5" />
                                     </a>
                                 )
@@ -111,15 +111,15 @@ const GridItem = ({ icon, member }: GridItemProps) => {
 
                         {/* 3. Name and Role */}
                         <div className="text-center">
-                            <h3 className="font-sans text-xl font-semibold text-white">
+                            <h3 className="font-sans text-xl font-semibold text-foreground">
                                 {member.name}
                             </h3>
-                            <p className="text-sm text-neutral-400 font-medium">{member.role}</p>
+                            <p className="text-sm text-muted-foreground font-medium">{member.role}</p>
                         </div>
 
                         {/* 4. Description */}
                         <div className="text-center">
-                            <h2 className="font-sans text-sm text-neutral-500 line-clamp-2">
+                            <h2 className="font-sans text-sm text-muted-foreground/80 line-clamp-2">
                                 {member.description}
                             </h2>
                         </div>

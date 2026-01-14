@@ -9,6 +9,8 @@ import ShimmerButton from '../self-made-ui/shimmer-button';
 import { HoverBorderGradient } from '../ui/hover-border-gradient';
 import { useRouter } from 'next/navigation';
 import { motion, Variants } from 'framer-motion';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 
 interface ServiceCardData {
@@ -67,8 +69,15 @@ const itemVariants: Variants = {
 
 export default function ServicesSection() {
   const router = useRouter();
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <section className="w-full bg-black  lg:py-24">
+    <section className="w-full bg-background lg:py-24 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-9">
         <div className="flex flex-col items-center">
           <GradientBanner text="Our Services" />
@@ -78,7 +87,7 @@ export default function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-8 mb-10 text-center text-3xl font-medium tracking-tight text-white sm:text-3xl md:text-4xl"
+            className="mt-8 mb-10 text-center text-3xl font-medium tracking-tight text-foreground sm:text-3xl md:text-4xl"
           >
             Impactful Digital Strategies
           </motion.h2>
@@ -93,15 +102,18 @@ export default function ServicesSection() {
           >
             {servicesData.map((service, index) => (
               <motion.div key={index} variants={itemVariants} className="flex">
-                <MagicCard className="flex-1 rounded-lg">
+                <MagicCard
+                  className="flex-1 rounded-lg"
+                  gradientColor={mounted && theme === 'light' ? "#E5E7EB" : "#262626"}
+                >
                   <div className="flex flex-col h-full p-6 sm:p-8">
-                    <h3 className="mb-4 text-2xl font-bold text-white sm:mb-6">
+                    <h3 className="mb-4 text-2xl font-bold text-foreground sm:mb-6">
                       {service.title}
                     </h3>
 
                     <ul className="mb-6 flex-1 space-y-2 sm:space-y-3">
                       {service.description.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3 text-base text-gray-300">
+                        <li key={idx} className="flex items-start gap-3 text-base text-muted-foreground">
                           <span className="mt-1 flex-shrink-0 text-cyan-400">✓</span>
                           <span>{item}</span>
                         </li>

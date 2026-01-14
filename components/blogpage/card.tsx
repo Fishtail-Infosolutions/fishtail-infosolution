@@ -34,7 +34,7 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
                         <p className="font-normal text-sm text-neutral-300">
                             {blog.date}
                         </p>
-                        <div className="flex items-center gap-2 text-sm text-white font-medium group-hover:translate-x-1 transition-transform duration-300">
+                        <div className="flex items-center gap-2 text-sm text-foreground font-medium group-hover:translate-x-1 transition-transform duration-300">
                             Read More <FaArrowRight />
                         </div>
                     </div>

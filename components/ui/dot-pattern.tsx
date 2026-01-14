@@ -113,7 +113,7 @@ export function DotPattern({
       ref={containerRef}
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full text-neutral-400/80",
+        "pointer-events-none absolute inset-0 h-full w-full text-muted-foreground/30",
         className
       )}
       {...props}
@@ -135,20 +135,20 @@ export function DotPattern({
           animate={
             glow
               ? {
-                  opacity: [0.4, 1, 0.4],
-                  scale: [1, 1.5, 1],
-                }
+                opacity: [0.4, 1, 0.4],
+                scale: [1, 1.5, 1],
+              }
               : {}
           }
           transition={
             glow
               ? {
-                  duration: dot.duration,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  delay: dot.delay,
-                  ease: "easeInOut",
-                }
+                duration: dot.duration,
+                repeat: Infinity,
+                repeatType: "reverse",
+                delay: dot.delay,
+                ease: "easeInOut",
+              }
               : {}
           }
         />

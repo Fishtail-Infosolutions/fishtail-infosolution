@@ -41,7 +41,7 @@ export default function BlogPostPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-black text-white flex items-center justify-center pt-24">
+            <div className="min-h-screen bg-background text-foreground flex items-center justify-center pt-24">
                 <div className="animate-pulse">Loading...</div>
             </div>
         );
@@ -49,7 +49,7 @@ export default function BlogPostPage() {
 
     if (!blog) {
         return (
-            <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center pt-24 gap-4">
+            <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center pt-24 gap-4">
                 <h1 className="text-2xl font-bold">Blog Post Not Found</h1>
                 <Link href="/blog">
                     <Button variant="outline">Back to Blog</Button>
@@ -59,19 +59,19 @@ export default function BlogPostPage() {
     }
 
     return (
-        <div className="min-h-screen max-w-4xl mx-auto bg-black text-white font-sans pt-24 pb-20 px-6 sm:px-8 md:px-12 lg:px-20">
+        <div className="min-h-screen max-w-4xl mx-auto bg-background text-foreground font-sans pt-24 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500">
 
 
 
             <div className="">
                 {/* Date with decorative line */}
-                <div className="flex items-center gap-4 text-gray-400 mb-6">
-                    <div className="w-16 h-px bg-linear-to-r from-transparent to-gray-500"></div>
+                <div className="flex items-center gap-4 text-muted-foreground mb-6">
+                    <div className="w-16 h-px bg-linear-to-r from-transparent to-border"></div>
                     <span className="uppercase tracking-widest text-sm font-medium">{blog.date}</span>
                 </div>
 
                 {/* Blog Title */}
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-white via-gray-200 to-gray-500 mb-8 leading-tight">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-foreground via-foreground/80 to-foreground/50 mb-8 leading-tight">
                     {blog.title}
                 </h1>
 
@@ -81,13 +81,13 @@ export default function BlogPostPage() {
                         <BreadcrumbList>
                             <BreadcrumbItem>
                                 <BreadcrumbLink asChild>
-                                    <Link href="/" className="hover:text-white transition-colors">Home</Link>
+                                    <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
                                 <BreadcrumbLink asChild>
-                                    <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+                                    <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
@@ -103,9 +103,9 @@ export default function BlogPostPage() {
                         variant="outline"
                         size="sm"
                         onClick={handleCopyLink}
-                        className="rounded-full bg-white text-white hover:bg-gray-200 border-none px-6 w-fit"
+                        className="rounded-full bg-accent text-foreground hover:bg-accent/80 border-border px-6 w-fit h-9"
                     >
-                        {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                        {copied ? <Check className="w-4 h-4 text-green-500 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
                         {copied ? "Copied" : "Copy Link"}
                     </Button>
                 </div>
@@ -124,7 +124,7 @@ export default function BlogPostPage() {
 
                     {/* Blog Body Content */}
                     <div
-                        className="text-gray-300 leading-relaxed space-y-6 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-white [&>h3]:mt-8 [&>h3]:mb-4 [&>p]:mb-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2"
+                        className="text-muted-foreground leading-relaxed space-y-6 [&>h3]:text-2xl [&>h3]:font-bold [&>h3]:text-foreground [&>h3]:mt-8 [&>h3]:mb-4 [&>p]:mb-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-2 prose-headings:text-foreground"
                         dangerouslySetInnerHTML={{ __html: blog.content || `<p>${blog.excerpt}</p>` }}
                     />
                 </article>

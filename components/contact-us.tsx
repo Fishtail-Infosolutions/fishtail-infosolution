@@ -57,7 +57,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="relative overflow-hidden h-full mt-40 bg-black text-white flex flex-col md:px-40 px-4">
+    <div className="relative overflow-hidden h-full mt-40 bg-background text-foreground flex flex-col md:px-40 px-4 transition-colors duration-500">
       {/* Gradient Banner */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -93,17 +93,17 @@ const ContactUs = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full lg:w-1/3 p-6  bg-black border border-neutral-800 rounded-xl shadow-lg relative overflow-hidden"
+          className="w-full lg:w-1/3 p-6 border border-border rounded-xl relative overflow-hidden"
         >
           <div className="space-y-8">
             {/* Contact Email */}
             <div className="flex flex-col space-y-4">
               <div className="flex items-center gap-2">
                 <IconMail className="h-5 w-5 text-blue-400" />
-                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Email</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#70C1FF] to-[#005CAD] dark:from-[#ABDCFF] dark:to-[#0396FF] bg-clip-text text-transparent">Email</h3>
               </div>
               <a href="mailto:info@fishtailinfosolutions.com/" target="_blank" rel="noopener noreferrer">
-                <p className="text-neutral-300 hover:text-white cursor-pointer">info@fishtailinfosolutions.com</p>
+                <p className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">info@fishtailinfosolutions.com</p>
               </a>
             </div>
 
@@ -111,19 +111,19 @@ const ContactUs = () => {
             <div className="flex flex-col space-y-4">
               <div className="flex items-center gap-2">
                 <IconPhone className="h-5 w-5 text-blue-400" />
-                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Phone number</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#70C1FF] to-[#005CAD] dark:from-[#ABDCFF] dark:to-[#0396FF] bg-clip-text text-transparent">Phone number</h3>
               </div>
-              <p className="text-neutral-300">+977 9806673560</p>
+              <p className="text-muted-foreground">+977 9806673560</p>
             </div>
 
             {/* Contact Location */}
             <div className="flex flex-col space-y-4">
               <div className="flex items-center gap-2">
                 <IconMapPin className="h-5 w-5 text-blue-400" />
-                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Location</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#70C1FF] to-[#005CAD] dark:from-[#ABDCFF] dark:to-[#0396FF] bg-clip-text text-transparent">Location</h3>
               </div>
               <a href='https://www.google.com/maps/place/Fishtail+Infosolutions/@28.2211603,83.9819452,691m/data=!3m1!1e3!4m7!3m6!1s0xaf8712d0425aa3e7:0x528c4e6c8c86ffbf!4b1!8m2!3d28.2207887!4d83.9840869!16s%2Fg%2F11yq1r478s?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' target="_blank" rel="noopener noreferrer">
-                <p className="text-neutral-300 hover:text-white cursor-pointer">Pokhara-8, Bagaletol</p>
+                <p className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">Pokhara-8, Bagaletol</p>
               </a>
 
             </div>
@@ -132,7 +132,7 @@ const ContactUs = () => {
 
               <div className="flex items-center gap-2">
                 <Globe className="h-5 w-5 text-blue-400" />
-                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] bg-clip-text text-transparent">Social Media</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-br from-[#70C1FF] to-[#005CAD] dark:from-[#ABDCFF] dark:to-[#0396FF] bg-clip-text text-transparent">Social Media</h3>
               </div>
               <div className="flex justify-start gap-6">
                 {Socials.map((social) => (
@@ -141,10 +141,14 @@ const ContactUs = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 min-w-[3rem] rounded-full flex items-center justify-center transition-all duration-300 group hover:shadow-lg"
+                    className="w-12 h-12 min-w-[3rem] rounded-full flex items-center justify-center transition-all duration-300 group hover:bg-white dark:bg-transparent shadow-none hover:shadow-lg "
                   >
                     <social.icon
-                      className={`w-6 h-6 text-white transition-colors ${social.hoverColor}`}
+                      className={cn(
+                        "w-6 h-6 text-foreground/60 dark:text-white transition-colors duration-300",
+                        social.groupHoverColor,
+                        social.darkGroupHoverColor
+                      )}
                     />
                   </a>
                 ))}
@@ -160,7 +164,7 @@ const ContactUs = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="w-full lg:w-2/3 bg-black p-6 border border-neutral-800 space-y-6 rounded-lg shadow-lg mt-8 md:mt-0 relative"
+          className="w-full lg:w-2/3 p-6 border border-border space-y-6 rounded-lg mt-8 md:mt-0 relative"
         >
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -175,7 +179,7 @@ const ContactUs = () => {
                       <FormItem>
                         <FormLabel htmlFor="name">Name <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                          <Input id="name" placeholder="Your Name" {...field} />
+                          <Input id="name" placeholder="Your Name" className="bg-secondary" {...field} />
                         </FormControl>
                         <FormMessage>{form.formState.errors.name?.message}</FormMessage>
                       </FormItem>
@@ -190,7 +194,7 @@ const ContactUs = () => {
                       <FormItem>
                         <FormLabel htmlFor="phone">Phone</FormLabel>
                         <FormControl>
-                          <Input id="phone" placeholder="Your Phone" {...field} />
+                          <Input id="phone" placeholder="Your Phone" className="bg-secondary" {...field} />
                         </FormControl>
                         <FormMessage>{form.formState.errors.phone?.message}</FormMessage>
                       </FormItem>
@@ -207,7 +211,7 @@ const ContactUs = () => {
                     <FormItem>
                       <FormLabel htmlFor="subject">Subject</FormLabel>
                       <FormControl>
-                        <Input id="subject" placeholder="Subject" {...field} />
+                        <Input id="subject" placeholder="Subject" className="bg-secondary" {...field} />
                       </FormControl>
                       <FormMessage>{form.formState.errors.subject?.message}</FormMessage>
                     </FormItem>
@@ -223,7 +227,7 @@ const ContactUs = () => {
                     <FormItem>
                       <FormLabel htmlFor="email">Email <span className="text-red-500">*</span></FormLabel>
                       <FormControl>
-                        <Input id="email" placeholder="Your Email" {...field} />
+                        <Input id="email" placeholder="Your Email" className="bg-secondary" {...field} />
                       </FormControl>
                       <FormMessage>{form.formState.errors.email?.message}</FormMessage>
                     </FormItem>
@@ -239,7 +243,7 @@ const ContactUs = () => {
                     <FormItem>
                       <FormLabel htmlFor="message">Message <span className="text-red-500">*</span></FormLabel>
                       <FormControl>
-                        <Textarea id="message" placeholder="Your Message" {...field} />
+                        <Textarea id="message" placeholder="Your Message" className="bg-secondary" {...field} />
                       </FormControl>
                       <FormMessage>{form.formState.errors.message?.message}</FormMessage>
                     </FormItem>
@@ -248,7 +252,7 @@ const ContactUs = () => {
               </LabelInputContainer>
 
               {/* Submit Button */}
-              <Button type="submit" className="group/btn relative block h-10 w-fit px-8 rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]">
+              <Button type="submit" variant="secondary" className="group/btn relative block h-10 w-fit px-8 rounded-md dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 font-medium text-foreground dark:text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]">
                 Submit
                 <BottomGradient />
               </Button>
