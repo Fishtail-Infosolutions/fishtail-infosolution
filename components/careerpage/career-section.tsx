@@ -41,7 +41,7 @@ export default function CareerSection() {
                         Join our Team
                     </h1>
                     <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
-                        Feel free to email <a href="mailto:hr@fishtailinfosolutions.com.np" className="text-transparent bg-clip-text bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF] hover:underline">hr@fishtailinfosolutions.com.np</a> if you believe you would be a fantastic fit.
+                        Feel free to email <a href="mailto:hr@fishtailinfosolutions.com.np" className="text-transparent bg-clip-text bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF] hover:underline">hr@fishtailinfosolutions.com</a> if you believe you would be a fantastic fit.
                     </p>
                 </motion.div>
 

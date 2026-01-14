@@ -482,27 +482,27 @@ export interface Project {
 export const Projects: Project[] = [
   {
     id: 1,
-    title: "In the Mountains",
+    title: "EcoShop - Modern E-commerce",
     imageUrl:
-      "https://images.unsplash.com/photo-1663765970236-f2acfde22237?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=3542&auto=format&fit=crop",
   },
   {
     id: 2,
-    title: "River Serenity",
+    title: "Nova - SaaS Dashboard",
     imageUrl:
-      "https://images.unsplash.com/photo-1663765970236-f2acfde22237?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=3540&auto=format&fit=crop",
   },
   {
     id: 3,
-    title: "Forest Retreat",
+    title: "WealthWise - Fintech App",
     imageUrl:
-      "https://images.unsplash.com/photo-1663765970236-f2acfde22237?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=3542&auto=format&fit=crop",
   },
   {
     id: 4,
-    title: "Urban Escape",
+    title: "Pulse - Health Monitoring",
     imageUrl:
-      "https://images.unsplash.com/photo-1663765970236-f2acfde22237?q=80&w=3542&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://images.unsplash.com/photo-1576091160550-217359f4ecf8?q=80&w=3542&auto=format&fit=crop",
   },
 ];
 
