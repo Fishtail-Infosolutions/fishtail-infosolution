@@ -18,9 +18,9 @@ import {
 import { IconMail, IconPhone, IconMapPin } from "@tabler/icons-react";
 import { cn } from "@/lib/utils"; // Importing GradientBanner
 import { DotPattern } from "@/components/ui/dot-pattern"; // DotPattern component
-import GradientBanner from "./self-made-ui/gradeint-banner";
-import { Socials } from "@/constants";
+import { Socials } from "@/constants/socials";
 import { Globe } from "lucide-react";
+import GradientBanner from "../self-made-ui/gradeint-banner";
 
 // Validation schema with Zod
 const schema = z.object({

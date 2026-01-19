@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import CareerCard from "./card";
-import { JobOpenings } from "@/constants";
+import { JobOpenings } from "@/constants/jobs";
 import { cn } from "@/lib/utils";
 import GradientBanner from "../self-made-ui/gradeint-banner";
 import Tabs from "@/components/tab";

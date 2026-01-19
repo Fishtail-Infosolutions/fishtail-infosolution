@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Copy, Check, ChevronLeft } from "lucide-react";
-import { JobOpenings } from "@/constants";
+import { JobOpenings } from "@/constants/jobs";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { cn } from "@/lib/utils";

@@ -1,4 +1,5 @@
-import ContactUs from '@/components/contact-us'
+
+import ContactUs from '@/components/contactpage/contact-us'
 import { Sign } from 'crypto'
 import React from 'react'
 

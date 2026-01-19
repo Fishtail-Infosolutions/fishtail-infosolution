@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus } from "lucide-react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
-import { MessageFAQ } from "@/constants";
+import { MessageFAQ } from "@/constants/faq";
 import { cn } from "@/lib/utils";
 import Tabs from "@/components/tab";
 

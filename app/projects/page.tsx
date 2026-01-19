@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Projects } from "@/constants";
+import { Projects } from "@/constants/projects";
 import { ProjectCard } from "@/components/projectpage/card";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 

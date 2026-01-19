@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "motion/react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { BlogCard } from "@/components/blogpage/card";
-import { Blogs } from "@/constants";
+import { Blogs } from "@/constants/blogs";
 
 const BlogPage = () => {
   return (

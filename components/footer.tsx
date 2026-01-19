@@ -1,5 +1,5 @@
 
-import { Socials } from '@/constants';
+import { Socials } from '@/constants/socials';
 import { Phone, Mail, Clock, MapPin, Home, Info, Briefcase, HelpCircle, FileText, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';

@@ -3,7 +3,7 @@
 import GradientBanner from '../self-made-ui/gradeint-banner';
 import { Button } from '../ui/button';
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
-import { Projects } from '@/constants';
+import { Projects } from '@/constants/projects';
 import Image from 'next/image';
 import { FaArrowRight } from "react-icons/fa6";
 

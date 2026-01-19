@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Copy, Check } from "lucide-react";
-import { Blogs } from "@/constants";
+import { Blogs } from "@/constants/blogs";
 import { Button } from "@/components/ui/button";
 import {
     Breadcrumb,
@@ -41,7 +41,7 @@ export default function BlogPostPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-background text-foreground flex items-center justify-center pt-24">
+            <div className="min-h-screen bg-background text-foreground flex items-center justify-center pt-30">
                 <div className="animate-pulse">Loading...</div>
             </div>
         );
@@ -49,7 +49,7 @@ export default function BlogPostPage() {
 
     if (!blog) {
         return (
-            <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center pt-24 gap-4">
+            <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center pt-30 gap-4">
                 <h1 className="text-2xl font-bold">Blog Post Not Found</h1>
                 <Link href="/blog">
                     <Button variant="outline">Back to Blog</Button>
@@ -59,7 +59,7 @@ export default function BlogPostPage() {
     }
 
     return (
-        <div className="min-h-screen max-w-4xl mx-auto bg-background text-foreground font-sans pt-24 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500">
+        <div className="min-h-screen max-w-4xl mx-auto bg-background text-foreground font-sans pt-30 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500">
 
 
 

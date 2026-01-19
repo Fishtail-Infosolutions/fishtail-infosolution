@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
-import { TeamMembers, TeamMember } from "@/constants";
+import { TeamMembers, TeamMember } from "@/constants/team";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { User2 } from "lucide-react";

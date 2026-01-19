@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import BlurText from "@/components/BlurText";
+import BlurText from "@/components/ui/BlurText";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 

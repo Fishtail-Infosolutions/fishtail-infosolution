@@ -4,7 +4,7 @@ import React from "react";
 import { FollowerPointerCard } from "@/components/ui/following-pointer";
 import { DotPattern } from "@/components/ui/dot-pattern";
 import { cn } from "@/lib/utils";
-import { JobOpening } from "@/constants";
+import { JobOpening } from "@/constants/jobs";
 import { User, MapPin, Clock } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
