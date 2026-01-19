@@ -26,7 +26,7 @@ export default function ProjectsSection() {
           </h2>
 
           <div className="w-full">
-            <ScrollStack topOffset="2rem" itemDistance={0}>
+            <ScrollStack topOffset="2rem" itemDistance={40} itemStackDistance={45}>
               {Projects.slice(0, 3).map((project, i) => (
                 <ScrollStackItem
                   key={project.id}

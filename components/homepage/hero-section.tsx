@@ -24,14 +24,14 @@ export default function HeroSection() {
 
   return (
     <section className="w-full ">
-      <div className="h-[40rem] w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-background">
+      <div className="h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-background pt-12 md:pt-14">
         {mounted && theme === 'dark' && <Spotlight />}
 
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="relative z-10 px-6 max-w-4xl text-center"
+          className="relative z-10 px-6 max-w-5xl text-center"
         >
           <div className="flex justify-center mb-3.5">
             <GradientBanner text="Trusted SEO and Digital Partner" />
@@ -55,7 +55,7 @@ export default function HeroSection() {
             className="mt-8 flex items-center justify-center gap-4"
           >
             <FreeQuoteDialog>
-              <Button>
+              <Button >
                 <ChartNoAxesColumnIncreasingIcon />
                 Free Quote
               </Button>

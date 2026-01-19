@@ -77,7 +77,7 @@ export default function ServicesSection() {
   }, []);
 
   return (
-    <section className="w-full bg-background lg:py-24 transition-colors duration-500">
+    <section className="w-full bg-background lg:py-7 pt-3 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-9">
         <div className="flex flex-col items-center">
           <GradientBanner text="Our Services" />

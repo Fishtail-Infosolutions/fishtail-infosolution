@@ -134,15 +134,9 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        {/* <div className="pt-8 text-center text-xs sm:text-sm text-muted-foreground border-t border-border/50">
-          <p className="flex flex-wrap justify-center items-center gap-1 sm:gap-2">
-            <span>Designed by O360® | Optimized360 LLC © 2020 All Rights Reserved</span>
-            <span className="hidden sm:inline">|</span>
-            <a href="#" className="hover:text-gray-900 transition-colors">Legal Notices</a>
-            <span>|</span>
-            <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
-          </p>
-        </div> */}
+        <div className="pt-8 mt-8 border-t border-border/50 text-center text-xs sm:text-sm text-muted-foreground/60">
+          <p>© 2026 Fishtail Infosolutions. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );

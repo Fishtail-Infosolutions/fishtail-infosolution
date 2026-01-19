@@ -25,7 +25,7 @@ const GradientBanner: React.FC<BannerProps> = ({
       </span>
       <div className="relative flex space-x-2 items-center z-10 rounded-full bg-background/80 dark:bg-zinc-950 py-1.5 px-4 ring-1 ring-border/20">
         {icon && <span className="mr-2">{icon}</span>}
-        <span className="text-sm">{text}</span>
+        <span className="text-xs md:text-sm">{text}</span>
       </div>
       <span className="absolute bottom-0 left-4.5 block h-px w-[calc(100%-2.25rem)] bg-linear-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
     </div>
