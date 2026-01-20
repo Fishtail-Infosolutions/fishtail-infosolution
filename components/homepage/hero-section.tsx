@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
+import { Button as MovingBorderButton } from '../ui/moving-border';
 import { HoverBorderGradient } from '../ui/hover-border-gradient';
 import { Spotlight } from '../ui/spotlight-new';
 import { ArrowRightIcon, ChartNoAxesColumnIncreasingIcon } from 'lucide-react';
@@ -24,27 +25,27 @@ export default function HeroSection() {
 
   return (
     <section className="w-full ">
-      <div className="h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-background pt-12 md:pt-14">
+      <div className="h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-12 md:pt-14">
         {mounted && theme === 'dark' && <Spotlight />}
 
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="relative z-10 px-6 max-w-5xl text-center"
+          className="relative z-10 px-6 max-w-4xl text-center"
         >
           <div className="flex justify-center mb-3.5">
             <GradientBanner text="Trusted SEO and Digital Partner" />
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-foreground">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-foreground leading-[1.2] md:leading-[1.1]">
             <LayoutTextFlip
               text="Elevate Your Digital Presence with"
               words={['Web Development', 'Search Optimization', 'Lead Generation']}
             />
           </h1>
 
-          <p className="mt-4 text-md md:text-lg text-muted-foreground mx-auto">
+          <p className="mt-4 md:mt-6 max-w-2xl text-md md:text-lg text-muted-foreground mx-auto">
             We build SEO, web, and marketing strategies that drive measurable growth—clear, focused, and performance-driven.
           </p>
 
@@ -55,19 +56,25 @@ export default function HeroSection() {
             className="mt-8 flex items-center justify-center gap-4"
           >
             <FreeQuoteDialog>
-              <Button >
-                <ChartNoAxesColumnIncreasingIcon />
-                Free Quote
-              </Button>
+              <MovingBorderButton
+                borderRadius="1.75rem"
+                containerClassName="h-10 w-32 md:h-12 md:w-40"
+                className="bg-slate-800 text-white border-slate-800 flex items-center gap-2"
+              >
+                <ChartNoAxesColumnIncreasingIcon className="w-4 h-4 md:w-5 md:h-5 text-[#0396FF]" />
+                <span className="text-sm md:text-base font-medium">Free Quote</span>
+              </MovingBorderButton>
             </FreeQuoteDialog>
 
             <HoverBorderGradient
               onClick={() => router.push('/company')}
               as="button"
-              className="flex items-center justify-center gap-2"
+              moving={false}
+              containerClassName=" rounded-[1.75rem]"
+              className="flex items-center justify-center gap-2 w-full h-full bg-background"
             >
-              <span>Learn More</span>
-              <ArrowRightIcon className="w-3 h-3" />
+              <span className="text-sm md:text-base font-medium">Learn More</span>
+              <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5" />
             </HoverBorderGradient>
           </motion.div>
         </motion.div>

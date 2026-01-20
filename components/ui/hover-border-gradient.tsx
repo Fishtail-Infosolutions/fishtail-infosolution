@@ -13,6 +13,7 @@ export function HoverBorderGradient({
   as: Tag = "button",
   duration = 1,
   clockwise = true,
+  moving = true,
   ...props
 }: React.PropsWithChildren<
   {
@@ -21,6 +22,7 @@ export function HoverBorderGradient({
     className?: string;
     duration?: number;
     clockwise?: boolean;
+    moving?: boolean;
   } & React.HTMLAttributes<HTMLElement>
 >) {
   const [hovered, setHovered] = useState<boolean>(false);
@@ -48,13 +50,13 @@ export function HoverBorderGradient({
     "radial-gradient(75% 181.15942028985506% at 50% 50%, #3275F8 0%, rgba(255, 255, 255, 0) 100%)";
 
   useEffect(() => {
-    if (!hovered) {
+    if (!hovered && moving) {
       const interval = setInterval(() => {
         setDirection((prevState) => rotateDirection(prevState));
       }, duration * 1000);
       return () => clearInterval(interval);
     }
-  }, [hovered]);
+  }, [hovered, moving]);
   return (
     <Tag
       onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) => {
@@ -69,7 +71,7 @@ export function HoverBorderGradient({
     >
       <div
         className={cn(
-          "w-auto text-foreground z-10 bg-background px-4 md:py-2 py-[9px] rounded-[inherit] text-xs md:text-sm",
+          "w-auto text-foreground z-10 bg-background px-4 py-[7px] md:py-[9px] rounded-[inherit] text-xs md:text-sm",
           className
         )}
       >

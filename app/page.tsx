@@ -4,9 +4,12 @@ import ProjectsSection from "@/components/homepage/projects-section";
 import ServicesSection from "@/components/homepage/services-section";
 import { TestimonialsSection } from "@/components/homepage/testimonials-section";
 
+import { StarsBackground } from "@/components/ui/stars-background";
+
 export default function Home() {
   return (
-    <div>
+    <div className="relative">
+      <StarsBackground />
       <div className="">
         <HeroSection />
         <ServicesSection />

@@ -16,7 +16,7 @@ const cardGradients = [
 
 export default function ProjectsSection() {
   return (
-    <section className="w-full bg-background sm:mt-20 mt-30 transition-colors duration-500">
+    <section className="w-full bg-transparent sm:mt-20 mt-30 transition-colors duration-500">
       <div className="mx-auto max-w-5xl px-4">
         <div className="flex flex-col items-center text-center">
           <GradientBanner text="Our Projects" />

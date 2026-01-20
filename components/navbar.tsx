@@ -8,6 +8,7 @@ import { Home, Info, Wrench, FolderKanban, BookOpen, Mail, Menu, X, ChartNoAxesC
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { RainbowButton } from "./ui/rainbow-button";
 import { Button } from "./ui/button";
+import { Button as MovingBorderButton } from "./ui/moving-border";
 import { FreeQuoteDialog } from "./homepage/free-quote-dialog";
 import { ThemeToggle } from "./theme-toggle";
 import { useTheme } from "next-themes";
@@ -142,10 +143,14 @@ const Navbar: React.FC = () => {
 
             <div className="hidden sm:block">
               <FreeQuoteDialog>
-                <Button >
-                  <ChartNoAxesColumnIncreasingIcon />
-                  Free Quote
-                </Button>
+                <MovingBorderButton
+                  borderRadius="1.75rem"
+                  containerClassName="h-10 w-32"
+                  className="bg-slate-700 text-white font-semibold border-slate-800 flex items-center gap-2"
+                >
+                  <ChartNoAxesColumnIncreasingIcon className="w-4 h-4 text-[#0396FF]" />
+                  <span>Free Quote</span>
+                </MovingBorderButton>
               </FreeQuoteDialog>
             </div>
 
@@ -195,10 +200,15 @@ const Navbar: React.FC = () => {
           })}
           <div className="pt-4 sm:hidden">
             <FreeQuoteDialog>
-              <Button className="w-full" onClick={handleNavClick}>
-                <ChartNoAxesColumnIncreasingIcon />
-                Free Quote
-              </Button>
+              <MovingBorderButton
+                borderRadius="1rem"
+                containerClassName="w-full h-12"
+                className="bg-slate-800 text-white font-semibold border-slate-800 flex items-center justify-center gap-2 "
+                onClick={handleNavClick}
+              >
+                <ChartNoAxesColumnIncreasingIcon className="w-4 h-4 text-[#0396FF]" />
+                <span >Free Quote</span>
+              </MovingBorderButton>
             </FreeQuoteDialog>
           </div>
         </div>

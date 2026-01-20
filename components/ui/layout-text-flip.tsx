@@ -26,13 +26,30 @@ export const LayoutTextFlip = ({
     <>
       <motion.span
         layoutId="subtext"
-        className="text-3xl font-bold tracking-tight drop-shadow-lg md:text-5xl"
+        className="font-bold drop-shadow-lg leading-inherit"
       >
         {text}
       </motion.span>
 
       {/* Minimal wrapper (no bg, no border, no padding) */}
-      <motion.span layout className=" relative w-fit overflow-hidden md:text-5xl ml-2 text-3xl">
+      <motion.span
+        layout
+        className="relative inline-grid grid-cols-1 grid-rows-1 overflow-hidden ml-0 md:ml-4 text-center md:text-left justify-items-center md:justify-items-start leading-inherit w-full md:w-fit"
+      >
+        {/* Invisible placeholders to maintain consistent width of the longest word */}
+        {words.map((w, i) => (
+          <span
+            key={w}
+            className={cn(
+              "invisible pointer-events-none select-none row-start-1 col-start-1 whitespace-nowrap font-bold",
+              i !== 0 && "h-0"
+            )}
+            aria-hidden="true"
+          >
+            {w}
+          </span>
+        ))}
+
         <AnimatePresence mode="popLayout">
           <motion.span
             key={currentIndex}
@@ -41,7 +58,7 @@ export const LayoutTextFlip = ({
             exit={{ y: 40, filter: "blur(10px)", opacity: 0 }}
             transition={{ duration: 0.45 }}
             className={cn(
-              "inline-block whitespace-nowrap font-bold text-transparent bg-clip-text  bg-gradient-to-br from-[#ABDCFF] to-[#0396FF]"
+              "inline-block whitespace-nowrap font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#ABDCFF] to-[#0396FF] row-start-1 col-start-1"
             )}
           >
             {words[currentIndex]}
