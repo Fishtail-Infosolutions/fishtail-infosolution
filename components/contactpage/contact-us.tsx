@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,7 @@ const schema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(1, "Phone number is required"),
   message: z.string().min(1, "Message is required"),
-  subject: z.string().min(1, "Subject is required"), // New field
+  subject: z.string().optional(), // Optional field
 });
 
 interface FormValues {
@@ -36,7 +37,7 @@ interface FormValues {
   email: string;
   phone: string;
   message: string;
-  subject: string; // New field
+  subject?: string; // Optional field
 }
 
 const ContactUs = () => {
@@ -54,6 +55,8 @@ const ContactUs = () => {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Form submitted", data);
+    toast.success("Message sent successfully!");
+    form.reset();
   };
 
   return (

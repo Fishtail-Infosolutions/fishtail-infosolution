@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import Stepper from "@/components/ui/Stepper"; // Default export
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,18 +36,19 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function ApplyForm() {
+    const router = useRouter();
+    const [formKey, setFormKey] = React.useState(0);
     const {
         register,
         handleSubmit,
         trigger,
         control,
+        reset,
         formState: { errors }
     } = useForm<FormData>({
         resolver: zodResolver(schema),
         mode: "onChange",
     });
-
-    const [isSuccess, setIsSuccess] = useState(false);
 
     const onBeforeNext = async (step: number) => {
         if (step === 1) {
@@ -61,27 +64,20 @@ export default function ApplyForm() {
 
     const onSubmit = (data: FormData) => {
         console.log("Form Data:", data);
-        setIsSuccess(true);
+        toast.success("Application submitted successfully");
+        reset();
+        // Reset stepper to step 1 by changing key
+        setFormKey(prev => prev + 1);
+        // Redirect to career page after a short delay
+        // setTimeout(() => {
+        router.push("/career");
+        // }, 4000);
     };
-
-    if (isSuccess) {
-        return (
-            <div className="flex flex-col items-center justify-center p-10 bg-card border border-border rounded-3xl text-center">
-                <h3 className="text-2xl font-bold text-green-500 mb-2">Application Submitted!</h3>
-                <p className="text-muted-foreground">Thank you for applying. We will review your application and get back to you shortly.</p>
-                <button
-                    onClick={() => window.location.reload()}
-                    className="mt-6 px-6 py-2 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition-colors"
-                >
-                    Apply for another position
-                </button>
-            </div>
-        );
-    }
 
     return (
         <div className="" >
             <Stepper
+                key={formKey}
                 initialStep={1}
                 onBeforeNext={onBeforeNext}
                 onFinalStepCompleted={handleSubmit(onSubmit)}

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import toast from "react-hot-toast"
 import { AlertCircle, CheckCircle, Globe, Mail, Phone, Building, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -102,6 +103,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
 
     function onSubmit(values: FormValues) {
         console.log("Form submitted:", values)
+        toast.success("Quote request submitted successfully!");
         // Here you would typically send data to API
         setIsOpen(false)
         form.reset()
@@ -150,7 +152,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                 <FormControl>
                                                     <div className="relative">
                                                         <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                        <Input placeholder="https://www.yourwebsite.com" className="pl-9 dark:bg-secondary" {...field} />
+                                                        <Input placeholder="https://www.yourwebsite.com" className="pl-9 dark:bg-secondary autofill-white" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage className="text-red-400 flex items-center gap-1">
@@ -169,7 +171,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                 <FormControl>
                                                     <Textarea
                                                         placeholder="Tell us about your goals or challenges..."
-                                                        className="min-h-[120px] dark:bg-secondary"
+                                                        className="min-h-[120px] dark:bg-secondary autofill-white"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -197,7 +199,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="John Doe" className="pl-9 dark:bg-secondary" {...field} />
+                                                            <Input placeholder="John Doe" className="pl-9 dark:bg-secondary autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage className="text-red-400" />
@@ -214,7 +216,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="john@example.com" className="pl-9 dark:bg-secondary" {...field} />
+                                                            <Input placeholder="john@example.com" className="pl-9 dark:bg-secondary autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage className="text-red-400" />
@@ -233,7 +235,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="+1 234 567 890" className="pl-9 dark:bg-secondary" {...field} />
+                                                            <Input placeholder="+1 234 567 890" className="pl-9 dark:bg-secondary autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />
@@ -250,7 +252,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <Building className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="Acme Inc." className="pl-9 dark:bg-secondary" {...field} />
+                                                            <Input placeholder="Acme Inc." className="pl-9 dark:bg-secondary autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />
