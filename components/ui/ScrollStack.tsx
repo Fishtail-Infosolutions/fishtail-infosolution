@@ -361,16 +361,20 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       const innerHeightNoEnd = (innerEl?.scrollHeight || 0) - endCurrentHeight;
       const currentInnerBottomGlobal = innerTopGlobal + innerHeightNoEnd;
 
+      const isMobile = window.innerWidth < 768;
       // desired end top in global coordinates so last card can pin to center area
-      const desiredEndTopGlobal = lastCardTopGlobal + lastCardHeight + containerHeight / 2 + 80;
+      // On mobile, we use a much smaller buffer so it releases faster
+      const verticalBuffer = isMobile ? containerHeight / 6 : containerHeight / 2;
+      const desiredEndTopGlobal = lastCardTopGlobal + lastCardHeight + verticalBuffer + (isMobile ? 20 : 80);
       let desiredHeight = desiredEndTopGlobal - currentInnerBottomGlobal;
 
       // clamp to reasonable bounds to avoid runaway values
       const perCardEstimate = cards.length * (itemDistance ?? 100);
       const maxAllowed = Math.max(Math.min(containerHeight + 200, Math.max(containerHeight * 1.2, perCardEstimate)), 0);
 
-      // enforce a stricter hard cap (default 300px) so the final gap stays small unless overridden
-      const hardCap = typeof endSpacerMax === 'number' ? endSpacerMax : 300;
+      // enforce a stricter hard cap so the final gap stays small.
+      // 60px max on mobile to keep sections tight
+      const hardCap = typeof endSpacerMax === 'number' ? endSpacerMax : (isMobile ? 60 : 300);
       const finalMax = Math.min(maxAllowed, hardCap);
       if (desiredHeight > finalMax) desiredHeight = finalMax;
       if (desiredHeight < 0) desiredHeight = 0;

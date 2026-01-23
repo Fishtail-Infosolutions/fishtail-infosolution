@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
 import {
     Breadcrumb,
@@ -46,20 +46,13 @@ export default function CareerPostPage() {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-                <div className="animate-pulse text-foreground">Loading...</div>
+                <div className="animate-pulse text-foreground"></div>
             </div>
         );
     }
 
     if (!job) {
-        return (
-            <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4">
-                <h1 className="text-2xl font-bold">Job Post Not Found</h1>
-                <Link href="/career">
-                    <Button variant="outline">Back to Careers</Button>
-                </Link>
-            </div>
-        );
+        notFound();
     }
 
     return (
@@ -68,7 +61,7 @@ export default function CareerPostPage() {
 
 
             {/* Hero / Header Section */}
-            <div className="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden border-b border-border pt-28 pb-12 px-4 sm:px-6">
+            <div className="relative min-h-[60vh] flex flex-col items-center justify-center overflow-hidden border-b border-border pt-28 pb-12 px-6 sm:px-6">
                 <AnimatedGridPattern
                     numSquares={30}
                     maxOpacity={0.1}
@@ -97,7 +90,7 @@ export default function CareerPostPage() {
                     </div>
 
                     {/* Title with Sparkles */}
-                    <div className="scale-110 sm:scale-125 md:scale-150">
+                    <div className="scale-110 sm:scale-125 md:scale-150 px-4 sm:px-">
                         <SparklesText className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground text-center">
                             {job.title}
                         </SparklesText>

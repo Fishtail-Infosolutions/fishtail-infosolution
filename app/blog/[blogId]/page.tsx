@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, Copy, Check } from "lucide-react";
 import { Blogs } from "@/constants/blogs";
@@ -42,20 +42,13 @@ export default function BlogPostPage() {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background text-foreground flex items-center justify-center pt-30">
-                <div className="animate-pulse">Loading...</div>
+                <div className="animate-pulse"></div>
             </div>
         );
     }
 
     if (!blog) {
-        return (
-            <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center pt-30 gap-4">
-                <h1 className="text-2xl font-bold">Blog Post Not Found</h1>
-                <Link href="/blog">
-                    <Button variant="outline">Back to Blog</Button>
-                </Link>
-            </div>
-        );
+        notFound();
     }
 
     return (

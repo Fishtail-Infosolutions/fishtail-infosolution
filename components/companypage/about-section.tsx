@@ -21,7 +21,7 @@ export default function AboutSection() {
 
     return (
         <section className="w-full bg-background transition-colors duration-500">
-            <BackgroundLines className="flex items-center justify-center w-full flex-col px-4 h-fit py-40 relative overflow-hidden">
+            <BackgroundLines className="flex items-center justify-center w-full flex-col px-4 min-h-screen relative overflow-hidden pt-12 md:pt-14">
                 {mounted && theme === 'dark' && <Spotlight />}
                 <div>
                     <GradientBanner text="About Us" />
