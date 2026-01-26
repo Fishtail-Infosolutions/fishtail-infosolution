@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-3">
             <Link href="/">
               <Image
-                src={mounted && theme === 'light' ? "/logos/Logo-Fishtail-Infosolutions-blue.png" : "/logos/Logo-Fishtail-Infosolutions-white.svg"}
+                src={mounted && theme === 'light' ? "/logos/FishtailLogo.svg" : "/logos/Logo-Fishtail-Infosolutions-white.svg"}
                 alt="Logo"
                 width={50}
                 height={50}

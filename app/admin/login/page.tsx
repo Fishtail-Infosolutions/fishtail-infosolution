@@ -1,0 +1,123 @@
+'use client';
+
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/moving-border'; // User requested this specific button
+import { Input } from '@/components/ui/input'; // Assuming this exists or I'll use standard input
+import { Label } from '@/components/ui/label'; // Assuming this exists
+import toast from 'react-hot-toast';
+import { motion } from 'motion/react';
+
+const schema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6),
+});
+
+type FormData = z.infer<typeof schema>;
+
+export default function LoginPage() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+        resolver: zodResolver(schema),
+    });
+
+    const onSubmit = async (data: FormData) => {
+        setIsLoading(true);
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                throw new Error(result.error || 'Login failed');
+            }
+
+            toast.success('Logged in successfully');
+            router.push('/admin/dashboard'); // Or wherever the admin home is
+            router.refresh();
+        } catch (error: any) {
+            toast.error(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 antialiased relative overflow-hidden">
+            {/* Ambient background effect - subtle light gradients */}
+            <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="z-10 w-full max-w-md p-4"
+            >
+                <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xl">
+                    <div className="text-center mb-8">
+                        <h1 className="text-3xl font-bold text-gray-900">
+                            Admin Login
+                        </h1>
+                        <p className="text-gray-500 mt-2 text-sm">
+                            Enter your credentials to access the dashboard
+                        </p>
+                    </div>
+
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
+                            <Input
+                                {...register('email')}
+                                type="email"
+                                placeholder="admin@fishtail.com"
+                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                            />
+                            {errors.email && (
+                                <p className="text-red-500 text-xs">{errors.email.message}</p>
+                            )}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+                            <Input
+                                {...register('password')}
+                                type="password"
+                                placeholder="••••••••"
+                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 "
+                            />
+                            {errors.password && (
+                                <p className="text-red-500 text-xs">{errors.password.message}</p>
+                            )}
+                        </div>
+
+                        <div className="flex justify-center mt-8">
+                            <Button
+                                borderRadius="1.75rem"
+                                className="bg-slate-900 text-white border-transparent font-semibold shadow-md"
+                                containerClassName="h-12 w-full"
+                                type="submit"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? (
+                                    <div className="flex items-center gap-2">
+                                        <div className="h-4 w-4 border-2 border-white/50 border-t-white rounded-full animate-spin" />
+                                        <span>Verifying...</span>
+                                    </div>
+                                ) : "Access Dashboard"}
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </motion.div>
+        </div>
+    );
+}
