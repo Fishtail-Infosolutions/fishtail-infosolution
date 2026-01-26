@@ -19,7 +19,7 @@ export default function CareerSection() {
             : JobOpenings.filter((job) => job.category === activeCategory);
 
     return (
-        <section className="w-full bg-background py-32 px-4 md:px-8 transition-colors duration-500">
+        <section className="w-full bg-background pt-32 pb-20 px-4 md:px-8 transition-colors duration-500">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}

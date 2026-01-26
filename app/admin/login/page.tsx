@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'; // Assuming this exists or I'll u
 import { Label } from '@/components/ui/label'; // Assuming this exists
 import toast from 'react-hot-toast';
 import { motion } from 'motion/react';
+import { Eye, EyeOff } from 'lucide-react';
 
 const schema = z.object({
     email: z.string().email(),
@@ -21,6 +22,7 @@ type FormData = z.infer<typeof schema>;
 export default function LoginPage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -88,12 +90,21 @@ export default function LoginPage() {
 
                         <div className="space-y-2">
                             <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
-                            <Input
-                                {...register('password')}
-                                type="password"
-                                placeholder="••••••••"
-                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 "
-                            />
+                            <div className="relative">
+                                <Input
+                                    {...register('password')}
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="••••••••"
+                                    className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 pr-12"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors z-30"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
                             {errors.password && (
                                 <p className="text-red-500 text-xs">{errors.password.message}</p>
                             )}

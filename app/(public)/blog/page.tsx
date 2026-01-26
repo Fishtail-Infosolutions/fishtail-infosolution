@@ -8,7 +8,7 @@ import { Blogs } from "@/constants/blogs";
 
 const BlogPage = () => {
   return (
-    <main className="min-h-screen bg-background antialiased pt-32 transition-colors duration-500 pb-12">
+    <main className="min-h-screen bg-background antialiased pt-32 transition-colors duration-500 pb-20">
       {/* Banner Section */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

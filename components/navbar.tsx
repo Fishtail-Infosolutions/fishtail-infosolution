@@ -95,17 +95,17 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Navbar with Glassmorphism */}
-      <nav className="fixed top-0 left-0 w-full bg-background/40 backdrop-blur-lg border-b border-border/40 z-50">
+      <nav className="fixed top-0 left-0 w-full bg-background/40 backdrop-blur-lg border-b border-border/40 z-[90]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 md:py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/">
               <Image
-                src={mounted && theme === 'light' ? "/logos/FishtailLogo.svg" : "/logos/Logo-Fishtail-Infosolutions-white.svg"}
+                src={mounted && theme === 'light' ? "/logos/fishtail-logo-blue.svg" : "/logos/fishtail-logo-white.svg"}
                 alt="Logo"
                 width={50}
                 height={50}
-                className="w-40 h-14 object-contain"
+                className="w-40 h-10 object-contain"
               />
             </Link>
           </div>
@@ -176,8 +176,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu with Glassmorphism */}
       <div
-        className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto
- w-72 bg-background/80 backdrop-blur-md border-l border-b border-border/40 z-100 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto w-72 bg-background/80 backdrop-blur-md border-l border-b border-border/40 z-[999] transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col p-6 space-y-2">

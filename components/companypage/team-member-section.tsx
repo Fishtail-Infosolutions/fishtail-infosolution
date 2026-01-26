@@ -66,7 +66,7 @@ const GridItem = ({ icon, member }: GridItemProps) => {
     return (
         <div className="min-h-[14rem] h-full">
             <motion.div
-                className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-accent/20 dark:bg-neutral-900 border-border"
+                className="relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-gray-50/50  dark:bg-zinc-900/30 border-border"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
             >
@@ -79,7 +79,7 @@ const GridItem = ({ icon, member }: GridItemProps) => {
                     proximity={64}
                     inactiveZone={0.01}
                 />
-                <div className="border-0.75 relative flex h-full flex-col items-center justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-card">
+                <div className="relative flex h-full flex-col items-center justify-between gap-6 overflow-hidden rounded-xl p-6 md:p-6 bg-transparent">
                     <div className="flex flex-col items-center gap-4 w-full">
                         {/* 1. Image (Circle) */}
                         {member.imageUrl ? (

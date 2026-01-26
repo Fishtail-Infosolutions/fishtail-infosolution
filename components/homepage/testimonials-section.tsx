@@ -20,7 +20,7 @@ export function TestimonialsSection() {
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="flex flex-col items-center gap-8"
+        className="flex flex-col items-center gap-8 pb-20"
       >
         <motion.div
           initial={{ opacity: 0, y: 18, scale: 0.995 }}

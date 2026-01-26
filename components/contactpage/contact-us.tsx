@@ -270,7 +270,7 @@ const ContactUs = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="w-full mt-12 mb-20"
+        className="w-full mt-12 mb-20 relative z-0"
       >
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7566.688373652978!2d83.98486930420776!3d28.22061516756835!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xaf8712d0425aa3e7%3A0x528c4e6c8c86ffbf!2sFishtail%20Infosolutions!5e1!3m2!1sen!2snp!4v1768388510746!5m2!1sen!2snp"
