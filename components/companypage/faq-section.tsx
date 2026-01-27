@@ -100,6 +100,7 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
                     <Plus className="w-6 h-6 text-muted-foreground" />
                 </motion.div>
             </button>
+
             <AnimatePresence>
                 {isOpen && (
                     <motion.div

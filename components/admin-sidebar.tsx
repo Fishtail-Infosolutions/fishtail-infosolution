@@ -12,7 +12,8 @@ import {
     LogOut,
     User,
     Menu,
-    X
+    X,
+    MessageSquareQuote
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
@@ -56,6 +57,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
         { href: "/admin/jobs", icon: <Briefcase size={20} />, label: "Jobs" },
         { href: "/admin/projects", icon: <Layers size={20} />, label: "Projects" },
         { href: "/admin/blog", icon: <FileText size={20} />, label: "Blog" },
+        { href: "/admin/quotes", icon: <MessageSquareQuote size={20} />, label: "Quotes" },
     ];
 
     const handleLogout = async () => {
@@ -100,7 +102,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
 
             {/* Sidebar Content */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-[70] transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
+                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40 transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 {/* Logo & Close Button */}

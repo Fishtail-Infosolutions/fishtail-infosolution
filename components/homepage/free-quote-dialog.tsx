@@ -101,12 +101,29 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
         form.handleSubmit(onSubmit)()
     }
 
-    function onSubmit(values: FormValues) {
-        console.log("Form submitted:", values)
-        toast.success("Quote request submitted successfully!");
-        // Here you would typically send data to API
-        setIsOpen(false)
-        form.reset()
+    async function onSubmit(values: FormValues) {
+        const loadingToast = toast.loading("Submitting your request...");
+        try {
+            const response = await fetch('/api/quotes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to submit quote');
+            }
+
+            toast.success("Quote request submitted successfully!", { id: loadingToast });
+            setIsOpen(false);
+            form.reset();
+        } catch (error: any) {
+            console.error("Submission error:", error);
+            toast.error(error.message || "Something went wrong. Please try again.", { id: loadingToast });
+        }
     }
 
     return (
@@ -300,7 +317,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                     {form.getValues("seoGoals") && (
                                         <div className="space-y-1">
                                             <Label className="text-muted-foreground">SEO Goals:</Label>
-                                            <p className="text-sm bg-accent/10 p-3 rounded-md italic text-muted-foreground break-words">
+                                            <p className="text-sm bg-accent/10 p-3 rounded-md italic text-muted-foreground wrap-break-word">
                                                 &quot;{form.getValues("seoGoals")}&quot;
                                             </p>
                                         </div>
