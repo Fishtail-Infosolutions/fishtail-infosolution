@@ -13,7 +13,8 @@ import {
     User,
     Menu,
     X,
-    MessageSquareQuote
+    MessageSquareQuote,
+    Tags
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
@@ -55,6 +56,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
         { href: "/admin/dashboard", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
         { href: "/admin/team", icon: <Users size={20} />, label: "Team Members" },
         { href: "/admin/jobs", icon: <Briefcase size={20} />, label: "Jobs" },
+        { href: "/admin/job-categories", icon: <Tags size={20} />, label: "Job Categories" },
         { href: "/admin/projects", icon: <Layers size={20} />, label: "Projects" },
         { href: "/admin/blog", icon: <FileText size={20} />, label: "Blog" },
         { href: "/admin/quotes", icon: <MessageSquareQuote size={20} />, label: "Quotes" },
@@ -134,13 +136,19 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
 
                 {/* Navigation */}
                 <nav className="flex-1 px-4 py-4 space-y-1">
-                    {navItems.map((item) => (
-                        <SidebarItem
-                            key={item.href}
-                            {...item}
-                            active={pathname === item.href}
-                        />
-                    ))}
+                    {navItems.map((item) => {
+                        const isActive = item.href === "/admin/dashboard"
+                            ? pathname === "/admin/dashboard"
+                            : pathname.startsWith(item.href);
+
+                        return (
+                            <SidebarItem
+                                key={item.href}
+                                {...item}
+                                active={isActive}
+                            />
+                        );
+                    })}
                 </nav>
 
                 {/* Footer / User Info */}

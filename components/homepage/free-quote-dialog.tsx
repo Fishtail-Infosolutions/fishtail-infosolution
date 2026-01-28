@@ -133,7 +133,8 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
             </DialogTrigger>
             <DialogContent
                 data-lenis-prevent
-                className="sm:max-w-[700px] w-[95vw] max-h-[85vh] overflow-y-auto bg-background/90 border-border text-foreground backdrop-blur-xl"
+                overlayClassName="z-1000"
+                className="sm:max-w-[700px] w-[95vw] max-h-[85vh] overflow-y-auto bg-background/90 border-border text-foreground backdrop-blur-xl z-1000"
             >
                 <DialogTitle className="sr-only">Free Quote Request</DialogTitle>
                 <Form {...form}>
@@ -290,7 +291,14 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                     <div className="rounded-lg border border-border bg-accent/10 p-4 space-y-3">
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
                                             <span className="text-muted-foreground">Website:</span>
-                                            <span className="sm:col-span-2 font-medium break-all">{form.getValues("websiteUrl")}</span>
+                                            <a
+                                                href={form.getValues("websiteUrl").startsWith('http') ? form.getValues("websiteUrl") : `https://${form.getValues("websiteUrl")}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="sm:col-span-2 font-medium break-all hover:text-blue-500 transition-colors"
+                                            >
+                                                {form.getValues("websiteUrl")}
+                                            </a>
 
                                             <span className="text-muted-foreground">Name:</span>
                                             <span className="sm:col-span-2 font-medium">{form.getValues("name")}</span>

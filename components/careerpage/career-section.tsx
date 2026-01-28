@@ -1,22 +1,61 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import CareerCard from "./card";
-import { JobOpenings } from "@/constants/jobs";
 import { cn } from "@/lib/utils";
 import GradientBanner from "../self-made-ui/gradeint-banner";
 import Tabs from "@/components/tab";
-
-const categories = ["All", "Developer", "Designer", "SEO", "Content Writer"];
+import { Loader2 } from "lucide-react";
 
 export default function CareerSection() {
+    const [categories, setCategories] = useState(["All"]);
+    const [jobs, setJobs] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState("All");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [catRes, jobRes] = await Promise.all([
+                    fetch("/api/job-categories"),
+                    fetch("/api/jobs")
+                ]);
+
+                if (catRes.ok) {
+                    const data = await catRes.json();
+                    setCategories(["All", ...data.map((cat: any) => cat.name)]);
+                }
+
+                if (jobRes.ok) {
+                    const data = await jobRes.json();
+                    setJobs(data.jobs || []);
+                }
+            } catch (error) {
+                console.error("Failed to fetch data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
     const filteredJobs =
         activeCategory === "All"
-            ? JobOpenings
-            : JobOpenings.filter((job) => job.category === activeCategory);
+            ? jobs
+            : jobs.filter((job) => {
+                const jobCategoryName = typeof job.category === 'object' ? job.category?.name : job.category;
+                return jobCategoryName === activeCategory;
+            });
+
+    if (loading) {
+        return (
+            <div className="w-full min-h-[60vh] flex flex-col items-center justify-center gap-4">
+                <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
+                <p className="text-muted-foreground animate-pulse font-medium">Fetching opportunities...</p>
+            </div>
+        );
+    }
 
     return (
         <section className="w-full bg-background pt-32 pb-20 px-4 md:px-8 transition-colors duration-500">

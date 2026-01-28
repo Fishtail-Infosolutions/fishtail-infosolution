@@ -54,8 +54,9 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 antialiased relative overflow-hidden">
-            {/* Ambient background effect - subtle light gradients */}
+        /* Forces the entire login block to behave as if it's in light mode */
+        <div className="light min-h-screen w-full flex items-center justify-center bg-gray-50 text-gray-900 antialiased relative overflow-hidden">
+            {/* Ambient background effect */}
             <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
 
             <motion.div
@@ -64,38 +65,42 @@ export default function LoginPage() {
                 transition={{ duration: 0.5 }}
                 className="z-10 w-full max-w-md p-4"
             >
-                <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xl">
+                {/* The card is now explicitly white even in dark theme contexts */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xl dark:bg-white dark:text-gray-900">
                     <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900">
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-900">
                             Admin Login
                         </h1>
-                        <p className="text-gray-500 mt-2 text-sm">
+                        <p className="text-gray-500 mt-2 text-sm dark:text-gray-500">
                             Enter your credentials to access the dashboard
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                         <div className="space-y-2">
-                            <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
+                            <Label htmlFor="email" className="text-gray-700 font-medium dark:text-gray-700">Email Address</Label>
                             <Input
                                 {...register('email')}
                                 type="email"
                                 placeholder="admin@fishtail.com"
-                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+                                /* We force these classes to stay light even if the global system is dark */
+                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 dark:bg-white dark:text-gray-900 dark:placeholder:text-gray-400 "
+                                id="email"
                             />
                             {errors.email && (
-                                <p className="text-red-500 text-xs">{errors.email.message}</p>
+                                <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
                             )}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+                            <Label htmlFor="password" className="text-gray-700 font-medium dark:text-gray-700">Password</Label>
                             <div className="relative">
                                 <Input
                                     {...register('password')}
                                     type={showPassword ? "text" : "password"}
                                     placeholder="••••••••"
-                                    className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 pr-12"
+                                    className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 pr-12 dark:bg-white dark:text-gray-900 dark:placeholder:text-gray-400"
+                                    id="password"
                                 />
                                 <button
                                     type="button"
@@ -106,7 +111,7 @@ export default function LoginPage() {
                                 </button>
                             </div>
                             {errors.password && (
-                                <p className="text-red-500 text-xs">{errors.password.message}</p>
+                                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
                             )}
                         </div>
 
