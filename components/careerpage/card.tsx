@@ -18,7 +18,7 @@ interface CareerCardProps {
         title: string;
         role?: string;
         description: string;
-        location: string;
+        locationType: string;
         type: string;
         postIcon?: string;
         icon?: string;
@@ -80,7 +80,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                                     <div>
                                         <h2 className="font-bold text-lg text-foreground line-clamp-1 transition-colors">{job.title}</h2>
                                         <p className="text-muted-foreground text-sm font-medium">
-                                            {typeof job.category === 'object' ? job.category?.name : (job.category || job.role || "-")}
+                                            {(typeof job.category === 'object' && job.category !== null) ? job.category.name : (job.category || job.role || "-")}
                                         </p>
                                     </div>
                                 </div>
@@ -105,12 +105,12 @@ export default function CareerCard({ job }: CareerCardProps) {
                                     {job.openings && (
                                         <div className="flex items-center gap-1">
                                             <User className="w-3 h-3" />
-                                            <span>{job.openings || "1"} Pos.</span>
+                                            <span>{job.openings || "1"} Openings</span>
                                         </div>
                                     )}
                                     <div className="flex items-center gap-1">
                                         <MapPin className="w-3 h-3" />
-                                        <span>{job.location}</span>
+                                        <span>{job.locationType}</span>
                                     </div>
                                     <div className="flex items-center gap-1">
                                         <Clock className="w-3 h-3" />

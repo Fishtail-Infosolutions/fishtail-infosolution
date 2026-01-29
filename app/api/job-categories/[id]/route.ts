@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import JobCategory from "@/models/JobCategory";
+import Job from "@/models/Job";
 
 export async function PUT(
     req: Request,
@@ -47,6 +48,9 @@ export async function DELETE(
         if (!deletedCategory) {
             return NextResponse.json({ error: "Category not found" }, { status: 404 });
         }
+
+        // Unset category on all jobs that were using this category
+        await Job.updateMany({ category: id }, { $set: { category: null } });
 
         return NextResponse.json({ message: "Category deleted successfully" });
     } catch (error) {

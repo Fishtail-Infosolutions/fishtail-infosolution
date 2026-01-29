@@ -104,7 +104,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
 
             {/* Sidebar Content */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40 transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
+                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-[70] transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 {/* Logo & Close Button */}

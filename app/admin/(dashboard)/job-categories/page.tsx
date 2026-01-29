@@ -4,14 +4,26 @@ import React, { useEffect, useState } from "react";
 import {
     Plus,
     Trash2,
-    Loader2,
     Briefcase,
     Tags,
     AlertCircle,
     MoreVertical,
-    Pencil
+    Pencil,
+    Loader2
 } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
 import {
     Dialog,
     DialogContent,
@@ -36,21 +48,39 @@ interface JobCategory {
     createdAt: string;
 }
 
+const categorySchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    description: z.string().optional(),
+});
+
+type CategoryFormValues = z.infer<typeof categorySchema>;
+
 export default function JobCategoriesPage() {
     const [categories, setCategories] = useState<JobCategory[]>([]);
     const [loading, setLoading] = useState(true);
+    // Form state removed - using react-hook-form now
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [categoryToDelete, setCategoryToDelete] = useState<JobCategory | null>(null);
     const [categoryToEdit, setCategoryToEdit] = useState<JobCategory | null>(null);
+    const [categoryToDelete, setCategoryToDelete] = useState<JobCategory | null>(null);
 
-    // Form state
-    const [newName, setNewName] = useState("");
-    const [newDescription, setNewDescription] = useState("");
-    const [editName, setEditName] = useState("");
-    const [editDescription, setEditDescription] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const addForm = useForm<CategoryFormValues>({
+        resolver: zodResolver(categorySchema),
+        defaultValues: {
+            name: "",
+            description: "",
+        },
+    });
+
+    const editForm = useForm<CategoryFormValues>({
+        resolver: zodResolver(categorySchema),
+        defaultValues: {
+            name: "",
+            description: "",
+        },
+    });
 
     const fetchCategories = async () => {
         try {
@@ -69,16 +99,13 @@ export default function JobCategoriesPage() {
         fetchCategories();
     }, []);
 
-    const handleAddCategory = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newName.trim()) return;
-
+    const handleAddCategory = async (values: CategoryFormValues) => {
         setIsSubmitting(true);
         try {
             const res = await fetch("/api/job-categories", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: newName, description: newDescription }),
+                body: JSON.stringify(values),
             });
 
             if (!res.ok) {
@@ -89,8 +116,7 @@ export default function JobCategoriesPage() {
             const newCategory = await res.json();
             setCategories([newCategory, ...categories]);
             setIsAddModalOpen(false);
-            setNewName("");
-            setNewDescription("");
+            addForm.reset();
             toast.success("Category added successfully");
         } catch (error: any) {
             toast.error(error.message);
@@ -99,16 +125,15 @@ export default function JobCategoriesPage() {
         }
     };
 
-    const handleEditCategory = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!editName.trim() || !categoryToEdit) return;
+    const handleEditCategory = async (values: CategoryFormValues) => {
+        if (!categoryToEdit) return;
 
         setIsSubmitting(true);
         try {
             const res = await fetch(`/api/job-categories/${categoryToEdit._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: editName, description: editDescription }),
+                body: JSON.stringify(values),
             });
 
             if (!res.ok) {
@@ -122,8 +147,7 @@ export default function JobCategoriesPage() {
             ));
             setIsEditModalOpen(false);
             setCategoryToEdit(null);
-            setEditName("");
-            setEditDescription("");
+            editForm.reset();
             toast.success("Category updated successfully");
         } catch (error: any) {
             toast.error(error.message);
@@ -152,14 +176,7 @@ export default function JobCategoriesPage() {
     };
 
     if (loading) {
-        return (
-            <div className="flex h-[60vh] items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-                    <p className="text-gray-500 animate-pulse font-medium">Loading categories...</p>
-                </div>
-            </div>
-        );
+        return <Loader />;
     }
 
     return (
@@ -244,8 +261,10 @@ export default function JobCategoriesPage() {
                                                             variant="ghost"
                                                             onClick={() => {
                                                                 setCategoryToEdit(category);
-                                                                setEditName(category.name);
-                                                                setEditDescription(category.description || "");
+                                                                editForm.reset({
+                                                                    name: category.name,
+                                                                    description: category.description || "",
+                                                                });
                                                                 setIsEditModalOpen(true);
                                                             }}
                                                             className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
@@ -288,57 +307,77 @@ export default function JobCategoriesPage() {
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={handleAddCategory} className="p-6 md:p-8 space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                <Tags size={14} className="text-blue-500" />
-                                Category Name
-                            </label>
-                            <Input
-                                value={newName}
-                                onChange={(e) => setNewName(e.target.value)}
-                                placeholder="e.g. Developer, Designer, SEO"
-                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
-                                required
+                    <Form {...addForm}>
+                        <form onSubmit={addForm.handleSubmit(handleAddCategory)} className="p-6 md:p-8 space-y-6">
+                            <FormField
+                                control={addForm.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-2">
+                                        <FormLabel className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                            <Tags size={14} className="text-blue-500" />
+                                            Category Name <span className="text-red-500 font-bold">*</span>
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                placeholder="e.g. Developer, Designer, SEO"
+                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
+                                            />
+                                        </FormControl>
+                                        <FormMessage className="text-[10px]" />
+                                    </FormItem>
+                                )}
                             />
-                        </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                <AlertCircle size={14} className="text-blue-500" />
-                                Description (Optional)
-                            </label>
-                            <Textarea
-                                value={newDescription}
-                                onChange={(e) => setNewDescription(e.target.value)}
-                                placeholder="Briefly describe what this category covers..."
-                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[100px] resize-none"
+                            <FormField
+                                control={addForm.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-2">
+                                        <FormLabel className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                            <AlertCircle size={14} className="text-blue-500" />
+                                            Description (Optional)
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Textarea
+                                                {...field}
+                                                placeholder="Briefly describe what this category covers..."
+                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[100px] resize-none"
+                                            />
+                                        </FormControl>
+                                        <FormMessage className="text-[10px]" />
+                                    </FormItem>
+                                )}
                             />
-                        </div>
 
-                        <div className="flex gap-3 pt-4">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => setIsAddModalOpen(false)}
-                                className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold h-11 rounded-xl"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="submit"
-                                disabled={isSubmitting || !newName.trim()}
-                                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 font-semibold h-11 rounded-xl"
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <Loader2 size={16} className="animate-spin mr-2" />
-                                        Creating...
-                                    </>
-                                ) : "Create Category"}
-                            </Button>
-                        </div>
-                    </form>
+                            <div className="flex gap-3 pt-4">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => {
+                                        setIsAddModalOpen(false);
+                                        addForm.reset();
+                                    }}
+                                    className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold h-11 rounded-xl"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 font-semibold h-11 rounded-xl"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <Loader2 size={16} className="animate-spin mr-2" />
+                                            Creating...
+                                        </>
+                                    ) : "Create Category"}
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
                 </DialogContent>
             </Dialog>
 
@@ -354,57 +393,78 @@ export default function JobCategoriesPage() {
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={handleEditCategory} className="p-6 md:p-8 space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                <Tags size={14} className="text-blue-500" />
-                                Category Name
-                            </label>
-                            <Input
-                                value={editName}
-                                onChange={(e) => setEditName(e.target.value)}
-                                placeholder="e.g. Developer, Designer, SEO"
-                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
-                                required
+                    <Form {...editForm}>
+                        <form onSubmit={editForm.handleSubmit(handleEditCategory)} className="p-6 md:p-8 space-y-6">
+                            <FormField
+                                control={editForm.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-2">
+                                        <FormLabel className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                            <Tags size={14} className="text-blue-500" />
+                                            Category Name <span className="text-red-500 font-bold">*</span>
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                placeholder="e.g. Developer, Designer, SEO"
+                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
+                                            />
+                                        </FormControl>
+                                        <FormMessage className="text-[10px]" />
+                                    </FormItem>
+                                )}
                             />
-                        </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                <AlertCircle size={14} className="text-blue-500" />
-                                Description (Optional)
-                            </label>
-                            <Textarea
-                                value={editDescription}
-                                onChange={(e) => setEditDescription(e.target.value)}
-                                placeholder="Briefly describe what this category covers..."
-                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[100px] resize-none"
+                            <FormField
+                                control={editForm.control}
+                                name="description"
+                                render={({ field }) => (
+                                    <FormItem className="space-y-2">
+                                        <FormLabel className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                            <AlertCircle size={14} className="text-blue-500" />
+                                            Description (Optional)
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Textarea
+                                                {...field}
+                                                placeholder="Briefly describe what this category covers..."
+                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[100px] resize-none"
+                                            />
+                                        </FormControl>
+                                        <FormMessage className="text-[10px]" />
+                                    </FormItem>
+                                )}
                             />
-                        </div>
 
-                        <div className="flex gap-3 pt-4">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => setIsEditModalOpen(false)}
-                                className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold h-11 rounded-xl"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="submit"
-                                disabled={isSubmitting || !editName.trim()}
-                                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 font-semibold h-11 rounded-xl"
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <Loader2 size={16} className="animate-spin mr-2" />
-                                        Updating...
-                                    </>
-                                ) : "Update Category"}
-                            </Button>
-                        </div>
-                    </form>
+                            <div className="flex gap-3 pt-4">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => {
+                                        setIsEditModalOpen(false);
+                                        setCategoryToEdit(null);
+                                        editForm.reset();
+                                    }}
+                                    className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold h-11 rounded-xl"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 font-semibold h-11 rounded-xl"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <Loader2 size={16} className="animate-spin mr-2" />
+                                            Updating...
+                                        </>
+                                    ) : "Update Category"}
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
                 </DialogContent>
             </Dialog>
 

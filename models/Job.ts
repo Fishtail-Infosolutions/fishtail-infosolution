@@ -9,7 +9,8 @@ const JobSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'JobCategory',
-        required: [true, 'Please provide job category'],
+        required: false,
+        index: true
     },
     icon: {
         type: String,
@@ -20,9 +21,10 @@ const JobSchema = new mongoose.Schema({
         enum: ['Full-time', 'Part-time', 'Contract', 'Internship'],
         default: 'Full-time',
     },
-    location: {
+    locationType: {
         type: String,
-        default: 'Kathmandu, Nepal (Remote/On-site)',
+        enum: ['Onsite', 'Remote', 'Hybrid'],
+        default: 'Onsite',
     },
     description: {
         type: String,

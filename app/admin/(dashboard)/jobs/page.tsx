@@ -5,7 +5,6 @@ import {
     Plus,
     ChevronLeft,
     ChevronRight,
-    Loader2,
     Briefcase,
     MoreVertical,
     Eye,
@@ -14,6 +13,7 @@ import {
     Search,
     Calendar
 } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import Image from "next/image";
@@ -120,21 +120,14 @@ export default function JobsPage() {
 
     const filteredJobs = jobs.filter(job => {
         const titleMatch = job.title.toLowerCase().includes(searchQuery.toLowerCase());
-        const categoryMatch = typeof job.category === 'object' && job.category?.name
+        const categoryMatch = (typeof job.category === 'object' && job.category !== null)
             ? job.category.name.toLowerCase().includes(searchQuery.toLowerCase())
-            : false;
+            : "not specified".includes(searchQuery.toLowerCase());
         return titleMatch || categoryMatch;
     });
 
     if (loading && pagination.page === 1) {
-        return (
-            <div className="flex h-[60vh] items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-                    <p className="text-gray-500 animate-pulse font-medium">Loading jobs...</p>
-                </div>
-            </div>
-        );
+        return <Loader />;
     }
 
     return (
@@ -219,7 +212,7 @@ export default function JobsPage() {
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-purple-100 tracking-wide dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-[13px] font-semibold">
-                                                {typeof job.category === 'object' ? job.category?.name : (job.category || "Uncategorized")}
+                                                {(typeof job.category === 'object' && job.category !== null) ? job.category.name : "Not Specified"}
                                             </span>
                                         </td>
                                         <td className="px-6 py-5 text-sm text-gray-600 dark:text-gray-300">

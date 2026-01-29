@@ -5,7 +5,7 @@ export interface JobOpening {
     deadline: string;
     description: string;
     openings: number;
-    location: string;
+    locationType: string;
     type: string;
     category: "Developer" | "Designer" | "SEO" | "Content Writer";
     icon?: any; // For company logo/icon if needed
@@ -27,7 +27,7 @@ export const JobOpenings: JobOpening[] = [
         deadline: "2026-02-28",
         description: "We are looking for a skilled Frontend Developer proficient in Next.js and React to build high-performance web applications.",
         openings: 2,
-        location: "Onsite",
+        locationType: "Onsite",
         type: "Full Time",
         category: "Developer",
         postIcon: "/career posting images/nextjs logo.png",
@@ -61,7 +61,7 @@ export const JobOpenings: JobOpening[] = [
         deadline: "2026-03-05",
         description: "Looking for a Backend Developer to join our core team and build scalable server-side systems using Node.js and Express.",
         openings: 1,
-        location: "Onsite",
+        locationType: "Onsite",
         type: "Full Time",
         category: "Developer",
         postIcon: "/career posting images/nodejs logo.png",
@@ -95,7 +95,7 @@ export const JobOpenings: JobOpening[] = [
         deadline: "2026-03-15",
         description: "Join us to create visually stunning and highly functional user interfaces for our global client base.",
         openings: 1,
-        location: "Onsite",
+        locationType: "Onsite",
         type: "Full Time",
         category: "Designer",
         postIcon: "/career posting images/ui ux logo.png",
@@ -129,7 +129,7 @@ export const JobOpenings: JobOpening[] = [
         deadline: "2026-02-20",
         description: "Manage all SEO activities and marketing, including content strategy, link building, and keyword strategy.",
         openings: 2,
-        location: "Hybrid",
+        locationType: "Hybrid",
         type: "Full Time",
         category: "SEO",
         postIcon: "/career posting images/seo logo.png",
@@ -163,7 +163,7 @@ export const JobOpenings: JobOpening[] = [
         deadline: "2026-03-10",
         description: "Create compelling articles, blog posts, and website content to engage our audience and improve search visibility.",
         openings: 3,
-        location: "Onsite",
+        locationType: "Onsite",
         type: "Full Time",
         category: "Content Writer",
         postIcon: "/career posting images/content writer logo.png",

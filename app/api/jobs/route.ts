@@ -47,10 +47,10 @@ export async function POST(req: Request) {
 
         const job = await Job.create({
             title: formData.get('title'),
-            category: formData.get('category'),
+            category: formData.get('category') || null,
             icon: formData.get('icon'),
             type: formData.get('type'),
-            location: formData.get('location'),
+            locationType: formData.get('locationType'),
             description: formData.get('description'),
             requirements: JSON.parse(formData.get('requirements') as string || '[]'),
             responsibilities: JSON.parse(formData.get('responsibilities') as string || '[]'),

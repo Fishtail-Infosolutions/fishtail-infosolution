@@ -164,7 +164,7 @@ export default function CareerPostPage() {
                             <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
                                 <span className="text-muted-foreground w-40">Category:</span>
                                 <span className="text-foreground font-medium">
-                                    {typeof job.category === 'object' ? job.category?.name : (job.category || job.role || "-")}
+                                    {(typeof job.category === 'object' && job.category !== null) ? job.category.name : (job.category || job.role || "-")}
                                 </span>
                             </div>
                             <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
@@ -186,16 +186,16 @@ export default function CareerPostPage() {
                             <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
                                 <span className="text-muted-foreground w-24 md:w-40 whitespace-nowrap">Job Type:</span>
                                 <span className="text-foreground font-medium text-right md:text-left">
-                                    {job.type || "-"} {job.location ? `(${job.location})` : ""}
+                                    {job.type || "-"} {job.locationType ? `(${job.locationType})` : ""}
                                 </span>
                             </div>
                             <div className="flex justify-between md:justify-start items-center border-b border-border/50 pb-2">
                                 <span className="text-muted-foreground w-40">Salary:</span>
-                                <span className="text-foreground font-medium">{job.salary || "Negotiable"}</span>
+                                <span className="text-foreground font-medium">{job.salary || "-"}</span>
                             </div>
                             <div className="flex justify-between md:justify-start items-center pb-2">
                                 <span className="text-muted-foreground w-40">Deadline:</span>
-                                <span className="text-foreground font-medium">{job.deadline || "Until Filled"}</span>
+                                <span className="text-foreground font-medium">{job.deadline || "-"}</span>
                             </div>
                         </div>
                     </div>
