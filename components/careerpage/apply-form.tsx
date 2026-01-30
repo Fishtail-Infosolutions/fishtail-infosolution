@@ -35,9 +35,16 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function ApplyForm() {
+interface ApplyFormProps {
+    jobId?: string;
+    jobTitle?: string;
+}
+
+export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
     const router = useRouter();
     const [formKey, setFormKey] = React.useState(0);
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+
     const {
         register,
         handleSubmit,
@@ -62,16 +69,62 @@ export default function ApplyForm() {
         return true;
     };
 
-    const onSubmit = (data: FormData) => {
-        console.log("Form Data:", data);
-        toast.success("Application submitted successfully");
-        reset();
-        // Reset stepper to step 1 by changing key
-        setFormKey(prev => prev + 1);
-        // Redirect to career page after a short delay
-        // setTimeout(() => {
-        router.push("/career");
-        // }, 4000);
+    const onSubmit = async (data: FormData) => {
+        setIsSubmitting(true);
+        try {
+            // 1. Upload CV
+            let cvUrl = "";
+            if (data.cv && data.cv.length > 0) {
+                const formData = new FormData();
+                formData.append("file", data.cv[0]);
+                formData.append("folder", "resumes");
+
+                const uploadRes = await fetch("/api/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!uploadRes.ok) {
+                    const errorData = await uploadRes.json();
+                    throw new Error(errorData.error || "Failed to upload CV");
+                }
+
+                const uploadData = await uploadRes.json();
+                cvUrl = uploadData.path;
+            }
+
+            // 2. Submit Application
+            const applicationData = {
+                ...data,
+                cvUrl, // Use the uploaded URL
+                job: jobId, // Link to job if available
+                jobTitle: jobTitle || "General Application", // Fallback title
+                cv: undefined // Remove file object
+            };
+
+            const res = await fetch("/api/applications", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(applicationData),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || "Failed to submit application");
+            }
+
+            toast.success("Application submitted successfully!");
+            reset();
+            setFormKey(prev => prev + 1);
+            router.push("/career");
+        } catch (error: any) {
+            console.error("Submission Error:", error);
+            toast.error(error.message || "Something went wrong. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -82,7 +135,8 @@ export default function ApplyForm() {
                 onBeforeNext={onBeforeNext}
                 onFinalStepCompleted={handleSubmit(onSubmit)}
                 backButtonText="Previous"
-                nextButtonText="Next Step"
+                nextButtonText="Next"
+                finalButtonText={isSubmitting ? "Submitting..." : "Submit Application"}
                 stepCircleContainerClassName="!bg-background !border-border"
                 stepContainerClassName="!bg-background"
                 contentClassName="m-9"

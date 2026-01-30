@@ -5,16 +5,27 @@ export async function POST(req: Request) {
     try {
         const formData = await req.formData();
         const file = formData.get('file') as File;
-        const folder = formData.get('folder') as string || 'general';
 
-        if (!file) {
+        if (!file || !(file instanceof File)) {
             return NextResponse.json(
                 { error: "No file provided" },
                 { status: 400 }
             );
         }
 
-        const filePath = await uploadFile(file, { folder });
+        const folder = formData.get('folder') as string || 'general';
+
+        // Set allowed types based on folder
+        let allowedTypes: string[] | undefined = undefined;
+        if (folder === 'resumes') {
+            allowedTypes = [
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ];
+        }
+
+        const filePath = await uploadFile(file, { folder, allowedTypes });
 
         return NextResponse.json({
             success: true,

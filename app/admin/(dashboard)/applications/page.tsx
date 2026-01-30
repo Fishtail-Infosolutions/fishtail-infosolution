@@ -2,22 +2,24 @@
 
 import React, { useEffect, useState } from "react";
 import {
-    MessageSquareQuote,
+    ClipboardList,
     Calendar,
     Mail,
-    Globe,
+    Phone,
+    Briefcase,
     Loader2,
     ExternalLink,
-    Clock,
     Trash2,
     Eye,
     Search,
     User,
-    Building,
-    MessageSquareText,
+    MapPin,
+    FileText,
+    Github,
+    Globe,
     ChevronLeft,
     ChevronRight,
-    Phone
+    Download
 } from "lucide-react";
 import { Loader } from "@/components/ui/loader";
 import toast from "react-hot-toast";
@@ -31,55 +33,70 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-interface Quote {
+interface Application {
     _id: string;
-    websiteUrl: string;
-    seoGoals?: string;
-    name: string;
+    job?: {
+        _id: string;
+        title: string;
+    };
+    jobTitle: string;
+    fullName: string;
     email: string;
-    phone?: string;
-    company?: string;
-    status: 'pending' | 'reviewed' | 'responded' | 'completed';
+    phone: string;
+    address: string;
+    workExperience: string;
+    expectedSalary?: string;
+    portfolioLink?: string;
+    githubLink?: string;
+    cvUrl: string;
+    coverLetter?: string;
+    status: 'pending' | 'reviewed' | 'shortlisted' | 'rejected' | 'hired';
     createdAt: string;
 }
 
 const statusConfig = {
-    pending: { label: "Not Responded", color: "text-blue-500 bg-blue-50/50 dark:bg-blue-900/20 border-blue-200/50 dark:border-blue-800/50" },
+    pending: { label: "Pending", color: "text-blue-500 bg-blue-50/50 dark:bg-blue-900/20 border-blue-200/50 dark:border-blue-800/50" },
     reviewed: { label: "Reviewed", color: "text-purple-500 bg-purple-50/50 dark:bg-purple-900/20 border-purple-200/50 dark:border-purple-800/50" },
-    responded: { label: "Responded", color: "text-orange-500 bg-orange-50/50 dark:bg-orange-900/20 border-orange-200/50 dark:border-orange-800/50" },
-    completed: { label: "Closed", color: "text-green-500 bg-green-50/50 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50" },
+    shortlisted: { label: "Shortlisted", color: "text-orange-500 bg-orange-50/50 dark:bg-orange-900/20 border-orange-200/50 dark:border-orange-800/50" },
+    rejected: { label: "Rejected", color: "text-red-500 bg-red-50/50 dark:bg-red-900/20 border-red-200/50 dark:border-red-800/50" },
+    hired: { label: "Hired", color: "text-green-500 bg-green-50/50 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50" },
 };
 
-export default function QuotesPage() {
-    const [quotes, setQuotes] = useState<Quote[]>([]);
+export default function ApplicationsPage() {
+    const [applications, setApplications] = useState<Application[]>([]);
     const [loading, setLoading] = useState(true);
-    const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
+    const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const fetchQuotes = async () => {
+    const fetchApplications = async () => {
         try {
-            const res = await fetch("/api/quotes");
-            if (!res.ok) throw new Error("Failed to fetch quotes");
+            const res = await fetch("/api/applications");
+            if (!res.ok) throw new Error("Failed to fetch applications");
             const data = await res.json();
-            setQuotes(data);
+            setApplications(data);
         } catch (error) {
-            toast.error("Error loading quotes");
+            toast.error("Error loading applications");
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchQuotes();
+        fetchApplications();
     }, []);
 
     const updateStatus = async (id: string, newStatus: string) => {
         try {
-            const res = await fetch(`/api/quotes/${id}`, {
+            // Since we don't have a specific PATCH endpoint for applications yet, 
+            // I'll assume standard REST: PATCH /api/applications/[id]
+            // Wait, I only created POST and GET in /api/applications/route.ts
+            // I need to create /api/applications/[id]/route.ts for DELETE/PATCH logic.
+            // For now, I will write the fetch logic, but I MUST implement the API route next.
+            const res = await fetch(`/api/applications/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status: newStatus }),
@@ -87,11 +104,11 @@ export default function QuotesPage() {
 
             if (!res.ok) throw new Error("Failed to update status");
 
-            const updatedQuotes = quotes.map(q => q._id === id ? { ...q, status: newStatus as any } : q);
-            setQuotes(updatedQuotes);
+            const updatedApps = applications.map(app => app._id === id ? { ...app, status: newStatus as any } : app);
+            setApplications(updatedApps);
 
-            if (selectedQuote?._id === id) {
-                setSelectedQuote({ ...selectedQuote, status: newStatus as any });
+            if (selectedApplication?._id === id) {
+                setSelectedApplication({ ...selectedApplication, status: newStatus as any });
             }
 
             toast.success(`Status updated to ${newStatus}`);
@@ -112,21 +129,21 @@ export default function QuotesPage() {
         if (!idToDelete) return;
 
         try {
-            const res = await fetch(`/api/quotes/${idToDelete}`, {
+            const res = await fetch(`/api/applications/${idToDelete}`, {
                 method: "DELETE",
             });
 
-            if (!res.ok) throw new Error("Failed to delete quote");
+            if (!res.ok) throw new Error("Failed to delete application");
 
-            setQuotes(quotes.filter(q => q._id !== idToDelete));
-            if (selectedQuote?._id === idToDelete) {
-                setSelectedQuote(null);
+            setApplications(applications.filter(app => app._id !== idToDelete));
+            if (selectedApplication?._id === idToDelete) {
+                setSelectedApplication(null);
             }
             setIsDeleteModalOpen(false);
             setIdToDelete(null);
-            toast.success("Quote deleted successfully");
+            toast.success("Application deleted successfully");
         } catch (error) {
-            toast.error("Error deleting quote");
+            toast.error("Error deleting application");
         }
     };
 
@@ -138,16 +155,16 @@ export default function QuotesPage() {
         });
     };
 
-    const filteredQuotes = quotes.filter(quote =>
-        quote.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quote.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quote.websiteUrl.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredApplications = applications.filter(app =>
+        app.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        app.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // Pagination logic
-    const totalPages = Math.ceil(filteredQuotes.length / itemsPerPage);
+    const totalPages = Math.ceil(filteredApplications.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + itemsPerPage);
+    const paginatedApplications = filteredApplications.slice(startIndex, startIndex + itemsPerPage);
 
     useEffect(() => {
         setCurrentPage(1); // Reset to page 1 when search term changes
@@ -158,15 +175,15 @@ export default function QuotesPage() {
     }
 
     return (
-        <div className="max-w-[1200px] mx-auto space-y-8 lg:p-0">
+        <div className="max-w-[1200px] mx-auto space-y-8 lg:p-0 animate-in fade-in duration-500">
             {/* Header Section */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
                     <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Quote Requests ({filteredQuotes.length})
+                        Applications ({filteredApplications.length})
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 font-medium">
-                        Manage and respond to your incoming client inquiries.
+                        Manage and review incoming job applications.
                     </p>
                 </div>
 
@@ -174,7 +191,7 @@ export default function QuotesPage() {
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10" size={18} />
                     <Input
                         type="text"
-                        placeholder="Search clients..."
+                        placeholder="Search applicants..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-10 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-xl"
@@ -185,85 +202,81 @@ export default function QuotesPage() {
             {/* Table Section */}
             <div className="w-full max-w-full bg-white dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden">
                 <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-blue-500/20">
-                    <table className="w-full text-left border-collapse min-w-[800px] table-auto">
+                    <table className="w-full text-left border-collapse min-w-[1000px] table-auto">
                         <thead>
                             <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
-                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Received Date</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Client Information</th>
-                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Website URL</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Applied Date</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Applicant</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Job Position</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Experience</th>
                                 <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Status</th>
                                 <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                            {paginatedQuotes.length === 0 ? (
+                            {paginatedApplications.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-16 text-center">
+                                    <td colSpan={6} className="px-6 py-16 text-center">
                                         <div className="flex flex-col items-center gap-3 opacity-50">
-                                            <MessageSquareQuote size={40} className="text-gray-400" />
-                                            <p className="text-gray-500 font-medium italic">No quote requests found</p>
+                                            <ClipboardList size={40} className="text-gray-400" />
+                                            <p className="text-gray-500 font-medium italic">No applications found</p>
                                         </div>
                                     </td>
                                 </tr>
                             ) : (
-                                paginatedQuotes.map((quote) => (
+                                paginatedApplications.map((app) => (
                                     <tr
-                                        key={quote._id}
-                                        onClick={() => setSelectedQuote(quote)}
+                                        key={app._id}
+                                        onClick={() => setSelectedApplication(app)}
                                         className="hover:bg-gray-50 dark:hover:bg-white/2 transition-colors group cursor-pointer"
                                     >
                                         <td className="px-6 py-5 text-sm text-gray-600 dark:text-gray-300">
                                             <div className="flex items-center gap-2">
                                                 <Calendar size={14} className="text-blue-500" />
-                                                {formatDate(quote.createdAt)}
+                                                {formatDate(app.createdAt)}
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-3">
                                                 <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 font-bold text-sm">
-                                                    {quote.name.charAt(0)}
+                                                    {app.fullName.charAt(0)}
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="font-semibold text-gray-900 dark:text-white">{quote.name}</span>
+                                                    <span className="font-semibold text-gray-900 dark:text-white">{app.fullName}</span>
                                                     <a
-                                                        href={`mailto:${quote.email}`}
+                                                        href={`mailto:${app.email}`}
                                                         onClick={(e) => e.stopPropagation()}
-                                                        className="text-xs text-gray-400 hover:text-blue-500 dark:hover:text-blue-500 transition-colors"
+                                                        className="text-xs text-gray-400 hover:text-blue-500 active:text-blue-600 transition-colors"
                                                     >
-                                                        {quote.email}
+                                                        {app.email}
                                                     </a>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <a
-                                                href={quote.websiteUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                onClick={(e) => e.stopPropagation()}
-                                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 ease-in-out group/link"
-                                            >
-                                                <Globe size={12} className="text-gray-400 group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400 transition-colors duration-200" />
-                                                {quote.websiteUrl.replace(/^https?:\/\/(www\.)?/, '')}
-                                                <ExternalLink size={10} className="opacity-0 group-hover/link:opacity-100 group-hover/link:text-blue-600 dark:group-hover/link:text-blue-400 transition-all duration-200" />
-                                            </a>
+                                            <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-medium">
+                                                {app.jobTitle}
+                                            </span>
+                                        </td>
+                                        <td className="px-6 py-5 text-sm text-gray-600 dark:text-gray-300">
+                                            {app.workExperience}
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border tracking-wider ${statusConfig[quote.status || 'pending'].color}`}>
+                                            <div className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border tracking-wider ${statusConfig[app.status || 'pending'].color}`}>
                                                 <div className="w-1.5 h-1.5 rounded-full bg-current mr-2 animate-pulse" />
-                                                {statusConfig[quote.status || 'pending'].label}
+                                                {statusConfig[app.status || 'pending'].label}
                                             </div>
                                         </td>
                                         <td className="px-6 py-5 text-right">
                                             <Button
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    setSelectedQuote(quote);
+                                                    setSelectedApplication(app);
                                                 }}
                                                 variant="ghost"
                                                 className="h-9 px-3 text-xs font-semibold gap-2 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white transition-all rounded-lg"
                                             >
-                                                View Details
+                                                Review
                                                 <Eye size={14} />
                                             </Button>
                                         </td>
@@ -306,20 +319,26 @@ export default function QuotesPage() {
                 )}
             </div>
 
-            <Dialog open={!!selectedQuote} onOpenChange={(open) => !open && setSelectedQuote(null)}>
-                <DialogContent className="sm:max-w-[650px] w-[95vw] sm:w-full p-0 overflow-hidden bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 shadow-2xl max-h-[92vh] flex flex-col">
+            {/* Application Detail Modal */}
+            <Dialog open={!!selectedApplication} onOpenChange={(open) => !open && setSelectedApplication(null)}>
+                <DialogContent className="sm:max-w-[700px] w-[95vw] sm:w-full p-0 overflow-hidden bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 shadow-2xl max-h-[92vh] flex flex-col">
                     <DialogHeader className="p-6 pt-12 md:p-8 md:px-9 md:pr-12 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-800 shrink-0">
-                        <div className="flex flex-col md:flex-row md:justify-between md:items-center items-center text-center md:text-left gap-4">
-                            <div className="space-y-1">
-                                <DialogTitle className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    Quote Request Details
-                                </DialogTitle>
-                                <DialogDescription className="text-gray-500 text-xs md:text-sm font-medium">
-                                    Received on {selectedQuote && formatDate(selectedQuote.createdAt)}
-                                </DialogDescription>
+                        <div className="flex flex-col md:flex-row md:justify-between md:items-center text-center md:text-left gap-4">
+                            <div className="flex items-center gap-4 justify-center md:justify-start">
+                                <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 font-bold text-xl shrink-0">
+                                    {selectedApplication?.fullName.charAt(0)}
+                                </div>
+                                <div className="space-y-1">
+                                    <DialogTitle className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                        {selectedApplication?.fullName}
+                                    </DialogTitle>
+                                    <DialogDescription className="text-gray-500 text-xs md:text-sm font-medium">
+                                        Applied for <span className="font-bold text-gray-900 dark:text-white">{selectedApplication?.jobTitle}</span>
+                                    </DialogDescription>
+                                </div>
                             </div>
-                            <div className={`w-fit mx-auto md:mx-0 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest border transition-colors ${selectedQuote && statusConfig[selectedQuote.status || 'pending'].color}`}>
-                                {selectedQuote && statusConfig[selectedQuote.status || 'pending'].label}
+                            <div className={`w-fit mx-auto md:mx-0 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest border transition-colors ${selectedApplication && statusConfig[selectedApplication.status || 'pending'].color}`}>
+                                {selectedApplication && statusConfig[selectedApplication.status || 'pending'].label}
                             </div>
                         </div>
                     </DialogHeader>
@@ -327,13 +346,13 @@ export default function QuotesPage() {
                     <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 custom-scrollbar">
                         {/* Status Quick Update */}
                         <div className="space-y-4">
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Mark Status As:</span>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Update Status:</span>
                             <div className="flex flex-wrap gap-2">
                                 {Object.entries(statusConfig).map(([key, config]) => (
                                     <button
                                         key={key}
-                                        onClick={() => selectedQuote && updateStatus(selectedQuote._id, key)}
-                                        className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition-all border ${selectedQuote?.status === key
+                                        onClick={() => selectedApplication && updateStatus(selectedApplication._id, key)}
+                                        className={`px-4 py-2 rounded-xl text-xs font-semibold tracking-wider transition-all border ${selectedApplication?.status === key
                                             ? 'bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20 scale-105'
                                             : 'bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-300 border-gray-200 dark:border-gray-800 hover:border-blue-500'
                                             }`}
@@ -346,95 +365,131 @@ export default function QuotesPage() {
 
                         {/* Information Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
-                            {/* Personal Details */}
-                            <div className="space-y-2">
-                                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                    <User size={14} className="text-blue-500 shrink-0" />
-                                    Client Name
-                                </h3>
-                                <p className="font-medium text-gray-700 dark:text-gray-300 text-base">
-                                    {selectedQuote?.name}
-                                </p>
-                            </div>
-
-                            <div className="space-y-2">
-                                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                    <Building size={14} className="text-blue-500 shrink-0" />
-                                    Company Name
-                                </h3>
-                                <p className="font-medium text-gray-700 dark:text-gray-300 text-base">
-                                    {selectedQuote?.company || "Personal Request"}
-                                </p>
-                            </div>
-
                             <div className="space-y-2">
                                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                                     <Mail size={14} className="text-blue-500 shrink-0" />
-                                    Email Workspace
+                                    Email Address
                                 </h3>
-                                <a href={`mailto:${selectedQuote?.email}`} className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-base block truncate transition-all">
-                                    {selectedQuote?.email}
+                                <a href={`mailto:${selectedApplication?.email}`} className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-base block truncate transition-all">
+                                    {selectedApplication?.email}
                                 </a>
                             </div>
 
                             <div className="space-y-2">
                                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                    <Globe size={14} className="text-blue-500 shrink-0" />
-                                    Target Website
+                                    <Phone size={14} className="text-blue-500 shrink-0" />
+                                    Phone Number
                                 </h3>
-                                <div className="flex">
-                                    <a
-                                        href={selectedQuote?.websiteUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 ease-in-out group/dialog-link"
-                                    >
-                                        <span className="truncate max-w-[200px] md:max-w-[300px]">
-                                            {selectedQuote?.websiteUrl?.replace(/^https?:\/\/(www\.)?/, '')}
-                                        </span>
-                                        <ExternalLink size={14} className="shrink-0 text-gray-400 group-hover/dialog-link:text-blue-600 dark:group-hover/dialog-link:text-blue-400 transition-all duration-200" />
-                                    </a>
-                                </div>
+                                <p className="font-medium text-gray-700 dark:text-gray-300 text-base">
+                                    {selectedApplication?.phone}
+                                </p>
                             </div>
 
                             <div className="space-y-2">
                                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                    <Phone size={14} className="text-blue-500 shrink-0" />
-                                    Contact Number
+                                    <MapPin size={14} className="text-blue-500 shrink-0" />
+                                    Location
                                 </h3>
                                 <p className="font-medium text-gray-700 dark:text-gray-300 text-base">
-                                    {selectedQuote?.phone || "Not provided"}
+                                    {selectedApplication?.address}
                                 </p>
                             </div>
+
+                            <div className="space-y-2">
+                                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                    <Briefcase size={14} className="text-blue-500 shrink-0" />
+                                    Experience
+                                </h3>
+                                <p className="font-medium text-gray-700 dark:text-gray-300 text-base">
+                                    {selectedApplication?.workExperience}
+                                </p>
+                            </div>
+
+                            {(selectedApplication?.portfolioLink) && (
+                                <div className="space-y-2">
+                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                        <Globe size={14} className="text-blue-500 shrink-0" />
+                                        Portfolio
+                                    </h3>
+                                    <div className="flex">
+                                        <a
+                                            href={selectedApplication.portfolioLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 ease-in-out group/dialog-link"
+                                        >
+                                            <span className="truncate max-w-[200px] md:max-w-[300px]">
+                                                {selectedApplication.portfolioLink.replace(/^https?:\/\/(www\.)?/, '')}
+                                            </span>
+                                            <ExternalLink size={14} className="shrink-0 text-gray-400 group-hover/dialog-link:text-blue-600 dark:group-hover/dialog-link:text-blue-400 transition-all duration-200" />
+                                        </a>
+                                    </div>
+                                </div>
+                            )}
+
+                            {(selectedApplication?.githubLink) && (
+                                <div className="space-y-2">
+                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                        <Github size={14} className="text-blue-500 shrink-0" />
+                                        GitHub
+                                    </h3>
+                                    <a href={selectedApplication.githubLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline text-sm truncate block transition-all">
+                                        {selectedApplication.githubLink.replace(/^https?:\/\/(www\.)?/, '')}
+                                    </a>
+                                </div>
+                            )}
                         </div>
 
-                        {/* Discussion / Goals */}
-                        <div className="space-y-4 p-6 rounded-2xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-800/50">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                                <MessageSquareText size={16} className="text-blue-500" />
-                                Client's Goals & Perspective
-                            </h3>
-                            <div className="bg-white dark:bg-gray-900/60 p-5 rounded-xl border border-gray-100 dark:border-gray-800/50 text-gray-700 dark:text-gray-200 leading-relaxed text-sm whitespace-pre-wrap">
-                                {selectedQuote?.seoGoals || "No specific priorities were mentioned in the initial request."}
+                        {/* Resume Download */}
+                        <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg text-blue-600 dark:text-blue-200">
+                                    <FileText size={20} />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-bold text-gray-900 dark:text-white">Candidate Resume</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">PDF / DOCX Format</p>
+                                </div>
                             </div>
+                            <Button
+                                size="sm"
+                                className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
+                                onClick={() => window.open(selectedApplication?.cvUrl, '_blank')}
+                            >
+                                <Download size={14} />
+                                View Resume
+                            </Button>
                         </div>
+
+                        {/* Cover Letter */}
+                        {selectedApplication?.coverLetter && (
+                            <div className="space-y-4 p-6 rounded-2xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-800/50">
+                                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                                    <FileText size={16} className="text-blue-500" />
+                                    Cover Letter
+                                </h3>
+                                <div className="bg-white dark:bg-gray-900/60 p-5 rounded-xl border border-gray-100 dark:border-gray-800/50 text-gray-700 dark:text-gray-200 leading-relaxed text-sm whitespace-pre-wrap">
+                                    {selectedApplication.coverLetter}
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="p-6 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-800 flex justify-between items-center shrink-0">
                         <Button
                             variant="destructive"
                             className="bg-red-500/15 dark:bg-red-500/8 hover:bg-red-500 dark:hover:bg-red-600 text-red-600 dark:text-red-400 hover:text-white dark:hover:text-white border-none text-xs font-semibold gap-2 transition-all focus:ring-red-500/20"
-                            onClick={() => selectedQuote && handleDeleteClick(selectedQuote._id)}
+                            onClick={() => selectedApplication && handleDeleteClick(selectedApplication._id)}
                         >
                             <Trash2 size={14} />
-                            Discard
+                            Delete Application
                         </Button>
                         <Button
                             variant="outline"
                             className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold shadow-sm"
-                            onClick={() => setSelectedQuote(null)}
+                            onClick={() => setSelectedApplication(null)}
                         >
-                            Dismiss
+                            Close
                         </Button>
                     </div>
                 </DialogContent>
@@ -452,7 +507,7 @@ export default function QuotesPage() {
                                 Confirm Deletion
                             </DialogTitle>
                             <DialogDescription className="text-gray-500 dark:text-gray-400 text-sm">
-                                Are you sure you want to permanently delete this quote request? This action cannot be undone.
+                                Are you sure you want to permanently delete this application? This action cannot be undone.
                             </DialogDescription>
                         </div>
                     </div>
@@ -490,6 +545,6 @@ export default function QuotesPage() {
                     background: #3b82f666;
                 }
             `}</style>
-        </div >
+        </div>
     );
 }

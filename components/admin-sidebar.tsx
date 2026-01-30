@@ -14,7 +14,8 @@ import {
     Menu,
     X,
     MessageSquareQuote,
-    Tags
+    Tags,
+    ClipboardList
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
@@ -39,7 +40,7 @@ const SidebarItem = ({ href, icon, label, active }: SidebarItemProps) => (
     >
         <span className={cn(
             "transition-transform duration-200 group-hover:scale-110",
-            active ? "text-white" : "text-gray-400 dark:text-gray-500 group-hover:text-blue-500"
+            active ? "text-white" : "text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-500"
         )}>
             {icon}
         </span>
@@ -57,6 +58,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
         { href: "/admin/team", icon: <Users size={20} />, label: "Team Members" },
         { href: "/admin/jobs", icon: <Briefcase size={20} />, label: "Jobs" },
         { href: "/admin/job-categories", icon: <Tags size={20} />, label: "Job Categories" },
+        { href: "/admin/applications", icon: <ClipboardList size={20} />, label: "Applications" },
         { href: "/admin/projects", icon: <Layers size={20} />, label: "Projects" },
         { href: "/admin/blog", icon: <FileText size={20} />, label: "Blog" },
         { href: "/admin/quotes", icon: <MessageSquareQuote size={20} />, label: "Quotes" },

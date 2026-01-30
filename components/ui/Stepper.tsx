@@ -15,6 +15,7 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   nextButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
   backButtonText?: string;
   nextButtonText?: string;
+  finalButtonText?: string;
   disableStepIndicators?: boolean;
   onBeforeNext?: (step: number) => boolean | Promise<boolean>;
   renderStepIndicator?: (props: {
@@ -37,6 +38,7 @@ export default function Stepper({
   nextButtonProps = {},
   backButtonText = 'Back',
   nextButtonText = 'Continue',
+  finalButtonText = 'Complete',
   disableStepIndicators = false,
   onBeforeNext,
   renderStepIndicator,
@@ -176,7 +178,7 @@ export default function Stepper({
                 className="duration-350 flex items-center justify-center rounded-full bg-green-500 py-1.5 px-3.5 font-medium tracking-tight text-white transition hover:bg-green-600 active:bg-green-700"
                 {...nextButtonProps}
               >
-                {isLastStep ? 'Complete' : nextButtonText}
+                {isLastStep ? finalButtonText : nextButtonText}
               </button>
             </div>
           </div>

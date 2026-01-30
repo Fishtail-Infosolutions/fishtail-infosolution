@@ -1,0 +1,38 @@
+import { NextResponse } from "next/server";
+import connectDB from "@/lib/db";
+import Application from "@/models/Application";
+import Job from "@/models/Job"; // To populate job details if needed
+
+export async function POST(req: Request) {
+    try {
+        await connectDB();
+        const body = await req.json();
+
+        const application = await Application.create(body);
+
+        return NextResponse.json(application, { status: 201 });
+    } catch (error: any) {
+        console.error("Application Submission Error:", error);
+        return NextResponse.json({
+            error: "Failed to submit application",
+            details: error.message
+        }, { status: 500 });
+    }
+}
+
+export async function GET(req: Request) {
+    try {
+        await connectDB();
+        const applications = await Application.find({})
+            .populate('job', 'title') // Populate job title from Job model if it exists
+            .sort({ createdAt: -1 });
+
+        return NextResponse.json(applications);
+    } catch (error: any) {
+        console.error("Fetch Applications Error:", error);
+        return NextResponse.json({
+            error: "Failed to fetch applications",
+            details: error.message
+        }, { status: 500 });
+    }
+}

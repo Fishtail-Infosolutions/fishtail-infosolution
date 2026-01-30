@@ -253,7 +253,7 @@ export default function CareerPostPage() {
                         <h2 className="text-3xl font-bold text-foreground text-center">Apply Now</h2>
                         <div className="h-px bg-border grow"></div>
                     </div>
-                    <ApplyForm />
+                    <ApplyForm jobId={job._id} jobTitle={job.title} />
                 </section>
             </div>
         </div>

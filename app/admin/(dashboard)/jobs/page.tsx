@@ -291,10 +291,10 @@ export default function JobsPage() {
                             </p>
                             <div className="flex items-center gap-2">
                                 <Button
-                                    variant="outline"
+                                    variant="ghost"
                                     onClick={() => handlePageChange(pagination.page - 1)}
                                     disabled={pagination.page === 1 || loading}
-                                    className="h-9 px-3 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 disabled:opacity-50"
+                                    className="h-9 px-3 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
                                 >
                                     <ChevronLeft size={16} />
                                     Previous
@@ -331,10 +331,10 @@ export default function JobsPage() {
                                         })}
                                 </div>
                                 <Button
-                                    variant="outline"
+                                    variant="ghost"
                                     onClick={() => handlePageChange(pagination.page + 1)}
                                     disabled={pagination.page === pagination.pages || loading}
-                                    className="h-9 px-3 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 disabled:opacity-50"
+                                    className="h-9 px-3 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
                                 >
                                     Next
                                     <ChevronRight size={16} />

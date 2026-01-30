@@ -147,7 +147,8 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                             initialStep={1}
                             onBeforeNext={onBeforeNext}
                             onFinalStepCompleted={onFinalStepCompleted}
-                            nextButtonText="Continue"
+                            nextButtonText="Next"
+                            finalButtonText="Submit Quote"
                             backButtonText="Back"
                             stepCircleContainerClassName="!bg-transparent !shadow-none !border-none"
                             stepContainerClassName="!p-0 !pb-6"
