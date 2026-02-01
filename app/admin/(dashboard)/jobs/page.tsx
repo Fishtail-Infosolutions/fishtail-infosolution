@@ -13,6 +13,7 @@ import {
     Search,
     Calendar
 } from "lucide-react";
+import { AddButton } from "@/components/admin/add-button";
 import { Loader } from "@/components/ui/loader";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -31,6 +32,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ConfirmDeleteModal } from "@/components/modals/confirm-delete-modal";
 
 interface Job {
     _id: string;
@@ -68,6 +70,7 @@ export default function JobsPage() {
     });
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [jobToDelete, setJobToDelete] = useState<Job | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
     const fetchJobs = async (page: number = 1) => {
@@ -93,6 +96,7 @@ export default function JobsPage() {
         if (!jobToDelete) return;
 
         try {
+            setIsDeleting(true);
             const res = await fetch(`/api/jobs/${jobToDelete._id}`, {
                 method: "DELETE",
             });
@@ -110,6 +114,8 @@ export default function JobsPage() {
             }
         } catch (error) {
             toast.error("Error deleting job");
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -143,12 +149,10 @@ export default function JobsPage() {
                         Manage your job vacancies and recruitment listings.
                     </p>
                 </div>
-                <Link href="/admin/jobs/new">
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 px-6 h-11 rounded-xl font-semibold gap-2">
-                        <Plus size={18} />
-                        Add Job
-                    </Button>
-                </Link>
+                <AddButton
+                    href="/admin/jobs/new"
+                    label="Add Job"
+                />
             </div>
 
             {/* Search Bar */}
@@ -355,40 +359,13 @@ export default function JobsPage() {
             </div>
 
             {/* Delete Confirmation Dialog */}
-            <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-                <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 shadow-2xl">
-                    <div className="p-6 pt-8 flex flex-col items-center text-center space-y-4">
-                        <div className="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/10 flex items-center justify-center">
-                            <Trash2 size={32} className="text-red-500" />
-                        </div>
-                        <div className="space-y-2">
-                            <DialogTitle className="text-xl font-bold text-gray-900 dark:text-white">
-                                Confirm Deletion
-                            </DialogTitle>
-                            <DialogDescription className="text-gray-500 dark:text-gray-400 text-sm">
-                                Are you sure you want to delete <span className="font-bold text-gray-900 dark:text-white">"{jobToDelete?.title}"</span>?
-                                This action cannot be undone.
-                            </DialogDescription>
-                        </div>
-                    </div>
-                    <div className="p-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-800 flex gap-3">
-                        <Button
-                            variant="outline"
-                            className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold"
-                            onClick={() => setIsDeleteModalOpen(false)}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            variant="destructive"
-                            className="flex-1 bg-red-500/15 dark:bg-red-500/8 hover:bg-red-500 dark:hover:bg-red-600 text-red-600 dark:text-red-400 hover:text-white dark:hover:text-white border-none text-xs font-semibold"
-                            onClick={handleDelete}
-                        >
-                            Delete Permanently
-                        </Button>
-                    </div>
-                </DialogContent>
-            </Dialog>
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleDelete}
+                itemName={jobToDelete?.title}
+                loading={isDeleting}
+            />
         </div>
     );
 }

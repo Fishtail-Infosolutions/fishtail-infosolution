@@ -25,7 +25,7 @@ const teamMemberSchema = z.object({
     description: z.string().min(1, "Description is required"),
     imageUrl: z.string().min(1, "Profile image is required"),
     order: z.string().optional(),
-    isActive: z.boolean().default(true),
+    isActive: z.boolean(),
 });
 
 type TeamMemberFormValues = z.infer<typeof teamMemberSchema>;
@@ -184,8 +184,8 @@ export default function NewTeamMemberPage() {
                                     </FormLabel>
 
                                     {!imagePreview ? (
-                                        <div className="w-full max-w-sm min-h-48 border border-dashed bg-white dark:bg-gray-900/50 border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
-                                            <FileUpload onChange={handleImageChange} />
+                                        <div className="w-full max-w-sm border border-dashed bg-white dark:bg-gray-900/50 border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+                                            <FileUpload onChange={handleImageChange} className="p-6" />
                                         </div>
                                     ) : (
                                         <div className="flex items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">

@@ -125,7 +125,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
                             />
                         </Link>
                         <div className="hidden lg:block">
-                            <ThemeToggle />
+                            <ThemeToggle className="w-8 h-8" />
                         </div>
                     </div>
                     <button

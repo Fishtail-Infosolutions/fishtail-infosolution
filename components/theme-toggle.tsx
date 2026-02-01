@@ -4,8 +4,9 @@ import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-export function ThemeToggle() {
+export function ThemeToggle({ className }: { className?: string }) {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = React.useState(false);
 
@@ -16,7 +17,7 @@ export function ThemeToggle() {
 
     if (!mounted) {
         return (
-            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-secondary/10" />
+            <div className={cn("w-10 h-10 flex items-center justify-center rounded-full bg-secondary/10", className)} />
         );
     }
 
@@ -27,7 +28,7 @@ export function ThemeToggle() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="relative w-10 h-10 flex items-center justify-center rounded-full bg-secondary/10 border border-border hover:bg-secondary/20 transition-colors"
+            className={cn("relative w-10 h-10 flex items-center justify-center rounded-full bg-secondary/10 border border-border hover:bg-secondary/20 transition-colors", className)}
             aria-label="Toggle theme"
         >
             <AnimatePresence mode="wait">

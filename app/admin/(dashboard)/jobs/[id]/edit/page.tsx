@@ -263,8 +263,8 @@ export default function EditJobPage() {
                             </label>
 
                             {!iconPreview ? (
-                                <div className="w-full max-w-sm min-h-48 border border-dashed bg-white dark:bg-gray-900/50 border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
-                                    <FileUpload onChange={handleIconChange} />
+                                <div className="w-full max-w-sm border border-dashed bg-white dark:bg-gray-900/50 border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
+                                    <FileUpload onChange={handleIconChange} className="p-6" />
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">

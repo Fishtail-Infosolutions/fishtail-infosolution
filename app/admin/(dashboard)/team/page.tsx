@@ -16,6 +16,7 @@ import {
     Loader2,
     X
 } from "lucide-react";
+import { AddButton } from "@/components/admin/add-button";
 import { Loader } from "@/components/ui/loader";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -37,6 +38,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { ConfirmDeleteModal } from "@/components/modals/confirm-delete-modal";
 
 // Drag and Drop imports
 import {
@@ -133,6 +135,7 @@ export default function TeamPage() {
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
     const [memberToView, setMemberToView] = useState<TeamMember | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isReordering, setIsReordering] = useState(false);
 
@@ -207,6 +210,7 @@ export default function TeamPage() {
         if (!memberToDelete) return;
 
         try {
+            setIsDeleting(true);
             const res = await fetch(`/api/team/${memberToDelete._id}`, {
                 method: "DELETE",
             });
@@ -223,6 +227,8 @@ export default function TeamPage() {
             }
         } catch (error) {
             toast.error("Error deleting team member");
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -256,12 +262,10 @@ export default function TeamPage() {
                 </div>
                 <div className="flex items-center gap-4">
                     {isReordering && <span className="text-sm text-blue-500 flex items-center gap-2 animate-pulse"><Loader2 size={14} className="animate-spin" /> Saving order...</span>}
-                    <Link href="/admin/team/new">
-                        <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 px-6 h-11 rounded-xl font-semibold gap-2">
-                            <Plus size={18} />
-                            Add Team Member
-                        </Button>
-                    </Link>
+                    <AddButton
+                        href="/admin/team/new"
+                        label="Add Team Member"
+                    />
                 </div>
             </div>
 
@@ -293,7 +297,7 @@ export default function TeamPage() {
                                         <span className="sr-only">Drag Handle</span>
                                     </th>
                                     <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Member</th>
-                                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Role</th>
+                                    <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider min-w-[200px]">Role</th>
                                     <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Socials</th>
                                     <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
                                     <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
@@ -337,7 +341,7 @@ export default function TeamPage() {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-5">
+                                                <td className="px-6 py-5 min-w-[200px]">
                                                     <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 text-sm font-medium">
                                                         {member.role}
                                                     </span>
@@ -540,40 +544,13 @@ export default function TeamPage() {
             </Dialog>
 
             {/* Delete Confirmation Dialog */}
-            <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
-                <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 shadow-2xl">
-                    <div className="p-6 pt-8 flex flex-col items-center text-center space-y-4">
-                        <div className="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/10 flex items-center justify-center">
-                            <Trash2 size={32} className="text-red-500" />
-                        </div>
-                        <div className="space-y-2">
-                            <DialogTitle className="text-xl font-bold text-gray-900 dark:text-white">
-                                Confirm Deletion
-                            </DialogTitle>
-                            <DialogDescription className="text-gray-500 dark:text-gray-400 text-sm">
-                                Are you sure you want to delete <span className="font-bold text-gray-900 dark:text-white">"{memberToDelete?.name}"</span>?
-                                This action cannot be undone.
-                            </DialogDescription>
-                        </div>
-                    </div>
-                    <div className="p-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-800 flex gap-3">
-                        <Button
-                            variant="outline"
-                            className="flex-1 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-xs font-semibold"
-                            onClick={() => setIsDeleteModalOpen(false)}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            variant="destructive"
-                            className="flex-1 bg-red-500/15 dark:bg-red-500/8 hover:bg-red-500 dark:hover:bg-red-600 text-red-600 dark:text-red-400 hover:text-white dark:hover:text-white border-none text-xs font-semibold"
-                            onClick={handleDelete}
-                        >
-                            Delete Permanently
-                        </Button>
-                    </div>
-                </DialogContent>
-            </Dialog>
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleDelete}
+                itemName={memberToDelete?.name}
+                loading={isDeleting}
+            />
         </div>
     );
 }
