@@ -46,6 +46,7 @@ interface Job {
     salary?: string;
     deadline?: string;
     openings?: number;
+    applicationsCount?: number;
     createdAt: string;
 }
 
@@ -172,6 +173,7 @@ export default function JobsPage() {
                                 <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Category</th>
                                 <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Deadline</th>
                                 <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Openings</th>
+                                <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Applications</th>
                                 <th className="px-6 py-5 text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] text-right">Actions</th>
                             </tr>
                         </thead>
@@ -225,6 +227,13 @@ export default function JobsPage() {
                                             <span className="inline-flex items-center justify-center px-2.5 py-1 rounded-md bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold min-w-[40px]">
                                                 {job.openings || 1}
                                             </span>
+                                        </td>
+                                        <td className="px-6 py-5">
+                                            <Link href={`/admin/applications?job=${job._id}`}>
+                                                <span className="inline-flex items-center justify-center px-2.5 py-1 rounded-md bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-bold min-w-[40px] hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors cursor-pointer">
+                                                    {job.applicationsCount || 0} Applications
+                                                </span>
+                                            </Link>
                                         </td>
                                         <td className="px-6 py-5 text-right">
                                             <Popover>

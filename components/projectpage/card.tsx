@@ -19,7 +19,7 @@ export function ProjectCard({ imageUrl, title, className }: ProjectCardProps) {
             >
                 <div className="flex gap-3 items-center justify-between">
                     <p className="font-semibold text-xl">{title}</p>
-                    <Button size="sm">
+                    <Button size="sm" className="bg-white text-black hover:bg-white/90 rounded-full">
                         View Project
                     </Button>
                 </div>

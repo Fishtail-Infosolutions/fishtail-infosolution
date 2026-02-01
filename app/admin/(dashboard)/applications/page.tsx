@@ -19,10 +19,13 @@ import {
     Globe,
     ChevronLeft,
     ChevronRight,
-    Download
+    Download,
+    X
 } from "lucide-react";
 import { Loader } from "@/components/ui/loader";
 import toast from "react-hot-toast";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import {
     Dialog,
     DialogContent,
@@ -62,11 +65,14 @@ const statusConfig = {
     hired: { label: "Hired", color: "text-green-500 bg-green-50/50 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50" },
 };
 
-export default function ApplicationsPage() {
+export function ApplicationsList() {
     const [applications, setApplications] = useState<Application[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const jobId = searchParams.get('job');
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +80,9 @@ export default function ApplicationsPage() {
 
     const fetchApplications = async () => {
         try {
-            const res = await fetch("/api/applications");
+            setLoading(true);
+            const url = jobId ? `/api/applications?job=${jobId}` : "/api/applications";
+            const res = await fetch(url);
             if (!res.ok) throw new Error("Failed to fetch applications");
             const data = await res.json();
             setApplications(data);
@@ -87,7 +95,11 @@ export default function ApplicationsPage() {
 
     useEffect(() => {
         fetchApplications();
-    }, []);
+    }, [jobId]);
+
+    const clearFilter = () => {
+        router.push('/admin/applications');
+    };
 
     const updateStatus = async (id: string, newStatus: string) => {
         try {
@@ -177,11 +189,24 @@ export default function ApplicationsPage() {
     return (
         <div className="max-w-[1200px] mx-auto space-y-8 lg:p-0 animate-in fade-in duration-500">
             {/* Header Section */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="space-y-1">
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Applications ({filteredApplications.length})
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-3">
+                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+                        {jobId && applications.length > 0 ? `Applications for ${applications[0].jobTitle}` : `Applications (${filteredApplications.length})`}
                     </h1>
+                    {jobId && (
+                        <div className="flex items-center gap-3 py-1">
+                            <span className="text-[12px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2.5 py-1 rounded-full border border-blue-100 dark:border-blue-800/50">
+                                Filtered by Job
+                            </span>
+                            <button
+                                onClick={clearFilter}
+                                className="text-[12px] font-bold uppercase tracking-widest text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 px-2.5 py-1 rounded-full hover:bg-red-500/15 transition-all border border-transparent hover:border-red-500/20 flex items-center gap-1.5"
+                            >
+                                <X size={12} /> Clear Filter
+                            </button>
+                        </div>
+                    )}
                     <p className="text-gray-500 dark:text-gray-400 font-medium">
                         Manage and review incoming job applications.
                     </p>
@@ -482,7 +507,7 @@ export default function ApplicationsPage() {
                             onClick={() => selectedApplication && handleDeleteClick(selectedApplication._id)}
                         >
                             <Trash2 size={14} />
-                            Delete Application
+                            Delete
                         </Button>
                         <Button
                             variant="outline"
@@ -546,5 +571,13 @@ export default function ApplicationsPage() {
                 }
             `}</style>
         </div>
+    );
+}
+
+export default function ApplicationsPage() {
+    return (
+        <Suspense fallback={<Loader />}>
+            <ApplicationsList />
+        </Suspense>
     );
 }

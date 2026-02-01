@@ -23,7 +23,12 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
     try {
         await connectDB();
-        const applications = await Application.find({})
+        const { searchParams } = new URL(req.url);
+        const jobId = searchParams.get('job');
+
+        const query = jobId ? { job: jobId } : {};
+
+        const applications = await Application.find(query)
             .populate('job', 'title') // Populate job title from Job model if it exists
             .sort({ createdAt: -1 });
 

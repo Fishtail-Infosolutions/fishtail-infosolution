@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Job from "@/models/Job";
 import JobCategory from "@/models/JobCategory";
+import Application from "@/models/Application";
 
 export async function GET(req: Request) {
     try {
@@ -23,10 +24,27 @@ export async function GET(req: Request) {
             .limit(limit)
             .skip(skip);
 
+        // Get application counts for each job
+        const jobIds = jobs.map(job => job._id);
+        const applicationCounts = await Application.aggregate([
+            { $match: { job: { $in: jobIds } } },
+            { $group: { _id: "$job", count: { $sum: 1 } } }
+        ]);
+
+        const countsMap = applicationCounts.reduce((acc, curr) => {
+            acc[curr._id.toString()] = curr.count;
+            return acc;
+        }, {} as Record<string, number>);
+
+        const jobsWithCounts = jobs.map(job => ({
+            ...job.toObject(),
+            applicationsCount: countsMap[job._id.toString()] || 0
+        }));
+
         const total = await Job.countDocuments();
 
         return NextResponse.json({
-            jobs,
+            jobs: jobsWithCounts,
             pagination: {
                 total,
                 page,

@@ -28,12 +28,26 @@ export interface TeamMember {
 export const getPlatformIcon = (platform: string) => {
     switch (platform.toLowerCase()) {
         case 'linkedin': return FaLinkedin;
-        case 'twitter': return FaX;
+        case 'twitter':
+        case 'x': return FaX;
         case 'facebook': return FaFacebook;
         case 'github': return FaGithub;
         case 'instagram': return FaInstagram;
         case 'website': return FaGlobe;
         default: return FaGlobe;
+    }
+};
+
+export const getPlatformHoverColor = (platform: string) => {
+    switch (platform.toLowerCase()) {
+        case 'linkedin': return 'hover:text-[#0e76a8]';
+        case 'twitter':
+        case 'x': return 'hover:text-[#1DA1F2]';
+        case 'facebook': return 'hover:text-[#1877F2]';
+        case 'github': return 'hover:text-foreground';
+        case 'instagram': return 'hover:text-red-500';
+        case 'whatsapp': return 'hover:text-[#25D366]';
+        default: return 'hover:text-foreground';
     }
 };
 
@@ -83,14 +97,14 @@ export const TeamCard = ({ member, icon = <User2 className="h-6 w-6 text-foregro
                         <div className="flex gap-4">
                             {member.socials?.map((social, idx) => {
                                 const Icon = getPlatformIcon(social.platform);
+                                const hoverColor = getPlatformHoverColor(social.platform);
                                 return (
-                                    <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                                    <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className={cn("text-muted-foreground transition-all duration-300", hoverColor)}>
                                         <Icon className="w-5 h-5" />
                                     </a>
                                 )
                             })}
                         </div>
-
                         {/* 3. Name and Role */}
                         <div className="text-center">
                             <h3 className="font-sans text-xl font-semibold text-foreground">
