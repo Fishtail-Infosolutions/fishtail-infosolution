@@ -328,7 +328,7 @@ export default function JobCategoriesPage() {
                                                 className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
                                             />
                                         </FormControl>
-                                        <FormMessage className="text-[10px]" />
+                                        <FormMessage className="text-xs" />
                                     </FormItem>
                                 )}
                             />
@@ -349,7 +349,7 @@ export default function JobCategoriesPage() {
                                                 className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[100px] resize-none"
                                             />
                                         </FormControl>
-                                        <FormMessage className="text-[10px]" />
+                                        <FormMessage className="text-xs" />
                                     </FormItem>
                                 )}
                             />
@@ -414,7 +414,7 @@ export default function JobCategoriesPage() {
                                                 className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
                                             />
                                         </FormControl>
-                                        <FormMessage className="text-[10px]" />
+                                        <FormMessage className="text-xs" />
                                     </FormItem>
                                 )}
                             />
@@ -435,7 +435,7 @@ export default function JobCategoriesPage() {
                                                 className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[100px] resize-none"
                                             />
                                         </FormControl>
-                                        <FormMessage className="text-[10px]" />
+                                        <FormMessage className="text-xs" />
                                     </FormItem>
                                 )}
                             />

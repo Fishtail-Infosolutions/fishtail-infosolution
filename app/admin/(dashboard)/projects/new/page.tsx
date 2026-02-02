@@ -2,10 +2,18 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Upload, X, Type, Globe, ImageIcon } from "lucide-react";
+import { Loader2, Upload, X, Type, Globe, ImageIcon, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import Breadcrumb from "@/components/admin/breadcrumb";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -100,13 +108,28 @@ export default function NewProjectPage() {
 
     return (
         <div className="max-w-3xl mr-auto space-y-8 pb-20 pt-2 px-4 md:px-0">
-            {/* Breadcrumb */}
-            <Breadcrumb
-                items={[
-                    { label: "Projects", href: "/admin/projects" },
-                    { label: "Add Project" }
-                ]}
-            />
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/admin/dashboard" className="flex items-center gap-2">
+                                <Home className="h-4 w-4 font-bold" />
+                                Dashboard
+                            </Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/admin/projects">Projects</Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Add Project</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
 
             {/* Header */}
             <div className="space-y-1">
@@ -188,15 +211,23 @@ export default function NewProjectPage() {
                                             <FileUpload onChange={handleImageChange} className="p-6" />
                                         </div>
                                     ) : (
-                                        <div className="relative aspect-video w-full max-w-md rounded-2xl overflow-hidden border-2 border-white dark:border-gray-800 shadow-lg group">
-                                            <Image src={imagePreview} alt="Project preview" fill className="object-cover" />
-                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <div className="flex flex-col sm:flex-row items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
+                                            <div className="relative aspect-video w-full sm:w-48 rounded-xl overflow-hidden border-2 border-white dark:border-gray-800 shadow-md group shrink-0">
+                                                <Image src={imagePreview} alt="Project preview" fill className="object-cover" />
+                                            </div>
+                                            <div className="flex-1 space-y-2 text-center sm:text-left">
+                                                <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                                                    Project Preview Image
+                                                </p>
+                                                <p className="text-xs text-gray-500">
+                                                    {imageFile?.size ? (imageFile.size / (1024 * 1024)).toFixed(2) : "0.00"} MB
+                                                </p>
                                                 <Button
                                                     type="button"
-                                                    variant="secondary"
+                                                    variant="ghost"
                                                     size="sm"
                                                     onClick={removeImage}
-                                                    className="rounded-full bg-white/90 hover:bg-white text-red-500 border-none px-4"
+                                                    className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 h-9 px-3 ml-0 sm:-ml-3"
                                                 >
                                                     <X size={16} className="mr-2" />
                                                     Remove & Change

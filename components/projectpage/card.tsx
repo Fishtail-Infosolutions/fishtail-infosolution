@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 interface ProjectCardProps {
     imageUrl: string;
     title: string;
+    projectUrl: string;
     className?: string;
 }
 
-export function ProjectCard({ imageUrl, title, className }: ProjectCardProps) {
+export function ProjectCard({ imageUrl, title, projectUrl, className }: ProjectCardProps) {
     return (
         <div className={cn(" relative flex items-center justify-center", className)}>
             <DirectionAwareHover
@@ -19,9 +20,11 @@ export function ProjectCard({ imageUrl, title, className }: ProjectCardProps) {
             >
                 <div className="flex gap-3 items-center justify-between">
                     <p className="font-semibold text-xl">{title}</p>
-                    <Button size="sm" className="bg-white text-black hover:bg-white/90 rounded-full">
-                        View Project
-                    </Button>
+                    <a href={projectUrl} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" className="bg-white text-black hover:bg-white/90 rounded-full">
+                            View Project
+                        </Button>
+                    </a>
                 </div>
             </DirectionAwareHover>
         </div>

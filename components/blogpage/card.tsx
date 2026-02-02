@@ -5,12 +5,23 @@ import { FaArrowRight } from "react-icons/fa6";
 import GlareHover from "../ui/GlareHover";
 
 interface BlogCardProps {
-    blog: Blog;
+    blog: {
+        _id: string;
+        title: string;
+        slug: string;
+        imageUrl: string;
+        publishedAt?: string;
+        createdAt?: string;
+    };
 }
 
 export const BlogCard = ({ blog }: BlogCardProps) => {
+    const formattedDate = blog.publishedAt
+        ? new Date(blog.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : new Date(blog.createdAt!).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
     return (
-        <Link href={`/blog/${blog.id}`} className="block group w-full mx-auto sm:mx-0">
+        <Link href={`/blog/${blog.slug}`} className="block group w-full mx-auto sm:mx-0">
             <GlareHover
                 width="100%"
                 height="350px"
@@ -32,7 +43,7 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
                     </p>
                     <div className="flex justify-between items-center w-full">
                         <p className="font-normal text-sm text-neutral-300">
-                            {blog.date}
+                            {formattedDate}
                         </p>
                         <div className="flex items-center gap-2 text-sm text-foreground font-medium group-hover:translate-x-1 transition-transform duration-300">
                             Read More <FaArrowRight />

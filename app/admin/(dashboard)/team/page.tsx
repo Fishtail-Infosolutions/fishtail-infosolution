@@ -462,24 +462,25 @@ export default function TeamPage() {
 
                 {/* Pagination */}
                 {pagination.pages > 1 && (
-                    <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4">
-                        <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                Showing <span className="font-semibold text-gray-900 dark:text-white">{((pagination.page - 1) * pagination.limit) + 1}</span> to{" "}
-                                <span className="font-semibold text-gray-900 dark:text-white">
+                    <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
+                                Showing <span className="font-bold text-gray-900 dark:text-white">{((pagination.page - 1) * pagination.limit) + 1}</span> to{" "}
+                                <span className="font-bold text-gray-900 dark:text-white">
                                     {Math.min(pagination.page * pagination.limit, pagination.total)}
                                 </span> of{" "}
-                                <span className="font-semibold text-gray-900 dark:text-white">{pagination.total}</span> results
+                                <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
                             </p>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
                                 <Button
                                     variant="ghost"
+                                    size="sm"
                                     onClick={() => handlePageChange(pagination.page - 1)}
                                     disabled={pagination.page === 1 || loading}
-                                    className="h-9 px-3 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
+                                    className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                                 >
                                     <ChevronLeft size={16} />
-                                    Previous
+                                    <span className="hidden sm:inline">Previous</span>
                                 </Button>
                                 <div className="flex items-center gap-1">
                                     {Array.from({ length: pagination.pages }, (_, i) => i + 1)
@@ -493,15 +494,16 @@ export default function TeamPage() {
                                             return (
                                                 <React.Fragment key={page}>
                                                     {showEllipsisBefore && (
-                                                        <span className="px-2 text-gray-400">...</span>
+                                                        <span className="px-1 text-gray-400 select-none">...</span>
                                                     )}
                                                     <Button
                                                         variant={pagination.page === page ? "default" : "outline"}
+                                                        size="sm"
                                                         onClick={() => handlePageChange(page)}
                                                         disabled={loading}
-                                                        className={`h-9 w-9 p-0 ${pagination.page === page
-                                                            ? "bg-blue-600 text-white hover:bg-blue-700"
-                                                            : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
+                                                            ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
+                                                            : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
                                                             }`}
                                                     >
                                                         {page}
@@ -512,11 +514,12 @@ export default function TeamPage() {
                                 </div>
                                 <Button
                                     variant="ghost"
+                                    size="sm"
                                     onClick={() => handlePageChange(pagination.page + 1)}
                                     disabled={pagination.page === pagination.pages || loading}
-                                    className="h-9 px-3 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
+                                    className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                                 >
-                                    Next
+                                    <span className="hidden sm:inline">Next</span>
                                     <ChevronRight size={16} />
                                 </Button>
                             </div>
@@ -530,6 +533,7 @@ export default function TeamPage() {
                 <DialogContent showCloseButton={false} className="sm:max-w-[425px] p-0 bg-transparent border-none shadow-none text-foreground">
                     {memberToView && (
                         <div className="relative w-full h-full">
+                            <DialogTitle className="sr-only">View Team Member: {memberToView.name}</DialogTitle>
                             <TeamCard
                                 member={memberToView}
                                 className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800"

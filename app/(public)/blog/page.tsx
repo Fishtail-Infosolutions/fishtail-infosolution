@@ -1,12 +1,44 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { BlogCard } from "@/components/blogpage/card";
-import { Blogs } from "@/constants/blogs";
+import { Loader } from "@/components/ui/loader";
+
+interface Blog {
+  _id: string;
+  title: string;
+  slug: string;
+  imageUrl: string;
+  excerpt: string;
+  category: string;
+  publishedAt: string;
+}
 
 const BlogPage = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch("/api/blogs?status=Published&limit=10");
+        if (!res.ok) throw new Error("Failed to fetch blogs");
+        const data = await res.json();
+        setBlogs(data.blogs);
+      } catch (error) {
+        console.error("Error loading blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (loading) return <Loader />;
+
   return (
     <main className="min-h-screen bg-background antialiased pt-32 transition-colors duration-500 pb-20">
       {/* Banner Section */}
@@ -47,24 +79,30 @@ const BlogPage = () => {
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-9 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
-          {Blogs.map((blog, index) => (
-            <motion.div
-              key={blog.id}
-              className="w-full"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: "easeOut"
-              }}
-            >
-              <BlogCard blog={blog} />
-            </motion.div>
-          ))}
-        </div>
+        {blogs.length === 0 ? (
+          <div className="text-center py-20 bg-gray-50/50 dark:bg-gray-900/50 rounded-3xl border-2 border-dashed border-gray-100 dark:border-gray-800">
+            <p className="text-gray-500 font-medium italic">No articles published yet. Stay tuned!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+            {blogs.map((blog, index) => (
+              <motion.div
+                key={blog._id}
+                className="w-full"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  ease: "easeOut"
+                }}
+              >
+                <BlogCard blog={blog} />
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   );

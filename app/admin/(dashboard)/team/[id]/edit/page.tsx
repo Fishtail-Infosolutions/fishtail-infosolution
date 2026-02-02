@@ -2,10 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { Loader2, Upload, X, User, Briefcase, FileText, Link2, Hash, ToggleLeft, Plus } from "lucide-react";
+import { Loader2, Upload, X, User, Briefcase, FileText, Link2, Hash, ToggleLeft, Plus, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import Breadcrumb from "@/components/admin/breadcrumb";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -208,13 +216,28 @@ export default function EditTeamMemberPage() {
 
     return (
         <div className="max-w-3xl mr-auto space-y-8 pb-20 pt-2 px-4 md:px-0">
-            {/* Breadcrumb */}
-            <Breadcrumb
-                items={[
-                    { label: "Team Members", href: "/admin/team" },
-                    { label: "Edit Member" }
-                ]}
-            />
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/admin/dashboard" className="flex items-center gap-2">
+                                <Home className="h-4 w-4 font-bold" />
+                                Dashboard
+                            </Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/admin/team">Team Members</Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Edit Member</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
 
             {/* Header */}
             <div className="space-y-1">
@@ -411,11 +434,11 @@ export default function EditTeamMemberPage() {
                                 <div className="space-y-2">
                                     {socials.map((social, index) => (
                                         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-xl">
-                                            <div className="flex items-center gap-3">
-                                                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded">
+                                            <div className="flex items-center gap-3 min-w-0">
+                                                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-1 rounded shrink-0">
                                                     {social.platform}
                                                 </span>
-                                                <span className="text-sm text-gray-600 dark:text-gray-400 truncate max-w-xs">
+                                                <span className="text-sm text-gray-600 dark:text-gray-400 truncate">
                                                     {social.url}
                                                 </span>
                                             </div>

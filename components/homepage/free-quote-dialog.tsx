@@ -134,7 +134,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
             <DialogContent
                 data-lenis-prevent
                 overlayClassName="z-1000"
-                className="sm:max-w-[700px] w-[95vw] max-h-[85vh] overflow-y-auto bg-background/90 border-border text-foreground backdrop-blur-xl z-1000"
+                className="sm:max-w-[700px] w-[95vw] max-h-[85vh] overflow-y-auto bg-background/70 border-border text-foreground backdrop-blur-sm z-1000"
             >
                 <DialogTitle className="sr-only">Free Quote Request</DialogTitle>
                 <Form {...form}>

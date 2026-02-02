@@ -319,31 +319,66 @@ export function ApplicationsList() {
 
                 {/* Pagination Footer */}
                 {totalPages > 1 && (
-                    <div className="px-6 py-4 bg-gray-50/50 dark:bg-gray-800/20 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-                        <p className="text-xs text-gray-500 font-medium italic">
-                            Page <span className="text-gray-900 dark:text-white">{currentPage}</span> of <span className="text-gray-900 dark:text-white">{totalPages}</span>
-                        </p>
-                        <div className="flex items-center gap-2">
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                                className="h-8 px-2 text-xs font-bold gap-1 dark:bg-transparent shadow-none hover:bg-gray-100 dark:hover:bg-gray-800"
-                            >
-                                <ChevronLeft size={14} />
-                                Prev
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                disabled={currentPage === totalPages}
-                                className="h-8 px-2 text-xs font-bold gap-1 dark:bg-transparent shadow-none hover:bg-gray-100 dark:hover:bg-gray-800"
-                            >
-                                Next
-                                <ChevronRight size={14} />
-                            </Button>
+                    <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
+                                Showing <span className="font-bold text-gray-900 dark:text-white">{startIndex + 1}</span> to{" "}
+                                <span className="font-bold text-gray-900 dark:text-white">
+                                    {Math.min(startIndex + itemsPerPage, filteredApplications.length)}
+                                </span> of{" "}
+                                <span className="font-bold text-gray-900 dark:text-white">{filteredApplications.length}</span> <span className="hidden sm:inline">results</span>
+                            </p>
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                    className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-all shadow-none"
+                                >
+                                    <ChevronLeft size={16} />
+                                    <span className="hidden sm:inline">Previous</span>
+                                </Button>
+                                <div className="flex items-center gap-1">
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                        .filter(page => {
+                                            return page === 1 ||
+                                                page === totalPages ||
+                                                Math.abs(page - currentPage) <= 1;
+                                        })
+                                        .map((page, index, array) => {
+                                            const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
+                                            return (
+                                                <React.Fragment key={page}>
+                                                    {showEllipsisBefore && (
+                                                        <span className="px-1 text-gray-400 select-none">...</span>
+                                                    )}
+                                                    <Button
+                                                        variant={currentPage === page ? "default" : "outline"}
+                                                        size="sm"
+                                                        onClick={() => setCurrentPage(page)}
+                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${currentPage === page
+                                                            ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
+                                                            : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
+                                                            }`}
+                                                    >
+                                                        {page}
+                                                    </Button>
+                                                </React.Fragment>
+                                            );
+                                        })}
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                    className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-all shadow-none"
+                                >
+                                    <span className="hidden sm:inline">Next</span>
+                                    <ChevronRight size={16} />
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -353,13 +388,13 @@ export function ApplicationsList() {
             <Dialog open={!!selectedApplication} onOpenChange={(open) => !open && setSelectedApplication(null)}>
                 <DialogContent className="sm:max-w-[700px] w-[95vw] sm:w-full p-0 overflow-hidden bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 shadow-2xl max-h-[92vh] flex flex-col">
                     <DialogHeader className="p-6 pt-12 md:p-8 md:px-9 md:pr-12 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-100 dark:border-gray-800 shrink-0">
-                        <div className="flex flex-col md:flex-row md:justify-between md:items-center text-center md:text-left gap-4">
-                            <div className="flex items-center gap-4 justify-center md:justify-start">
+                        <div className="flex flex-col md:flex-row md:justify-between md:items-center items-center text-center md:text-left gap-4">
+                            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
                                 <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 font-bold text-xl shrink-0">
                                     {selectedApplication?.fullName.charAt(0)}
                                 </div>
                                 <div className="space-y-1">
-                                    <DialogTitle className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                    <DialogTitle className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-1">
                                         {selectedApplication?.fullName}
                                     </DialogTitle>
                                     <DialogDescription className="text-gray-500 text-xs md:text-sm font-medium">
@@ -376,8 +411,8 @@ export function ApplicationsList() {
                     <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 custom-scrollbar">
                         {/* Status Quick Update */}
                         <div className="space-y-4">
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Update Status:</span>
-                            <div className="flex flex-wrap gap-2">
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">Mark Status As:</span>
+                            <div className="flex flex-wrap gap-2 text-foreground">
                                 {Object.entries(statusConfig).map(([key, config]) => (
                                     <button
                                         key={key}
@@ -400,7 +435,7 @@ export function ApplicationsList() {
                                     <Mail size={14} className="text-blue-500 shrink-0" />
                                     Email Address
                                 </h3>
-                                <a href={`mailto:${selectedApplication?.email}`} className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-base block truncate transition-all">
+                                <a href={`mailto:${selectedApplication?.email}`} className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-sm md:text-base block truncate transition-all">
                                     {selectedApplication?.email}
                                 </a>
                             </div>
@@ -430,7 +465,7 @@ export function ApplicationsList() {
                                     <Briefcase size={14} className="text-blue-500 shrink-0" />
                                     Experience
                                 </h3>
-                                <p className="font-medium text-gray-700 dark:text-gray-300 text-base">
+                                <p className="font-medium text-gray-700 dark:text-gray-300 text-sm md:text-base">
                                     {selectedApplication?.workExperience}
                                 </p>
                             </div>
@@ -471,9 +506,9 @@ export function ApplicationsList() {
                         </div>
 
                         {/* Resume Download */}
-                        <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg text-blue-600 dark:text-blue-200">
+                        <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div className="flex items-center gap-3 self-start sm:self-auto">
+                                <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg text-blue-600 dark:text-blue-200 shrink-0">
                                     <FileText size={20} />
                                 </div>
                                 <div>
@@ -483,7 +518,7 @@ export function ApplicationsList() {
                             </div>
                             <Button
                                 size="sm"
-                                className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
+                                className="bg-blue-600 hover:bg-blue-700 text-white gap-2 w-full sm:w-auto"
                                 onClick={() => window.open(selectedApplication?.cvUrl, '_blank')}
                             >
                                 <Download size={14} />

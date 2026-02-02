@@ -12,6 +12,7 @@ import { Button as MovingBorderButton } from "./ui/moving-border";
 import { FreeQuoteDialog } from "./homepage/free-quote-dialog";
 import { ThemeToggle } from "./theme-toggle";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 interface NavItem {
   name: string;
@@ -95,7 +96,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* Navbar with Glassmorphism */}
-      <nav className="fixed top-0 left-0 w-full bg-background/40 backdrop-blur-lg border-b border-border/40 z-[90]">
+      <nav className="fixed top-0 left-0 w-full bg-background/40 backdrop-blur-lg border-b border-border/40 z-90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 md:py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
@@ -167,16 +168,16 @@ const Navbar: React.FC = () => {
       </nav>
 
 
-      {/* {isMobileMenuOpen && (
+      {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-md z-100 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
-      )} */}
+      )}
 
       {/* Mobile Menu with Glassmorphism */}
       <div
-        className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto w-72 bg-background/80 backdrop-blur-md border-l border-b border-border/40 z-[999] transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto w-72 bg-white dark:bg-black border-l border-b border-border/40 z-999 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col p-6 space-y-2">
@@ -187,10 +188,12 @@ const Navbar: React.FC = () => {
                 key={item.path}
                 href={item.path}
                 onClick={handleNavClick}
-                className={`flex items-center space-x-4 px-4 py-3 rounded-lg transition-all ${isActive(item.path)
-                  ? 'bg-accent text-foreground border border-border/40'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
-                  }`}
+                className={cn(
+                  "flex items-center space-x-4 px-4 py-3 rounded-lg transition-all",
+                  isActive(item.path)
+                    ? "bg-zinc-100 dark:bg-zinc-800 text-foreground border border-border/40"
+                    : "text-muted-foreground hover:text-foreground hover:bg-gray-50 dark:hover:bg-gray-900/50"
+                )}
               >
                 <Icon size={20} />
                 <span className="font-medium">{item.name}</span>

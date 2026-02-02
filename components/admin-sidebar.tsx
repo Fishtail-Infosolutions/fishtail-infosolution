@@ -26,11 +26,13 @@ interface SidebarItemProps {
     icon: React.ReactNode;
     label: string;
     active?: boolean;
+    onClick?: () => void;
 }
 
-const SidebarItem = ({ href, icon, label, active }: SidebarItemProps) => (
+const SidebarItem = ({ href, icon, label, active, onClick }: SidebarItemProps) => (
     <Link
         href={href}
+        onClick={onClick}
         className={cn(
             "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group",
             active
@@ -99,14 +101,14 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
             {/* Sidebar Overlay */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] lg:hidden"
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60 lg:hidden"
                     onClick={() => setIsOpen(false)}
                 />
             )}
 
             {/* Sidebar Content */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-[70] transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
+                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-70 transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 {/* Logo & Close Button */}
@@ -148,6 +150,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
                                 key={item.href}
                                 {...item}
                                 active={isActive}
+                                onClick={() => setIsOpen(false)}
                             />
                         );
                     })}

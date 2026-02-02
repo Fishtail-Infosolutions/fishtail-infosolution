@@ -164,9 +164,10 @@ export default function ProjectsPage() {
                             </div>
 
                             {/* Card Content */}
-                            <div className="p-5 space-y-3">
+                            <div className="p-5 space-y-4">
                                 <h3 className="font-bold text-gray-900 dark:text-white truncate">{project.title}</h3>
-                                <div className="pt-2 border-t border-gray-50 dark:border-gray-800">
+
+                                <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-gray-800">
                                     <a
                                         href={project.projectUrl}
                                         target="_blank"
@@ -176,6 +177,29 @@ export default function ProjectsPage() {
                                         <ExternalLink size={12} />
                                         VIEW PROJECT
                                     </a>
+
+                                    {/* Mobile Actions */}
+                                    <div className="flex items-center gap-1 sm:hidden">
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-8 w-8 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                                            onClick={() => router.push(`/admin/projects/${project._id}/edit`)}
+                                        >
+                                            <Pencil size={14} />
+                                        </Button>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            className="h-8 w-8 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                            onClick={() => {
+                                                setProjectToDelete(project);
+                                                setIsDeleteModalOpen(true);
+                                            }}
+                                        >
+                                            <Trash2 size={14} />
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -183,30 +207,70 @@ export default function ProjectsPage() {
                 )}
             </div>
 
-            {/* Pagination Component */}
+            {/* Pagination */}
             {pagination.pages > 1 && (
-                <div className="flex items-center justify-center gap-4 pt-4">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => fetchProjects(pagination.page - 1)}
-                        disabled={pagination.page === 1}
-                        className="rounded-xl border-gray-200 dark:border-gray-800"
-                    >
-                        <ChevronLeft size={16} className="mr-1" /> Previous
-                    </Button>
-                    <span className="text-sm font-semibold text-gray-500">
-                        Page <span className="text-gray-900 dark:text-white">{pagination.page}</span> of {pagination.pages}
-                    </span>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => fetchProjects(pagination.page + 1)}
-                        disabled={pagination.page === pagination.pages}
-                        className="rounded-xl border-gray-200 dark:border-gray-800"
-                    >
-                        Next <ChevronRight size={16} className="ml-1" />
-                    </Button>
+                <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10 rounded-2xl">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
+                            Showing <span className="font-bold text-gray-900 dark:text-white">{((pagination.page - 1) * pagination.limit) + 1}</span> to{" "}
+                            <span className="font-bold text-gray-900 dark:text-white">
+                                {Math.min(pagination.page * pagination.limit, pagination.total)}
+                            </span> of{" "}
+                            <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
+                        </p>
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => fetchProjects(pagination.page - 1)}
+                                disabled={pagination.page === 1 || loading}
+                                className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
+                            >
+                                <ChevronLeft size={16} />
+                                <span className="hidden sm:inline">Previous</span>
+                            </Button>
+                            <div className="flex items-center gap-1">
+                                {Array.from({ length: pagination.pages }, (_, i) => i + 1)
+                                    .filter(page => {
+                                        return page === 1 ||
+                                            page === pagination.pages ||
+                                            Math.abs(page - pagination.page) <= 1;
+                                    })
+                                    .map((page, index, array) => {
+                                        const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
+                                        return (
+                                            <React.Fragment key={page}>
+                                                {showEllipsisBefore && (
+                                                    <span className="px-1 text-gray-400 select-none">...</span>
+                                                )}
+                                                <Button
+                                                    variant={pagination.page === page ? "default" : "outline"}
+                                                    size="sm"
+                                                    onClick={() => fetchProjects(page)}
+                                                    disabled={loading}
+                                                    className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
+                                                        ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
+                                                        : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
+                                                        }`}
+                                                >
+                                                    {page}
+                                                </Button>
+                                            </React.Fragment>
+                                        );
+                                    })}
+                            </div>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => fetchProjects(pagination.page + 1)}
+                                disabled={pagination.page === pagination.pages || loading}
+                                className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
+                            >
+                                <span className="hidden sm:inline">Next</span>
+                                <ChevronRight size={16} />
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             )}
 

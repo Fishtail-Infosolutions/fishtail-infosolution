@@ -2,10 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { Loader2, Upload, X, Briefcase, Tags, MapPin, DollarSign, FileText, ListChecks, Users, Calendar } from "lucide-react";
+import { Loader2, Upload, X, Briefcase, Tags, MapPin, DollarSign, FileText, ListChecks, Users, Calendar, Home } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import Breadcrumb from "@/components/admin/breadcrumb";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -233,13 +241,28 @@ export default function EditJobPage() {
 
     return (
         <div className="max-w-3xl mr-auto space-y-8 pb-20 pt-2 px-4 md:px-0">
-            {/* Breadcrumb */}
-            <Breadcrumb
-                items={[
-                    { label: "Jobs", href: "/admin/jobs" },
-                    { label: "Edit Job" }
-                ]}
-            />
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/admin/dashboard" className="flex items-center gap-2">
+                                <Home className="h-4 w-4 font-bold" />
+                                Dashboard
+                            </Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link href="/admin/jobs">Jobs</Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Edit Job</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
 
             {/* Header */}
             <div className="space-y-1">
