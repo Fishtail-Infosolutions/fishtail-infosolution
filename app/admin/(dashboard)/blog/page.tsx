@@ -13,12 +13,19 @@ import {
     FileText,
     Calendar,
     Tag,
-    Clock
+    Clock,
+    MoreVertical
 } from "lucide-react";
 import { AddButton } from "@/components/admin/add-button";
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@/components/self-made-ui/loader";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import Link from "next/link";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -30,10 +37,9 @@ interface Blog {
     title: string;
     slug: string;
     imageUrl: string;
-    category: string;
     status: 'Draft' | 'Published';
     publishedAt: string;
-    createdAt: string;
+    updatedAt: string;
 }
 
 interface PaginationData {
@@ -98,8 +104,7 @@ export default function BlogManagementPage() {
     };
 
     const filteredBlogs = blogs.filter(b =>
-        b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.category.toLowerCase().includes(searchQuery.toLowerCase())
+        b.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     if (loading && pagination.page === 1) return <Loader />;
@@ -113,12 +118,12 @@ export default function BlogManagementPage() {
                         Blog Management ({pagination.total})
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 font-medium">
-                        Create, edit and manage your company articles and news.
+                        Create, edit and manage your company blogs and news.
                     </p>
                 </div>
                 <AddButton
                     onClick={() => router.push("/admin/blog/new")}
-                    label="Create Article"
+                    label="Create Blog"
                 />
             </div>
 
@@ -127,7 +132,7 @@ export default function BlogManagementPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                 <Input
                     type="text"
-                    placeholder="Search blogs by title or category..."
+                    placeholder="Search blogs by title..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-xl"
@@ -140,8 +145,7 @@ export default function BlogManagementPage() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-800">
-                                <th className="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Article</th>
-                                <th className="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Category</th>
+                                <th className="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Blog</th>
                                 <th className="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
                                 <th className="px-6 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
                                 <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
@@ -150,10 +154,10 @@ export default function BlogManagementPage() {
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                             {filteredBlogs.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-20 text-center">
+                                    <td colSpan={4} className="px-6 py-20 text-center">
                                         <div className="flex flex-col items-center gap-3 opacity-50">
                                             <FileText size={48} className="text-gray-300" />
-                                            <p className="text-gray-500 font-medium italic">No articles found</p>
+                                            <p className="text-gray-500 font-medium italic">No blogs found</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -177,11 +181,6 @@ export default function BlogManagementPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <Badge variant="secondary" className="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-none font-medium">
-                                                {blog.category}
-                                            </Badge>
-                                        </td>
-                                        <td className="px-6 py-5">
                                             <div className="flex items-center gap-2">
                                                 <span className={`h-2 w-2 rounded-full ${blog.status === 'Published' ? 'bg-green-500 animate-pulse' : 'bg-yellow-500'}`} />
                                                 <span className={`text-sm font-semibold ${blog.status === 'Published' ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
@@ -190,49 +189,54 @@ export default function BlogManagementPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className="flex flex-col gap-1">
-                                                <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
-                                                    <Calendar size={12} />
-                                                    {format(new Date(blog.createdAt), "MMM d, yyyy")}
-                                                </div>
-                                                {blog.status === 'Published' && (
-                                                    <div className="flex items-center gap-1.5 text-[10px] text-green-500 font-medium">
-                                                        <Clock size={10} />
-                                                        Published
-                                                    </div>
-                                                )}
+                                            <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                                                <Calendar size={12} />
+                                                {format(new Date(blog.updatedAt), "MMM d, yyyy")}
                                             </div>
                                         </td>
                                         <td className="px-6 py-5 text-right">
-                                            <div className="flex items-center justify-end gap-2">
-                                                <Button
-                                                    size="icon"
-                                                    variant="ghost"
-                                                    className="h-9 w-9 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg"
-                                                    onClick={() => router.push(`/admin/blog/${blog._id}/edit`)}
-                                                >
-                                                    <Pencil size={16} />
-                                                </Button>
-                                                <Button
-                                                    size="icon"
-                                                    variant="ghost"
-                                                    className="h-9 w-9 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
-                                                    onClick={() => {
-                                                        setBlogToDelete(blog);
-                                                        setIsDeleteModalOpen(true);
-                                                    }}
-                                                >
-                                                    <Trash2 size={16} />
-                                                </Button>
-                                                <Button
-                                                    size="icon"
-                                                    variant="ghost"
-                                                    className="h-9 w-9 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
-                                                    onClick={() => window.open(`/blog/${blog.slug}`, '_blank')}
-                                                >
-                                                    <Eye size={16} />
-                                                </Button>
-                                            </div>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        variant="ghost"
+                                                        className="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg"
+                                                    >
+                                                        <MoreVertical size={18} />
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-48 p-2 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800" align="end">
+                                                    <div className="flex flex-col gap-1">
+                                                        <Button
+                                                            variant="ghost"
+                                                            className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-green-50 dark:hover:bg-green-900/20 text-green-600 dark:text-green-400 hover:text-green-600 dark:hover:text-green-400"
+                                                            onClick={() => window.open(`/blog/${blog.slug}`, '_blank')}
+                                                        >
+                                                            <Eye size={16} />
+                                                            View
+                                                        </Button>
+                                                        <Link href={`/admin/blog/${blog._id}/edit`}>
+                                                            <Button
+                                                                variant="ghost"
+                                                                className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
+                                                            >
+                                                                <Pencil size={16} />
+                                                                Edit
+                                                            </Button>
+                                                        </Link>
+                                                        <Button
+                                                            variant="ghost"
+                                                            className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 hover:text-red-600 dark:hover:text-red-400"
+                                                            onClick={() => {
+                                                                setBlogToDelete(blog);
+                                                                setIsDeleteModalOpen(true);
+                                                            }}
+                                                        >
+                                                            <Trash2 size={16} />
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                </PopoverContent>
+                                            </Popover>
                                         </td>
                                     </tr>
                                 ))

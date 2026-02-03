@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { BlogCard } from "@/components/blogpage/card";
-import { Loader } from "@/components/ui/loader";
+import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { notFound } from "next/navigation";
 
 interface Blog {
   _id: string;
@@ -37,7 +38,9 @@ const BlogPage = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) return <Loader />;
+  if (loading) return <BrandLoader message="Loading blogs..." />;
+
+  if (!blogs) notFound()
 
   return (
     <main className="min-h-screen bg-background antialiased pt-32 transition-colors duration-500 pb-20">

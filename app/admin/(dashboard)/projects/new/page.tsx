@@ -202,7 +202,7 @@ export default function NewProjectPage() {
                                     </FormLabel>
 
                                     {isUploading ? (
-                                        <div className="w-full max-w-md aspect-video border border-dashed border-neutral-200 dark:border-neutral-800 rounded-2xl flex flex-col items-center justify-center gap-3 bg-gray-50/50 dark:bg-gray-900/20">
+                                        <div className="w-full max-w-md aspect-square border border-dashed border-neutral-200 dark:border-neutral-800 rounded-2xl flex flex-col items-center justify-center gap-3 bg-gray-50/50 dark:bg-gray-900/20">
                                             <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
                                             <p className="text-sm text-gray-500 font-medium">Uploading image...</p>
                                         </div>
@@ -212,7 +212,7 @@ export default function NewProjectPage() {
                                         </div>
                                     ) : (
                                         <div className="flex flex-col sm:flex-row items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
-                                            <div className="relative aspect-video w-full sm:w-48 rounded-xl overflow-hidden border-2 border-white dark:border-gray-800 shadow-md group shrink-0">
+                                            <div className="relative aspect-square w-full sm:w-48 rounded-xl overflow-hidden border-2 border-white dark:border-gray-800 shadow-md group shrink-0">
                                                 <Image src={imagePreview} alt="Project preview" fill className="object-cover" />
                                             </div>
                                             <div className="flex-1 space-y-2 text-center sm:text-left">
@@ -238,7 +238,7 @@ export default function NewProjectPage() {
 
                                     {!imagePreview && !isUploading && (
                                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                                            PNG, JPG up to 5MB are supported. Recommended aspect ratio 16:9.
+                                            PNG, JPG up to 5MB are supported. Recommended size: 1080x1080px (1:1 Aspect Ratio).
                                         </div>
                                     )}
 

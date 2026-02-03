@@ -6,7 +6,7 @@ import CareerCard from "./card";
 import { cn } from "@/lib/utils";
 import GradientBanner from "../self-made-ui/gradeint-banner";
 import Tabs from "@/components/tab";
-import { Loader2 } from "lucide-react";
+import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
 
 export default function CareerSection() {
     const [categories, setCategories] = useState(["All"]);
@@ -48,14 +48,7 @@ export default function CareerSection() {
                 return jobCategoryName === activeCategory;
             });
 
-    if (loading) {
-        return (
-            <div className="w-full min-h-[60vh] flex flex-col items-center justify-center gap-4">
-                <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-                <p className="text-muted-foreground animate-pulse font-medium">Fetching opportunities...</p>
-            </div>
-        );
-    }
+    if (loading) return <BrandLoader message="Fetching opportunities..." />;
 
     return (
         <section className="w-full bg-background pt-32 pb-20 px-4 md:px-8 transition-colors duration-500">
@@ -80,7 +73,7 @@ export default function CareerSection() {
                         Join our Team
                     </h1>
                     <p className="text-muted-foreground text-sm md:text-base max-w-lg mx-auto">
-                        Feel free to email <a href="mailto:hr@fishtailinfosolutions.com.np" className="text-transparent bg-clip-text bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF] hover:underline">hr@fishtailinfosolutions.com</a> if you believe you would be a fantastic fit.
+                        Feel free to email <a href="mailto:hr@fishtailinfosolutions.com.np" className="text-transparent bg-clip-text bg-linear-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF] hover:underline">hr@fishtailinfosolutions.com</a> if you believe you would be a fantastic fit.
                     </p>
                 </motion.div>
 

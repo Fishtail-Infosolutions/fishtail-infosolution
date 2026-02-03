@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Blog } from "@/constants/blogs";
 import { FaArrowRight } from "react-icons/fa6";
 import GlareHover from "../ui/GlareHover";
 

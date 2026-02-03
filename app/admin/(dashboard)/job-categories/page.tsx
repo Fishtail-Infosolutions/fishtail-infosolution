@@ -12,7 +12,7 @@ import {
     Loader2
 } from "lucide-react";
 import { AddButton } from "@/components/admin/add-button";
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@/components/self-made-ui/loader";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

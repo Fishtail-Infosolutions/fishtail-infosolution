@@ -14,7 +14,8 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { format } from "date-fns";
-import { Loader } from "@/components/ui/loader";
+import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+
 
 export default function BlogPostPage() {
     const { slug } = useParams();
@@ -26,9 +27,12 @@ export default function BlogPostPage() {
         const fetchBlog = async () => {
             try {
                 const res = await fetch(`/api/blogs/slug/${slug}`);
-                if (!res.ok) throw new Error("Blog not found");
-                const data = await res.json();
-                setBlog(data);
+                if (!res.ok) {
+                    setBlog(null);
+                } else {
+                    const data = await res.json();
+                    setBlog(data);
+                }
             } catch (error) {
                 console.error("Error fetching blog:", error);
                 setBlog(null);
@@ -48,52 +52,33 @@ export default function BlogPostPage() {
         });
     };
 
-    if (isLoading) return <Loader />;
-
-    if (!blog) notFound();
+    if (isLoading) return <BrandLoader message="Loading blog..." />;
+    if (!blog) return notFound();
 
     return (
-        <div className="min-h-screen bg-background text-foreground font-sans pt-32 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500">
+        <div className="min-h-screen bg-background text-foreground font-sans pt-26 md:pt-32 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500">
             <div className="max-w-4xl mx-auto">
                 {/* Header Section */}
                 <div className="space-y-6 mb-10">
-                    <div className="flex items-center gap-4 text-muted-foreground">
+
+                    {/* Date with decorative line */}
+                    <div className="flex items-center gap-4 text-muted-foreground mb-6">
                         <div className="w-16 h-px bg-linear-to-r from-transparent to-border"></div>
-                        <span className="uppercase tracking-widest text-sm font-semibold text-blue-500">
-                            {blog.category}
+                        <span className="uppercase tracking-widest text-sm font-medium">
+                            {format(new Date(blog.publishedAt || blog.createdAt), "MMMM d, yyyy")}
                         </span>
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+
+                    {/* Blog Title */}
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-foreground via-foreground/80 to-foreground/50 mb-8 leading-tight">
                         {blog.title}
                     </h1>
 
-                    <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                            <User size={16} className="text-blue-500" />
-                            <span>{blog.author}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar size={16} className="text-blue-500" />
-                            <span>{format(new Date(blog.publishedAt || blog.createdAt), "MMMM d, yyyy")}</span>
-                        </div>
-                        {blog.tags && blog.tags.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                <Tag size={16} className="text-blue-500" />
-                                <div className="flex items-center gap-1">
-                                    {blog.tags.map((tag: string, i: number) => (
-                                        <span key={i} className="hover:text-foreground transition-colors">
-                                            #{tag}{i < blog.tags.length - 1 ? ', ' : ''}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 {/* Breadcrumb & Copy Link Section */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-6 border-y border-gray-100 dark:border-gray-800 mb-10">
+                <div className="flex flex-row items-center justify-between gap-4 py-0 mb-8">
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
@@ -108,11 +93,6 @@ export default function BlogPostPage() {
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage className="text-gray-400 truncate max-w-[150px] sm:max-w-[300px]">
-                                    {blog.title}
-                                </BreadcrumbPage>
-                            </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
 
@@ -120,10 +100,10 @@ export default function BlogPostPage() {
                         variant="ghost"
                         size="sm"
                         onClick={handleCopyLink}
-                        className="rounded-xl bg-gray-50 dark:bg-gray-800/50 text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 px-6 h-10 border-none transition-all"
+                        className="rounded-full bg-gray-50 dark:bg-gray-800/50 text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 px-6 h-10 border-none transition-all"
                     >
                         {copied ? <Check className="w-4 h-4 text-green-500 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-                        {copied ? "Link Copied" : "Share Article"}
+                        {copied ? "Link Copied" : "Share Blog"}
                     </Button>
                 </div>
 
@@ -134,7 +114,7 @@ export default function BlogPostPage() {
                         <img
                             src={blog.imageUrl}
                             alt={blog.title}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                         />
                     </div>
 

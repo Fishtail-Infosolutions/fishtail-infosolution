@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 
-export function Loader() {
+export function BrandLoader({ message = "Loading..." }: { message?: string }) {
     const [animationData, setAnimationData] = useState<any>(null);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -30,15 +30,16 @@ export function Loader() {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-sm transition-all duration-300">
+        <div className="w-full flex flex-col items-center justify-center gap-1 py-12 min-h-[90vh]">
             <div className="rounded-full bg-transparent overflow-hidden">
                 <Lottie
                     options={defaultOptions}
-                    height={300}
-                    width={300}
+                    height={200}
+                    width={200}
                     isClickToPauseDisabled={true}
                 />
             </div>
+            <p className="text-muted-foreground animate-pulse font-medium text-sm md:text-base">{message}</p>
         </div>
     );
 }

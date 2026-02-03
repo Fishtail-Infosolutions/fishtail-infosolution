@@ -34,12 +34,8 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             title: body.title,
             slug: body.slug,
             content: body.content,
-            excerpt: body.excerpt,
             imageUrl: body.imageUrl,
-            category: body.category,
-            tags: body.tags,
             status: body.status,
-            author: body.author,
         };
 
         // Update publishedAt if status changed to Published

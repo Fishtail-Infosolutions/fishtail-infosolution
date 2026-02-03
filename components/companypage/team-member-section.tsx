@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
-import { RefreshCw } from "lucide-react";
+import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
 import { TeamCard, TeamMember } from "./team-card";
 
 export default function TeamMemberSection() {
@@ -27,13 +27,7 @@ export default function TeamMemberSection() {
         fetchTeamMembers();
     }, []);
 
-    if (loading) {
-        return (
-            <section className="w-full bg-background py-12 sm:py-20 px-8 md:px-16 flex justify-center items-center min-h-[400px]">
-                <RefreshCw className="animate-spin text-muted-foreground w-8 h-8" />
-            </section>
-        );
-    }
+    if (loading) return <BrandLoader message="Loading team..." />;
 
     return (
         <section className="w-full bg-background py-12 sm:py-20 px-8 md:px-16 transition-colors duration-500">

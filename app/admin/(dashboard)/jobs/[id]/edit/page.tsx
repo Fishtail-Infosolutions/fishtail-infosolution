@@ -36,6 +36,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { Loader } from "@/components/self-made-ui/loader";
 
 interface JobCategory {
     _id: string;
@@ -228,16 +229,7 @@ export default function EditJobPage() {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex h-[60vh] items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-                    <p className="text-gray-500 animate-pulse font-medium">Loading job...</p>
-                </div>
-            </div>
-        );
-    }
+    if (loading) return <Loader />;
 
     return (
         <div className="max-w-3xl mr-auto space-y-8 pb-20 pt-2 px-4 md:px-0">

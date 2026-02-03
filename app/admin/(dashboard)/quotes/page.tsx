@@ -17,9 +17,10 @@ import {
     MessageSquareText,
     ChevronLeft,
     ChevronRight,
-    Phone
+    Phone,
+    MoreVertical
 } from "lucide-react";
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@/components/self-made-ui/loader";
 import toast from "react-hot-toast";
 import {
     Dialog,
@@ -28,6 +29,11 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ConfirmDeleteModal } from "@/components/modals/confirm-delete-modal";
@@ -260,17 +266,42 @@ export default function QuotesPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5 text-right">
-                                            <Button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setSelectedQuote(quote);
-                                                }}
-                                                variant="ghost"
-                                                className="h-9 px-3 text-xs font-semibold gap-2 hover:bg-blue-600 dark:hover:bg-blue-600 hover:text-white transition-all rounded-lg"
-                                            >
-                                                View Details
-                                                <Eye size={14} />
-                                            </Button>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        variant="ghost"
+                                                        className="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg"
+                                                    >
+                                                        <MoreVertical size={18} />
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-48 p-2 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800" align="end">
+                                                    <div className="flex flex-col gap-1">
+                                                        <Button
+                                                            variant="ghost"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                setSelectedQuote(quote);
+                                                            }}
+                                                            className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
+                                                        >
+                                                            <Eye size={16} />
+                                                            View Details
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleDeleteClick(quote._id);
+                                                            }}
+                                                            className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 hover:text-red-600 dark:hover:text-red-400"
+                                                        >
+                                                            <Trash2 size={16} />
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                </PopoverContent>
+                                            </Popover>
                                         </td>
                                     </tr>
                                 ))

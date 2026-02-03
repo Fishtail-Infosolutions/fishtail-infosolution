@@ -13,7 +13,7 @@ import {
     Image as ImageIcon,
 } from "lucide-react";
 import { AddButton } from "@/components/admin/add-button";
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@/components/self-made-ui/loader";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";

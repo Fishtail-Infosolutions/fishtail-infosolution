@@ -32,7 +32,7 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import RichTextEditor from "@/components/admin/rich-text-editor";
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@/components/self-made-ui/loader";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -177,21 +177,21 @@ export default function EditBlogPage() {
                         </BreadcrumbItem>
                         <BreadcrumbSeparator />
                         <BreadcrumbItem>
-                            <BreadcrumbPage>Edit Article</BreadcrumbPage>
+                            <BreadcrumbPage>Edit Blog</BreadcrumbPage>
                         </BreadcrumbItem>
                     </BreadcrumbList>
                 </Breadcrumb>
             </div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Edit Article</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Edit Blog</h1>
                     <p className="text-gray-500 dark:text-gray-400 font-medium">Refine and update your content.</p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 w-full md:w-auto">
                     <Button
                         variant="outline"
-                        className="rounded-xl"
+                        className="rounded-xl flex-1 md:flex-none"
                         type="button"
                         onClick={() => {
                             form.setValue("status", "Draft");
@@ -203,7 +203,7 @@ export default function EditBlogPage() {
                         Save as Draft
                     </Button>
                     <Button
-                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/20"
+                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/20 flex-1 md:flex-none"
                         type="button"
                         onClick={() => {
                             form.setValue("status", "Published");
@@ -230,7 +230,7 @@ export default function EditBlogPage() {
                                     <FormItem className="space-y-4">
                                         <FormLabel className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                             <Type size={16} className="text-blue-500" />
-                                            ARTICLE TITLE <span className="text-red-500">*</span>
+                                            BLOG TITLE <span className="text-red-500">*</span>
                                         </FormLabel>
                                         <FormControl>
                                             <Input
@@ -288,7 +288,7 @@ export default function EditBlogPage() {
                                     <FormItem className="space-y-4">
                                         <FormLabel className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
                                             <FileText size={16} className="text-blue-500" />
-                                            ARTICLE CONTENT <span className="text-red-500">*</span>
+                                            BLOG CONTENT <span className="text-red-500">*</span>
                                         </FormLabel>
                                         <FormControl>
                                             <RichTextEditor
@@ -323,62 +323,44 @@ export default function EditBlogPage() {
                                                     <FileUpload onChange={handleImageChange} className="p-6" />
                                                 </div>
                                             ) : (
-                                                <div className="relative aspect-video w-full rounded-xl overflow-hidden shadow-md group">
-                                                    <Image
-                                                        src={imagePreview}
-                                                        alt="Blog preview"
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/40 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                        <Button
-                                                            type="button"
-                                                            variant="destructive"
-                                                            size="sm"
-                                                            onClick={removeImage}
-                                                            className="rounded-full h-9 px-4"
-                                                        >
-                                                            <X size={16} className="mr-2" /> Remove Image
-                                                        </Button>
+                                                <div className="space-y-3">
+                                                    <div className="relative aspect-video w-full rounded-xl overflow-hidden shadow-md group">
+                                                        <Image
+                                                            src={imagePreview}
+                                                            alt="Blog preview"
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                        {/* Desktop Hover Overlay */}
+                                                        <div className="hidden md:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
+                                                            <Button
+                                                                type="button"
+                                                                variant="destructive"
+                                                                size="sm"
+                                                                onClick={removeImage}
+                                                                className="rounded-full h-9 px-4 dark:bg-red-600 dark:hover:bg-red-700"
+                                                            >
+                                                                <X size={16} className="mr-2" /> Remove Image
+                                                            </Button>
+                                                        </div>
                                                     </div>
+                                                    {/* Mobile Remove Button */}
+                                                    <Button
+                                                        type="button"
+                                                        variant="outline"
+                                                        onClick={removeImage}
+                                                        className="w-full md:hidden bg-red-500/15 dark:bg-red-500/8 hover:bg-red-500 dark:hover:bg-red-600 text-red-600 dark:text-red-400 hover:text-white dark:hover:text-white border-none"
+                                                    >
+                                                        <X size={16} className="mr-2" /> Remove Image
+                                                    </Button>
                                                 </div>
                                             )}
                                         </FormControl>
-                                        <p className="text-[10px] text-gray-400 italic text-center">Recommended size: 1200x630px</p>
+                                        <p className="text-[10px] text-gray-400 text-center">Recommended size: 1920x1080px (16:9 Aspect Ratio)</p>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
-                        </div>
-
-                        {/* Publication Info */}
-                        <div className="bg-green-50/50 dark:bg-green-900/10 p-6 border border-green-100 dark:border-green-900/30 rounded-2xl space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600">
-                                    <FileText size={20} />
-                                </div>
-                                <div>
-                                    <p className="text-sm font-bold text-gray-900 dark:text-white">Status: {form.watch("status")}</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">Current state</p>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-2 pt-2">
-                                <div className="flex items-center justify-between">
-                                    <label className="text-xs font-bold text-gray-500 capitalize cursor-pointer">IS PUBLISHED</label>
-                                    <FormField
-                                        control={form.control}
-                                        name="status"
-                                        render={({ field }) => (
-                                            <input
-                                                type="checkbox"
-                                                checked={field.value === 'Published'}
-                                                onChange={(e) => field.onChange(e.target.checked ? 'Published' : 'Draft')}
-                                                className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                                            />
-                                        )}
-                                    />
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>

@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
+import { Loader } from "@/components/self-made-ui/loader";
 
 const socialPlatforms = ['LinkedIn', 'Twitter', 'Facebook', 'GitHub', 'Instagram', 'Website'] as const;
 
@@ -203,16 +204,7 @@ export default function EditTeamMemberPage() {
         }
     };
 
-    if (loading) {
-        return (
-            <div className="flex h-[60vh] items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="h-10 w-10 animate-spin text-blue-600" />
-                    <p className="text-gray-500 animate-pulse font-medium">Loading team member...</p>
-                </div>
-            </div>
-        );
-    }
+    if (loading) return <Loader />;
 
     return (
         <div className="max-w-3xl mr-auto space-y-8 pb-20 pt-2 px-4 md:px-0">

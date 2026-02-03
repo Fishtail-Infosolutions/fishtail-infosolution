@@ -1,5 +1,7 @@
 "use client";
 
+import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { NotFoundComponent } from "@/components/self-made-ui/not-found-component";
 import React, { useState, useEffect } from "react";
 import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
@@ -68,13 +70,7 @@ export default function CareerPostPage() {
         });
     };
 
-    if (isLoading) {
-        return (
-            <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-                <div className="animate-pulse text-foreground"></div>
-            </div>
-        );
-    }
+    if (isLoading) return <BrandLoader message="Loading job details..." />;
 
     if (!job) {
         notFound();
