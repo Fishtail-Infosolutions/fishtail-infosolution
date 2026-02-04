@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Contact from "@/models/Contact";
+import { verifyToken } from "@/lib/auth";
+import { cookies } from "next/headers";
 
 const seedContacts = [
     {
@@ -69,6 +71,14 @@ const seedContacts = [
 
 export async function GET() {
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("admin_token")?.value;
+        const decoded = token ? await verifyToken(token) : null;
+
+        if (!decoded || (decoded as any).role !== "super-admin") {
+            return NextResponse.json({ error: "Forbidden - Super admin only" }, { status: 403 });
+        }
+
         await connectDB();
 
         // Clear existing contacts to avoid duplicates during testing (optional)

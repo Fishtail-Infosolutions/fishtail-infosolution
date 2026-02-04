@@ -24,7 +24,8 @@ export default function CareerSection() {
 
                 if (catRes.ok) {
                     const data = await catRes.json();
-                    setCategories(["All", ...data.map((cat: any) => cat.name)]);
+                    const categoriesArray = Array.isArray(data) ? data : (data.categories || []);
+                    setCategories(["All", ...categoriesArray.map((cat: any) => cat.name)]);
                 }
 
                 if (jobRes.ok) {

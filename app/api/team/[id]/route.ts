@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import TeamMember from "@/models/TeamMember";
 import { deleteFile } from "@/lib/upload";
+import { verifyToken } from "@/lib/auth";
+import { cookies } from "next/headers";
 
 export async function GET(
     req: Request,
@@ -28,6 +30,14 @@ export async function PUT(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("admin_token")?.value;
+        const decoded = token ? await verifyToken(token) : null;
+
+        if (!decoded) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectDB();
         const { id } = await params;
         const formData = await req.formData();
@@ -82,6 +92,14 @@ export async function DELETE(
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("admin_token")?.value;
+        const decoded = token ? await verifyToken(token) : null;
+
+        if (!decoded) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectDB();
         const { id } = await params;
 

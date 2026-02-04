@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Contact from "@/models/Contact";
+import { sendEmail, getContactTemplate } from "@/lib/mail";
 
 export async function POST(req: Request) {
     try {
@@ -24,14 +25,30 @@ export async function POST(req: Request) {
             message
         });
 
+        // Send Email Notification
+        try {
+            await sendEmail({
+                to: process.env.MAIL_TO_INFO || process.env.NOTIFICATION_EMAIL || "",
+                subject: `New Contact Message: ${subject || 'General Inquiry'}`,
+                html: getContactTemplate({ name, email, phone, subject, message }),
+                replyTo: email
+            });
+        } catch (mailError) {
+            console.error("Mail notification failed:", mailError);
+            // We don't return error here because the database save was successful
+        }
+
         return NextResponse.json(
             { message: "Message sent successfully", data: newContact },
             { status: 201 }
         );
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Contact form error:", error);
         return NextResponse.json(
-            { error: "Failed to send message", details: error.message },
+            {
+                error: "Failed to send message",
+                details: error instanceof Error ? error.message : "Unknown error"
+            },
             { status: 500 }
         );
     }

@@ -17,17 +17,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { IconMail, IconPhone, IconMapPin } from "@tabler/icons-react";
-import { cn } from "@/lib/utils"; // Importing GradientBanner
-import { DotPattern } from "@/components/ui/dot-pattern"; // DotPattern component
+import { cn } from "@/lib/utils";
 import { Socials } from "@/constants/socials";
 import { Globe } from "lucide-react";
 import GradientBanner from "../self-made-ui/gradeint-banner";
+
 
 // Validation schema with Zod
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(1, "Phone number is required"),
+  phone: z.string().optional().refine(
+    (val) => !val || /^[+0-9\s-]+$/.test(val),
+    { message: "Phone number can only contain digits, spaces, and dashes" }
+  ),
   message: z.string().min(1, "Message is required"),
   subject: z.string().optional(), // Optional field
 });
@@ -35,7 +38,7 @@ const schema = z.object({
 interface FormValues {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   message: string;
   subject?: string; // Optional field
 }
@@ -56,6 +59,7 @@ const ContactUs = () => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const loadingToast = toast.loading("Sending your message...");
     try {
       setIsSubmitting(true);
       const response = await fetch("/api/public/contact", {
@@ -72,10 +76,11 @@ const ContactUs = () => {
         throw new Error(result.error || "Failed to send message");
       }
 
-      toast.success("Message sent successfully!");
+      toast.success("Message sent successfully!", { id: loadingToast });
       form.reset();
-    } catch (error: any) {
-      toast.error(error.message || "An error occurred. Please try again.");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred. Please try again.";
+      toast.error(errorMessage, { id: loadingToast });
     } finally {
       setIsSubmitting(false);
     }

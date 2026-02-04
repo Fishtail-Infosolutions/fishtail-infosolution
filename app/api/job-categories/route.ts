@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import JobCategory from "@/models/JobCategory";
 import Job from "@/models/Job";
+import { verifyToken } from "@/lib/auth";
+import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
         await connectDB();
 
@@ -47,6 +49,14 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("admin_token")?.value;
+        const decoded = token ? await verifyToken(token) : null;
+
+        if (!decoded) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectDB();
         const { name, description } = await req.json();
 

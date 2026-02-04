@@ -21,7 +21,10 @@ const schema = z.object({
     // Step 1
     fullName: z.string().min(1, "Full Name is required"),
     email: z.string().email("Invalid email address"),
-    phone: z.string().min(1, "Phone number is required"),
+    phone: z.string().optional().refine(
+        (val) => !val || /^[+0-9\s-]+$/.test(val),
+        { message: "Phone number can only contain digits, spaces, and dashes" }
+    ),
     address: z.string().min(1, "Address is required"),
 
     // Step 2
@@ -71,6 +74,7 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
+        const loadingToast = toast.loading("Submitting your application...");
         try {
             // 1. Upload CV
             let cvUrl = "";
@@ -115,13 +119,13 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                 throw new Error(errorData.error || "Failed to submit application");
             }
 
-            toast.success("Application submitted successfully!");
+            toast.success("Application submitted successfully!", { id: loadingToast });
             reset();
             setFormKey(prev => prev + 1);
             router.push("/career");
         } catch (error: any) {
             console.error("Submission Error:", error);
-            toast.error(error.message || "Something went wrong. Please try again.");
+            toast.error(error.message || "Something went wrong. Please try again.", { id: loadingToast });
         } finally {
             setIsSubmitting(false);
         }
@@ -172,7 +176,7 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="phone" className="text-muted-foreground">Phone Number <span className="text-red-500">*</span></Label>
+                            <Label htmlFor="phone" className="text-muted-foreground">Phone Number</Label>
                             <Input
                                 id="phone"
                                 placeholder="+1 (555) 000-0000"

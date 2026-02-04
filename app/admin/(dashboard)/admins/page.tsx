@@ -22,6 +22,8 @@ import {
     Lock,
     Tag,
     Activity,
+    Eye,
+    EyeOff,
 } from "lucide-react";
 import { AddButton } from "@/components/admin/add-button";
 import { Loader } from "@/components/self-made-ui/loader";
@@ -95,6 +97,8 @@ export default function AdminsPage() {
     const [userToEdit, setUserToEdit] = useState<AdminUser | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     // Pagination state
     const [pagination, setPagination] = useState({
@@ -122,9 +126,6 @@ export default function AdminsPage() {
                 if (res.status === 403) {
                     setIsUnauthorized(true);
                     toast.error("Access Denied: Super Admin privileges required");
-                    setTimeout(() => {
-                        router.replace("/admin/dashboard");
-                    }, 1500);
                     return;
                 }
                 throw new Error("Failed to fetch users");
@@ -247,6 +248,7 @@ export default function AdminsPage() {
             isActive: user.isActive,
         });
         setIsEditModalOpen(true);
+        setShowPassword(false);
     };
 
     const openAddModal = () => {
@@ -257,6 +259,7 @@ export default function AdminsPage() {
             isActive: true,
         });
         setIsAddModalOpen(true);
+        setShowPassword(false);
     };
 
     const filteredUsers = users
@@ -567,13 +570,22 @@ export default function AdminsPage() {
                                             Password <span className="text-red-500 font-bold">*</span>
                                         </FormLabel>
                                         <FormControl>
-                                            <Input
-                                                type="password"
-                                                placeholder="Enter secure password"
-                                                {...fieldProps}
-                                                value={value as string || ""}
-                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl h-11"
-                                            />
+                                            <div className="relative">
+                                                <Input
+                                                    type={showPassword ? "text" : "password"}
+                                                    placeholder="Enter secure password"
+                                                    {...fieldProps}
+                                                    value={value as string || ""}
+                                                    className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl h-11 pr-10"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                                                >
+                                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                </button>
+                                            </div>
                                         </FormControl>
                                         <FormMessage className="text-xs" />
                                     </FormItem>
@@ -675,13 +687,22 @@ export default function AdminsPage() {
                                             Password <span className="normal-case font-normal text-muted-foreground ml-auto">(Leave blank to keep)</span>
                                         </FormLabel>
                                         <FormControl>
-                                            <Input
-                                                type="password"
-                                                placeholder="Enter new password"
-                                                {...fieldProps}
-                                                value={value as string || ""}
-                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl h-11"
-                                            />
+                                            <div className="relative">
+                                                <Input
+                                                    type={showPassword ? "text" : "password"}
+                                                    placeholder="Enter new password"
+                                                    {...fieldProps}
+                                                    value={value as string || ""}
+                                                    className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl h-11 pr-10"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                                                >
+                                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                </button>
+                                            </div>
                                         </FormControl>
                                         <FormMessage className="text-xs" />
                                     </FormItem>

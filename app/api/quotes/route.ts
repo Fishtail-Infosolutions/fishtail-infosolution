@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/db';
 import Quote from '@/models/Quote';
+import { verifyToken } from "@/lib/auth";
+import { cookies } from "next/headers";
+import { sendEmail, getQuoteTemplate } from "@/lib/mail";
 
 export async function POST(req: Request) {
     try {
@@ -27,6 +30,18 @@ export async function POST(req: Request) {
             status: 'pending'
         });
 
+        // Send Email Notification
+        try {
+            await sendEmail({
+                to: process.env.MAIL_TO_INFO || process.env.NOTIFICATION_EMAIL || "",
+                subject: `New SEO Quote Request from ${name}`,
+                html: getQuoteTemplate({ name, email, phone, company, websiteUrl, seoGoals }),
+                replyTo: email
+            });
+        } catch (mailError) {
+            console.error("Mail notification failed:", mailError);
+        }
+
         return NextResponse.json(
             { message: 'Quote submitted successfully', quote: newQuote },
             { status: 201 }
@@ -42,6 +57,14 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("admin_token")?.value;
+        const decoded = token ? await verifyToken(token) : null;
+
+        if (!decoded) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         await connectToDatabase();
         const { searchParams } = new URL(req.url);
         const page = parseInt(searchParams.get('page') || '1');

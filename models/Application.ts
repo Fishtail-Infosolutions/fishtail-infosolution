@@ -25,7 +25,7 @@ const ApplicationSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: [true, 'Please provide phone number'],
+        required: false,
     },
     address: {
         type: String,
@@ -65,4 +65,9 @@ const ApplicationSchema = new mongoose.Schema({
     timestamps: true
 });
 
-export default mongoose.models.Application || mongoose.model('Application', ApplicationSchema);
+if (mongoose.models.Application) {
+    delete mongoose.models.Application;
+}
+
+export default mongoose.model('Application', ApplicationSchema);
+
