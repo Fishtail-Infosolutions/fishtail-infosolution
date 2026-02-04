@@ -30,7 +30,7 @@ export function Loader() {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-[2px] transition-all duration-300">
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-white/60 dark:bg-black/60 backdrop-blur-[2px] transition-all duration-300">
             <div className="rounded-full bg-transparent overflow-hidden">
                 <Lottie
                     options={defaultOptions}

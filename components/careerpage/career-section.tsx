@@ -6,7 +6,7 @@ import CareerCard from "./card";
 import { cn } from "@/lib/utils";
 import GradientBanner from "../self-made-ui/gradeint-banner";
 import Tabs from "@/components/tab";
-import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { PublicWebsiteLoader } from "@/components/self-made-ui/public-website-loader";
 
 export default function CareerSection() {
     const [categories, setCategories] = useState(["All"]);
@@ -48,7 +48,7 @@ export default function CareerSection() {
                 return jobCategoryName === activeCategory;
             });
 
-    if (loading) return <BrandLoader message="Fetching opportunities..." />;
+    if (loading) return <PublicWebsiteLoader message="Fetching opportunities..." />;
 
     return (
         <section className="w-full bg-background pt-32 pb-20 px-4 md:px-8 transition-colors duration-500">

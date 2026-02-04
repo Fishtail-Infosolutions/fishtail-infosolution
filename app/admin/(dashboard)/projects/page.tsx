@@ -7,6 +7,7 @@ import {
     ChevronLeft,
     ChevronRight,
     Search,
+    MoreVertical,
     Pencil,
     Trash2,
     ExternalLink,
@@ -16,6 +17,11 @@ import { AddButton } from "@/components/admin/add-button";
 import { Loader } from "@/components/self-made-ui/loader";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ConfirmDeleteModal } from "@/components/modals/confirm-delete-modal";
@@ -127,84 +133,106 @@ export default function ProjectsPage() {
                 />
             </div>
 
-            {/* Project Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {filteredProjects.length === 0 ? (
-                    <div className="col-span-full py-20 text-center bg-gray-50/50 dark:bg-gray-900/50 rounded-2xl border-2 border-dashed border-gray-100 dark:border-gray-800">
-                        <ImageIcon size={48} className="mx-auto text-gray-300 mb-4" />
-                        <p className="text-gray-500 font-medium italic">No projects found</p>
-                    </div>
-                ) : (
-                    filteredProjects.map((project) => (
-                        <div key={project._id} className="group bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            {/* Card Image */}
-                            <div className="relative aspect-video overflow-hidden bg-gray-50 dark:bg-gray-800">
-                                <Image
-                                    src={project.imageUrl}
-                                    alt={project.title}
-                                    fill
-                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                    <Button
-                                        size="icon"
-                                        variant="secondary"
-                                        className="rounded-full w-9 h-9"
-                                        onClick={() => router.push(`/admin/projects/${project._id}/edit`)}
+            {/* Table */}
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full">
+                        <thead className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-800">
+                            <tr>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    Project
+                                </th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    Links
+                                </th>
+                                <th className="px-6 py-4 text-right text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                            {filteredProjects.length === 0 ? (
+                                <tr>
+                                    <td colSpan={3} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                                        No projects found
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredProjects.map((project) => (
+                                    <tr
+                                        key={project._id}
+                                        className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
                                     >
-                                        <Pencil size={16} />
-                                    </Button>
-                                    <Button size="icon" variant="destructive" className="rounded-full w-9 h-9 dark:bg-red-600 dark:hover:bg-red-700" onClick={() => {
-                                        setProjectToDelete(project);
-                                        setIsDeleteModalOpen(true);
-                                    }}>
-                                        <Trash2 size={16} />
-                                    </Button>
-                                </div>
-                            </div>
+                                        <td className="px-6 py-5">
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-10 w-16 rounded-lg overflow-hidden relative shadow-sm border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 shrink-0">
+                                                    <Image
+                                                        src={project.imageUrl}
+                                                        alt={project.title}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="font-semibold text-gray-900 dark:text-white truncate">
+                                                        {project.title}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
 
-                            {/* Card Content */}
-                            <div className="p-5 space-y-4">
-                                <h3 className="font-bold text-gray-900 dark:text-white truncate">{project.title}</h3>
-
-                                <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-gray-800">
-                                    <a
-                                        href={project.projectUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[11px] font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1.5 hover:underline"
-                                    >
-                                        <ExternalLink size={12} />
-                                        VIEW PROJECT
-                                    </a>
-
-                                    {/* Mobile Actions */}
-                                    <div className="flex items-center gap-1 sm:hidden">
-                                        <Button
-                                            size="icon"
-                                            variant="ghost"
-                                            className="h-8 w-8 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                                            onClick={() => router.push(`/admin/projects/${project._id}/edit`)}
-                                        >
-                                            <Pencil size={14} />
-                                        </Button>
-                                        <Button
-                                            size="icon"
-                                            variant="ghost"
-                                            className="h-8 w-8 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
-                                            onClick={() => {
-                                                setProjectToDelete(project);
-                                                setIsDeleteModalOpen(true);
-                                            }}
-                                        >
-                                            <Trash2 size={14} />
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
+                                        <td className="px-6 py-5">
+                                            <a
+                                                href={project.projectUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+                                            >
+                                                <ExternalLink size={14} />
+                                                View Project
+                                            </a>
+                                        </td>
+                                        <td className="px-6 py-5 text-right">
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button
+                                                        variant="ghost"
+                                                        className="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg"
+                                                    >
+                                                        <MoreVertical size={18} />
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-48 p-2 bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 z-150" align="end">
+                                                    <div className="flex flex-col gap-1">
+                                                        <Button
+                                                            variant="ghost"
+                                                            onClick={() => router.push(`/admin/projects/${project._id}/edit`)}
+                                                            className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
+                                                        >
+                                                            <Pencil size={16} />
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            onClick={() => {
+                                                                setProjectToDelete(project);
+                                                                setIsDeleteModalOpen(true);
+                                                            }}
+                                                            className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 hover:text-red-600 dark:hover:text-red-400"
+                                                        >
+                                                            <Trash2 size={16} />
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                </PopoverContent>
+                                            </Popover>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {/* Pagination */}

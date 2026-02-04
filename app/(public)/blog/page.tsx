@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { BlogCard } from "@/components/blogpage/card";
-import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { PublicWebsiteLoader } from "@/components/self-made-ui/public-website-loader";
 import { notFound } from "next/navigation";
 
 interface Blog {
@@ -38,7 +38,7 @@ const BlogPage = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) return <BrandLoader message="Loading blogs..." />;
+  if (loading) return <PublicWebsiteLoader message="Loading blogs..." />;
 
   if (!blogs) notFound()
 

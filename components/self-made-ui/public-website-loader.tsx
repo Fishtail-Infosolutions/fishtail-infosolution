@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 
-export function BrandLoader({ message = "Loading..." }: { message?: string }) {
+export function PublicWebsiteLoader({ message = "Loading..." }: { message?: string }) {
     const [animationData, setAnimationData] = useState<any>(null);
     const [isMounted, setIsMounted] = useState(false);
 

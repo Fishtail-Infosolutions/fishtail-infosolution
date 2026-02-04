@@ -398,9 +398,10 @@ export default function TeamPage() {
                                                     <Badge
                                                         variant={member.isActive ? "default" : "secondary"}
                                                         className={member.isActive
-                                                            ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/40 border-green-200 dark:border-green-900"
-                                                            : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700"}
+                                                            ? "bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/40 border-green-200 dark:border-green-900 px-2.5 py-0.5 rounded-full"
+                                                            : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700 px-2.5 py-0.5 rounded-full"}
                                                     >
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-current mr-1.5 animate-pulse" />
                                                         {member.isActive ? "Active" : "Inactive"}
                                                     </Badge>
                                                 </td>

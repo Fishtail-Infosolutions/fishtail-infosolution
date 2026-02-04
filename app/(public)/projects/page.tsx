@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { ProjectCard } from "@/components/projectpage/card";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
-import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { PublicWebsiteLoader } from "@/components/self-made-ui/public-website-loader";
 
 interface Project {
   _id: string;
@@ -34,7 +34,7 @@ export default function ProjectsPage() {
     fetchProjects();
   }, []);
 
-  if (loading) return <BrandLoader message="Loading projects..." />;
+  if (loading) return <PublicWebsiteLoader message="Loading projects..." />;
 
   return (
     <main className="min-h-screen bg-background antialiased transition-colors duration-500 mt-32">

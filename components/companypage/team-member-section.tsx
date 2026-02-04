@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
-import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { PublicWebsiteLoader } from "@/components/self-made-ui/public-website-loader";
 import { TeamCard, TeamMember } from "./team-card";
 
 export default function TeamMemberSection() {
@@ -27,7 +27,7 @@ export default function TeamMemberSection() {
         fetchTeamMembers();
     }, []);
 
-    if (loading) return <BrandLoader message="Loading team..." />;
+    if (loading) return <PublicWebsiteLoader message="Loading team..." />;
 
     return (
         <section className="w-full bg-background py-12 sm:py-20 px-8 md:px-16 transition-colors duration-500">

@@ -15,11 +15,21 @@ import {
     X,
     MessageSquareQuote,
     Tags,
-    ClipboardList
+    ClipboardList,
+    UserCog,
+    Shield,
+    ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 import toast from "react-hot-toast";
+
+interface NavItem {
+    href: string;
+    icon: React.ReactNode;
+    label: string;
+    superAdminOnly?: boolean;
+}
 
 interface SidebarItemProps {
     href: string;
@@ -55,7 +65,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
 
-    const navItems = [
+    const allNavItems: NavItem[] = [
         { href: "/admin/dashboard", icon: <LayoutDashboard size={20} />, label: "Dashboard" },
         { href: "/admin/team", icon: <Users size={20} />, label: "Team Members" },
         { href: "/admin/jobs", icon: <Briefcase size={20} />, label: "Jobs" },
@@ -64,7 +74,16 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
         { href: "/admin/projects", icon: <Layers size={20} />, label: "Projects" },
         { href: "/admin/blog", icon: <FileText size={20} />, label: "Blog" },
         { href: "/admin/quotes", icon: <MessageSquareQuote size={20} />, label: "Quotes" },
+        { href: "/admin/admins", icon: <UserCog size={20} />, label: "Admins", superAdminOnly: true },
     ];
+
+    // Filter nav items based on user role
+    const navItems = allNavItems.filter(item => {
+        if (item.superAdminOnly) {
+            return user.role === "super-admin";
+        }
+        return true;
+    });
 
     const handleLogout = async () => {
         try {
@@ -108,11 +127,11 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
 
             {/* Sidebar Content */}
             <aside className={cn(
-                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-70 transition-transform duration-300 transform lg:translate-x-0 overflow-y-auto flex flex-col shadow-xl lg:shadow-none",
+                "fixed inset-y-0 left-0 w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-70 transition-transform duration-300 transform lg:translate-x-0 overflow-hidden flex flex-col shadow-xl lg:shadow-none",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 {/* Logo & Close Button */}
-                <div className="p-6 flex items-center justify-between">
+                <div className="p-6 flex items-center justify-between shrink-0">
                     <div className="flex items-center justify-center gap-3">
                         <Link href="/" className="flex items-center gap-2">
                             <img
@@ -139,7 +158,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 px-4 py-4 space-y-1">
+                <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
                     {navItems.map((item) => {
                         const isActive = item.href === "/admin/dashboard"
                             ? pathname === "/admin/dashboard"
@@ -156,19 +175,28 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
                     })}
                 </nav>
 
-                {/* Footer / User Info */}
-                <div className="p-4 border-t border-gray-100 dark:border-gray-800 space-y-4">
-                    <div className="flex items-center gap-3 px-2 py-2">
-                        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                            <User size={20} />
+                <div className="p-4 border-t border-gray-100 dark:border-gray-800 space-y-4 shrink-0">
+                    <div className="flex items-center justify-center gap-3 px-2 py-2">
+                        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-lg uppercase selection:bg-transparent">
+                            {user.email.charAt(0)}
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                                 {user.email.split("@")[0]}
                             </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                                {user.email}
-                            </p>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                                {user.role === "super-admin" ? (
+                                    <div className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-medium">
+                                        <ShieldCheck size={10} />
+                                        <span>Super Admin</span>
+                                    </div>
+                                ) : (
+                                    <div className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium">
+                                        <Shield size={10} />
+                                        <span>Admin</span>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 

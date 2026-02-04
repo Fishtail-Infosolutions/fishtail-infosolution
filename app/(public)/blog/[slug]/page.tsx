@@ -14,7 +14,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { format } from "date-fns";
-import { BrandLoader } from "@/components/self-made-ui/public-website-loader";
+import { PublicWebsiteLoader } from "@/components/self-made-ui/public-website-loader";
 
 
 export default function BlogPostPage() {
@@ -52,7 +52,7 @@ export default function BlogPostPage() {
         });
     };
 
-    if (isLoading) return <BrandLoader message="Loading blog..." />;
+    if (isLoading) return <PublicWebsiteLoader message="Loading blog..." />;
     if (!blog) return notFound();
 
     return (

@@ -15,6 +15,10 @@ const userSchema = new Schema({
         enum: ['user', 'admin', 'super-admin'],
         default: 'admin',
     },
+    isActive: {
+        type: Boolean,
+        default: true,
+    },
 }, { timestamps: true });
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);

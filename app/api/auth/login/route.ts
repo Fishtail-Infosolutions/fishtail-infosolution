@@ -23,6 +23,10 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
+        if (user.isActive === false) {
+            return NextResponse.json({ error: 'Your account has been deactivated. Please contact support.' }, { status: 403 });
+        }
+
         const token = await signToken({ _id: user._id, email: user.email, role: user.role });
 
         const cookieStore = await cookies();
