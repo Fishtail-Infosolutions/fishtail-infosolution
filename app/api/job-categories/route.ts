@@ -7,8 +7,16 @@ export async function GET() {
     try {
         await connectDB();
 
-        // Get all categories
-        const categories = await JobCategory.find({}).sort({ createdAt: -1 });
+        const { searchParams } = new URL(req.url);
+        const page = parseInt(searchParams.get('page') || '1');
+        const limit = parseInt(searchParams.get('limit') || '10');
+        const skip = (page - 1) * limit;
+
+        // Get categories with pagination
+        const categories = await JobCategory.find({})
+            .sort({ createdAt: -1 })
+            .limit(limit)
+            .skip(skip);
 
         // Get job counts for each category
         const categoriesWithCount = await Promise.all(
@@ -21,7 +29,17 @@ export async function GET() {
             })
         );
 
-        return NextResponse.json(categoriesWithCount);
+        const total = await JobCategory.countDocuments();
+
+        return NextResponse.json({
+            categories: categoriesWithCount,
+            pagination: {
+                total,
+                page,
+                limit,
+                pages: Math.ceil(total / limit)
+            }
+        });
     } catch (error) {
         return NextResponse.json({ error: "Failed to fetch categories" }, { status: 500 });
     }

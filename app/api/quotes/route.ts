@@ -40,11 +40,30 @@ export async function POST(req: Request) {
     }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
         await connectToDatabase();
-        const quotes = await Quote.find().sort({ createdAt: -1 });
-        return NextResponse.json(quotes);
+        const { searchParams } = new URL(req.url);
+        const page = parseInt(searchParams.get('page') || '1');
+        const limit = parseInt(searchParams.get('limit') || '10');
+        const skip = (page - 1) * limit;
+
+        const quotes = await Quote.find()
+            .sort({ createdAt: -1 })
+            .limit(limit)
+            .skip(skip);
+
+        const total = await Quote.countDocuments();
+
+        return NextResponse.json({
+            quotes,
+            pagination: {
+                total,
+                page,
+                limit,
+                pages: Math.ceil(total / limit)
+            }
+        });
     } catch (error: any) {
         console.error('Error fetching quotes:', error);
         return NextResponse.json(

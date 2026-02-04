@@ -13,6 +13,7 @@ import {
     User,
     Menu,
     X,
+    MessageSquare,
     MessageSquareQuote,
     Tags,
     ClipboardList,
@@ -74,6 +75,7 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
         { href: "/admin/projects", icon: <Layers size={20} />, label: "Projects" },
         { href: "/admin/blog", icon: <FileText size={20} />, label: "Blog" },
         { href: "/admin/quotes", icon: <MessageSquareQuote size={20} />, label: "Quotes" },
+        { href: "/admin/contacts", icon: <MessageSquare size={20} />, label: "Contacts" },
         { href: "/admin/admins", icon: <UserCog size={20} />, label: "Admins", superAdminOnly: true },
     ];
 

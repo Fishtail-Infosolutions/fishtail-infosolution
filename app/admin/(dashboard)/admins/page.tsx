@@ -94,8 +94,15 @@ export default function AdminsPage() {
     const [userToDelete, setUserToDelete] = useState<AdminUser | null>(null);
     const [userToEdit, setUserToEdit] = useState<AdminUser | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
     const [isSaving, setIsSaving] = useState(false);
+
+    // Pagination state
+    const [pagination, setPagination] = useState({
+        total: 0,
+        page: 1,
+        limit: 10,
+        pages: 0
+    });
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
@@ -107,10 +114,10 @@ export default function AdminsPage() {
         },
     });
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (page = 1) => {
         try {
             setLoading(true);
-            const res = await fetch("/api/admin/users");
+            const res = await fetch(`/api/admin/users?page=${page}&limit=10`);
             if (!res.ok) {
                 if (res.status === 403) {
                     setIsUnauthorized(true);
@@ -124,6 +131,7 @@ export default function AdminsPage() {
             }
             const data = await res.json();
             setUsers(data.users);
+            setPagination(data.pagination);
         } catch (error) {
             toast.error("Error loading users");
         } finally {
@@ -447,6 +455,72 @@ export default function AdminsPage() {
                         </tbody>
                     </table>
                 </div>
+
+                {/* Pagination Footer */}
+                {pagination.pages > 1 && (
+                    <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
+                                Showing <span className="font-bold text-gray-900 dark:text-white">{(pagination.page - 1) * pagination.limit + 1}</span> to{" "}
+                                <span className="font-bold text-gray-900 dark:text-white">
+                                    {Math.min(pagination.page * pagination.limit, pagination.total)}
+                                </span> of{" "}
+                                <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
+                            </p>
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => fetchUsers(pagination.page - 1)}
+                                    disabled={pagination.page === 1}
+                                    className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-all shadow-none"
+                                >
+                                    <ChevronLeft size={16} />
+                                    <span className="hidden sm:inline">Previous</span>
+                                </Button>
+                                <div className="flex items-center gap-1">
+                                    {Array.from({ length: pagination.pages }, (_, i) => i + 1)
+                                        .filter(page => {
+                                            return page === 1 ||
+                                                page === pagination.pages ||
+                                                Math.abs(page - pagination.page) <= 1;
+                                        })
+                                        .map((page, index, array) => {
+                                            const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
+                                            return (
+                                                <React.Fragment key={page}>
+                                                    {showEllipsisBefore && (
+                                                        <span className="px-1 text-gray-400 select-none">...</span>
+                                                    )}
+                                                    <Button
+                                                        variant={pagination.page === page ? "default" : "outline"}
+                                                        size="sm"
+                                                        onClick={() => fetchUsers(page)}
+                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
+                                                            ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
+                                                            : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
+                                                            }`}
+                                                    >
+                                                        {page}
+                                                    </Button>
+                                                </React.Fragment>
+                                            );
+                                        })}
+                                </div>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => fetchUsers(pagination.page + 1)}
+                                    disabled={pagination.page === pagination.pages}
+                                    className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-all shadow-none"
+                                >
+                                    <span className="hidden sm:inline">Next</span>
+                                    <ChevronRight size={16} />
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Add User Modal */}

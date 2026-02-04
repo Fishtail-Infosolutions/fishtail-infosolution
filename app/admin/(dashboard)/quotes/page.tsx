@@ -62,17 +62,21 @@ export default function QuotesPage() {
     const [loading, setLoading] = useState(true);
     const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const [pagination, setPagination] = useState({
+        total: 0,
+        page: 1,
+        limit: 10,
+        pages: 0
+    });
 
-    // Pagination state
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-
-    const fetchQuotes = async () => {
+    const fetchQuotes = async (page = 1) => {
         try {
-            const res = await fetch("/api/quotes");
+            setLoading(true);
+            const res = await fetch(`/api/quotes?page=${page}&limit=10`);
             if (!res.ok) throw new Error("Failed to fetch quotes");
             const data = await res.json();
-            setQuotes(data);
+            setQuotes(data.quotes);
+            setPagination(data.pagination);
         } catch (error) {
             toast.error("Error loading quotes");
         } finally {
@@ -149,20 +153,11 @@ export default function QuotesPage() {
         });
     };
 
-    const filteredQuotes = quotes.filter(quote =>
-        quote.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quote.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        quote.websiteUrl.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredQuotes = quotes; // Search should ideally be server-side too, but keeping it simple for now or adding server-side search later
 
-    // Pagination logic
-    const totalPages = Math.ceil(filteredQuotes.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + itemsPerPage);
-
-    useEffect(() => {
-        setCurrentPage(1); // Reset to page 1 when search term changes
-    }, [searchTerm]);
+    // useEffect(() => {
+    //     setCurrentPage(1); // Reset to page 1 when search term changes
+    // }, [searchTerm]);
 
     if (loading) {
         return <Loader />;
@@ -207,7 +202,7 @@ export default function QuotesPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                            {paginatedQuotes.length === 0 ? (
+                            {quotes.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} className="px-6 py-16 text-center">
                                         <div className="flex flex-col items-center gap-3 opacity-50">
@@ -217,7 +212,7 @@ export default function QuotesPage() {
                                     </td>
                                 </tr>
                             ) : (
-                                paginatedQuotes.map((quote) => (
+                                quotes.map((quote) => (
                                     <tr
                                         key={quote._id}
                                         onClick={() => setSelectedQuote(quote)}
@@ -311,33 +306,33 @@ export default function QuotesPage() {
                 </div>
 
                 {/* Pagination Footer */}
-                {totalPages > 1 && (
+                {pagination.pages > 1 && (
                     <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10">
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
-                                Showing <span className="font-bold text-gray-900 dark:text-white">{startIndex + 1}</span> to{" "}
+                                Showing <span className="font-bold text-gray-900 dark:text-white">{(pagination.page - 1) * pagination.limit + 1}</span> to{" "}
                                 <span className="font-bold text-gray-900 dark:text-white">
-                                    {Math.min(startIndex + itemsPerPage, filteredQuotes.length)}
+                                    {Math.min(pagination.page * pagination.limit, pagination.total)}
                                 </span> of{" "}
-                                <span className="font-bold text-gray-900 dark:text-white">{filteredQuotes.length}</span> <span className="hidden sm:inline">results</span>
+                                <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
                             </p>
                             <div className="flex items-center gap-1.5 sm:gap-2">
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                    disabled={currentPage === 1}
+                                    onClick={() => fetchQuotes(pagination.page - 1)}
+                                    disabled={pagination.page === 1}
                                     className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-all shadow-none"
                                 >
                                     <ChevronLeft size={16} />
                                     <span className="hidden sm:inline">Previous</span>
                                 </Button>
                                 <div className="flex items-center gap-1">
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                    {Array.from({ length: pagination.pages }, (_, i) => i + 1)
                                         .filter(page => {
                                             return page === 1 ||
-                                                page === totalPages ||
-                                                Math.abs(page - currentPage) <= 1;
+                                                page === pagination.pages ||
+                                                Math.abs(page - pagination.page) <= 1;
                                         })
                                         .map((page, index, array) => {
                                             const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
@@ -347,10 +342,10 @@ export default function QuotesPage() {
                                                         <span className="px-1 text-gray-400 select-none">...</span>
                                                     )}
                                                     <Button
-                                                        variant={currentPage === page ? "default" : "outline"}
+                                                        variant={pagination.page === page ? "default" : "outline"}
                                                         size="sm"
-                                                        onClick={() => setCurrentPage(page)}
-                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${currentPage === page
+                                                        onClick={() => fetchQuotes(page)}
+                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
                                                             ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
                                                             : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
                                                             }`}
@@ -364,8 +359,8 @@ export default function QuotesPage() {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                    disabled={currentPage === totalPages}
+                                    onClick={() => fetchQuotes(pagination.page + 1)}
+                                    disabled={pagination.page === pagination.pages}
                                     className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-all shadow-none"
                                 >
                                     <span className="hidden sm:inline">Next</span>
