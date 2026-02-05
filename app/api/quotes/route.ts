@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         // Send Email Notification
         try {
             await sendEmail({
-                to: process.env.MAIL_TO_INFO || process.env.NOTIFICATION_EMAIL || "",
+                to: process.env.MAIL_TO_HR || process.env.NOTIFICATION_EMAIL || "",
                 subject: `New SEO Quote Request from ${name}`,
                 html: getQuoteTemplate({ name, email, phone, company, websiteUrl, seoGoals }),
                 replyTo: email

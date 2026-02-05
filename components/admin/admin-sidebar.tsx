@@ -22,8 +22,8 @@ import {
     ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./theme-toggle";
 import toast from "react-hot-toast";
+import { ThemeToggle } from "../theme-toggle";
 
 interface NavItem {
     href: string;

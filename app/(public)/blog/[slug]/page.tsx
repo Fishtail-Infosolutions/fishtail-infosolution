@@ -53,6 +53,7 @@ export default function BlogPostPage() {
     };
 
     if (isLoading) return <PublicWebsiteLoader message="Loading blog..." />;
+
     if (!blog) return notFound();
 
     return (

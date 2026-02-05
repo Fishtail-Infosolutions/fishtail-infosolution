@@ -28,7 +28,7 @@ export async function POST(req: Request) {
         // Send Email Notification
         try {
             await sendEmail({
-                to: process.env.MAIL_TO_INFO || process.env.NOTIFICATION_EMAIL || "",
+                to: process.env.MAIL_TO_HR || process.env.NOTIFICATION_EMAIL || "",
                 subject: `New Contact Message: ${subject || 'General Inquiry'}`,
                 html: getContactTemplate({ name, email, phone, subject, message }),
                 replyTo: email

@@ -18,7 +18,14 @@ export function PublicWebsiteLoader({ message = "Loading..." }: { message?: stri
             .catch((err) => console.error("Lottie load error:", err));
     }, []);
 
-    if (!isMounted || !animationData) return null;
+    // Invisible placeholder to maintain layout height while animation loads
+    if (!isMounted || !animationData) {
+        return (
+            <div className="w-full flex items-center justify-center py-12 min-h-[90vh]">
+                <span className="animate-pulse"></span>
+            </div>
+        );
+    }
 
     const defaultOptions = {
         loop: true,
