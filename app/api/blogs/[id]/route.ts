@@ -45,13 +45,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             slug: body.slug,
             content: body.content,
             imageUrl: body.imageUrl,
-            status: body.status,
         };
-
-        // Update publishedAt if status changed to Published
-        if (body.status === 'Published' && currentBlog.status !== 'Published') {
-            updates.publishedAt = new Date();
-        }
 
         const blog = await Blog.findByIdAndUpdate(
             id,

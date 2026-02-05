@@ -30,8 +30,8 @@ const schema = z.object({
     // Step 2
     workExperience: z.enum(["None", "0-1 year", "1-2 years", "2-5 years", "5+ years"]),
     expectedSalary: z.string().optional(),
-    portfolioLink: z.string().url("Invalid URL").optional().or(z.literal("")),
-    githubLink: z.string().url("Invalid URL").optional().or(z.literal("")),
+    portfolioLink: z.string().url("Invalid URL").refine((val) => !val || val.startsWith("https://"), { message: "URL must start with https://" }).optional().or(z.literal("")),
+    githubLink: z.string().url("Invalid URL").refine((val) => !val || val.startsWith("https://"), { message: "URL must start with https://" }).optional().or(z.literal("")),
     cv: z.any().refine((files) => files?.length > 0, "CV is required"),
     coverLetter: z.string().optional(),
 });

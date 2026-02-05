@@ -48,7 +48,6 @@ const blogSchema = z.object({
     slug: z.string().min(1, "Slug is required"),
     content: z.string().min(1, "Content is required"),
     imageUrl: z.string().min(1, "Featured image is required"),
-    status: z.enum(["Draft", "Published"]),
 });
 
 type BlogFormValues = z.infer<typeof blogSchema>;
@@ -63,7 +62,6 @@ export default function NewBlogPage() {
             slug: "",
             content: "",
             imageUrl: "",
-            status: "Draft",
         },
     });
 
@@ -154,32 +152,17 @@ export default function NewBlogPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create New Blog</h1>
-                    <p className="text-gray-500 dark:text-gray-400 font-medium">Draft your next masterpiece for the world to read.</p>
+                    <p className="text-gray-500 dark:text-gray-400 font-medium">Create your next masterpiece for the world to read.</p>
                 </div>
                 <div className="flex items-center gap-3 w-full md:w-auto">
                     <Button
-                        variant="outline"
-                        className="rounded-xl flex-1 md:flex-none"
-                        type="button"
-                        onClick={() => {
-                            form.setValue("status", "Draft");
-                            (form.handleSubmit(onSubmit) as any)();
-                        }}
-                        disabled={loading}
-                    >
-                        Save as Draft
-                    </Button>
-                    <Button
                         className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg shadow-blue-500/20 flex-1 md:flex-none"
                         type="button"
-                        onClick={() => {
-                            form.setValue("status", "Published");
-                            (form.handleSubmit(onSubmit) as any)();
-                        }}
+                        onClick={form.handleSubmit(onSubmit)}
                         disabled={loading}
                     >
                         {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Eye className="mr-2 h-4 w-4" />}
-                        Publish Blog
+                        Create Blog Post
                     </Button>
                 </div>
             </div>

@@ -24,7 +24,7 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("/api/blogs?status=Published&limit=10");
+        const res = await fetch("/api/blogs?limit=10");
         if (!res.ok) throw new Error("Failed to fetch blogs");
         const data = await res.json();
         setBlogs(data.blogs);

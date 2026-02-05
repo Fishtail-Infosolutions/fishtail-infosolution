@@ -48,25 +48,20 @@ export default function ProjectsPage() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
-    const [pagination, setPagination] = useState<PaginationData>({
-        total: 0,
-        page: 1,
-        limit: 8,
-        pages: 0
-    });
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const fetchProjects = useCallback(async (page: number = 1) => {
+    const fetchProjects = useCallback(async () => {
         try {
             setLoading(true);
-            const res = await fetch(`/api/projects?page=${page}&limit=8`);
+            const res = await fetch(`/api/projects`);
             if (!res.ok) throw new Error("Failed to fetch projects");
             const data = await res.json();
             setProjects(data.projects);
-            setPagination(data.pagination);
         } catch (error) {
             toast.error("Error loading projects");
         } finally {
@@ -89,7 +84,7 @@ export default function ProjectsPage() {
             toast.success("Project deleted successfully");
             setIsDeleteModalOpen(false);
             setProjectToDelete(null);
-            fetchProjects(projects.length === 1 && pagination.page > 1 ? pagination.page - 1 : pagination.page);
+            fetchProjects();
         } catch (error) {
             toast.error("Error deleting project");
         } finally {
@@ -101,7 +96,18 @@ export default function ProjectsPage() {
         p.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    if (loading && pagination.page === 1) return <Loader />;
+    const paginatedProjects = filteredProjects.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery]);
+
+    if (loading && projects.length === 0) return <Loader />;
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500 p-4 md:p-0">
@@ -109,7 +115,7 @@ export default function ProjectsPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
                     <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Projects Showcase ({pagination.total})
+                        Projects Showcase ({filteredProjects.length})
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 font-medium">
                         Manage your portfolio and showcase your best work.
@@ -151,14 +157,14 @@ export default function ProjectsPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                            {filteredProjects.length === 0 ? (
+                            {paginatedProjects.length === 0 ? (
                                 <tr>
                                     <td colSpan={3} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                                         No projects found
                                     </td>
                                 </tr>
                             ) : (
-                                filteredProjects.map((project) => (
+                                paginatedProjects.map((project) => (
                                     <tr
                                         key={project._id}
                                         className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors"
@@ -236,33 +242,33 @@ export default function ProjectsPage() {
             </div>
 
             {/* Pagination */}
-            {pagination.pages > 1 && (
+            {totalPages > 1 && (
                 <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10 rounded-2xl">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
-                            Showing <span className="font-bold text-gray-900 dark:text-white">{((pagination.page - 1) * pagination.limit) + 1}</span> to{" "}
+                            Showing <span className="font-bold text-gray-900 dark:text-white">{((currentPage - 1) * itemsPerPage) + 1}</span> to{" "}
                             <span className="font-bold text-gray-900 dark:text-white">
-                                {Math.min(pagination.page * pagination.limit, pagination.total)}
+                                {Math.min(currentPage * itemsPerPage, filteredProjects.length)}
                             </span> of{" "}
-                            <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
+                            <span className="font-bold text-gray-900 dark:text-white">{filteredProjects.length}</span> <span className="hidden sm:inline">results</span>
                         </p>
                         <div className="flex items-center gap-1.5 sm:gap-2">
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => fetchProjects(pagination.page - 1)}
-                                disabled={pagination.page === 1 || loading}
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                disabled={currentPage === 1 || loading}
                                 className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                             >
                                 <ChevronLeft size={16} />
                                 <span className="hidden sm:inline">Previous</span>
                             </Button>
                             <div className="flex items-center gap-1">
-                                {Array.from({ length: pagination.pages }, (_, i) => i + 1)
+                                {Array.from({ length: totalPages }, (_, i) => i + 1)
                                     .filter(page => {
                                         return page === 1 ||
-                                            page === pagination.pages ||
-                                            Math.abs(page - pagination.page) <= 1;
+                                            page === totalPages ||
+                                            Math.abs(page - currentPage) <= 1;
                                     })
                                     .map((page, index, array) => {
                                         const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
@@ -272,11 +278,11 @@ export default function ProjectsPage() {
                                                     <span className="px-1 text-gray-400 select-none">...</span>
                                                 )}
                                                 <Button
-                                                    variant={pagination.page === page ? "default" : "outline"}
+                                                    variant={currentPage === page ? "default" : "outline"}
                                                     size="sm"
-                                                    onClick={() => fetchProjects(page)}
+                                                    onClick={() => setCurrentPage(page)}
                                                     disabled={loading}
-                                                    className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
+                                                    className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${currentPage === page
                                                         ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
                                                         : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
                                                         }`}
@@ -290,8 +296,8 @@ export default function ProjectsPage() {
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => fetchProjects(pagination.page + 1)}
-                                disabled={pagination.page === pagination.pages || loading}
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                disabled={currentPage === totalPages || loading}
                                 className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                             >
                                 <span className="hidden sm:inline">Next</span>

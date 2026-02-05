@@ -184,7 +184,7 @@ export default function AdminDashboard() {
             title: "Total Applications",
             value: data?.stats?.applications?.total ?? "0",
             icon: <Users />,
-            subtitle: `${data?.stats?.applications?.pending ?? 0} pending review`,
+            subtitle: `${data?.stats?.applications?.pending ?? 0} pending ${data?.stats?.applications?.pending === 1 ? 'review' : 'reviews'}`,
             color: "bg-blue-600",
             href: "/admin/applications"
         },
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
             title: "Inquiries",
             value: data?.stats?.contacts?.total ?? "0",
             icon: <Mail />,
-            subtitle: `${data?.stats?.contacts?.unread ?? 0} unread messages`,
+            subtitle: `${data?.stats?.contacts?.unread ?? 0} unread ${data?.stats?.contacts?.unread === 1 ? 'message' : 'messages'}`,
             color: "bg-indigo-600",
             href: "/admin/contacts"
         },
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
             title: "Quote Requests",
             value: data?.stats?.quotes?.total ?? "0",
             icon: <MousePointerClick />,
-            subtitle: `${data?.stats?.quotes?.pending ?? 0} pending review`,
+            subtitle: `${data?.stats?.quotes?.pending ?? 0} pending ${data?.stats?.quotes?.pending === 1 ? 'review' : 'reviews'}`,
             color: "bg-emerald-600",
             href: "/admin/quotes"
         },
@@ -208,7 +208,7 @@ export default function AdminDashboard() {
             title: "Total Admins",
             value: data?.stats?.admins?.total ?? "0",
             icon: <ShieldCheck />,
-            subtitle: `${data?.stats?.admins?.subAdmins ?? 0} subadmins`,
+            subtitle: `${data?.stats?.admins?.subAdmins ?? 0} ${data?.stats?.admins?.subAdmins === 1 ? 'subadmin' : 'subadmins'}`,
             color: "bg-orange-600",
             href: "/admin/admins"
         },

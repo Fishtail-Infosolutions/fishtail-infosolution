@@ -62,25 +62,20 @@ interface PaginationData {
 export default function JobsPage() {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
-    const [pagination, setPagination] = useState<PaginationData>({
-        total: 0,
-        page: 1,
-        limit: 10,
-        pages: 0
-    });
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [jobToDelete, setJobToDelete] = useState<Job | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
 
-    const fetchJobs = async (page: number = 1) => {
+    const fetchJobs = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`/api/jobs?page=${page}&limit=10`);
+            const res = await fetch(`/api/jobs`);
             if (!res.ok) throw new Error("Failed to fetch jobs");
             const data = await res.json();
             setJobs(data.jobs);
-            setPagination(data.pagination);
         } catch (error) {
             toast.error("Error loading jobs");
         } finally {
@@ -107,11 +102,6 @@ export default function JobsPage() {
             setIsDeleteModalOpen(false);
             setJobToDelete(null);
             toast.success("Job deleted successfully");
-
-            // Refresh if we deleted the last item on the page
-            if (jobs.length === 1 && pagination.page > 1) {
-                fetchJobs(pagination.page - 1);
-            }
         } catch (error) {
             toast.error("Error deleting job");
         } finally {
@@ -120,9 +110,7 @@ export default function JobsPage() {
     };
 
     const handlePageChange = (newPage: number) => {
-        if (newPage >= 1 && newPage <= pagination.pages) {
-            fetchJobs(newPage);
-        }
+        setCurrentPage(newPage);
     };
 
     const filteredJobs = jobs.filter(job => {
@@ -133,7 +121,19 @@ export default function JobsPage() {
         return titleMatch || categoryMatch;
     });
 
-    if (loading && pagination.page === 1) {
+    const paginatedJobs = filteredJobs.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const totalPages = Math.ceil(filteredJobs.length / itemsPerPage);
+
+    // Reset page to 1 if search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery]);
+
+    if (loading) {
         return <Loader />;
     }
 
@@ -143,7 +143,7 @@ export default function JobsPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
                     <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Job Openings ({pagination.total})
+                        Job Openings ({filteredJobs.length})
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 font-medium">
                         Manage your job vacancies and recruitment listings.
@@ -182,7 +182,7 @@ export default function JobsPage() {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                            {filteredJobs.length === 0 ? (
+                            {paginatedJobs.length === 0 ? (
                                 <tr>
                                     <td colSpan={6} className="px-6 py-16 text-center">
                                         <div className="flex flex-col items-center gap-3 opacity-50">
@@ -192,7 +192,7 @@ export default function JobsPage() {
                                     </td>
                                 </tr>
                             ) : (
-                                filteredJobs.map((job) => (
+                                paginatedJobs.map((job) => (
                                     <tr key={job._id} className="hover:bg-gray-50 dark:hover:bg-white/2 transition-colors group">
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-3">
@@ -292,33 +292,33 @@ export default function JobsPage() {
                 </div>
 
                 {/* Pagination */}
-                {pagination.pages > 1 && (
+                {totalPages > 1 && (
                     <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10">
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
-                                Showing <span className="font-bold text-gray-900 dark:text-white">{((pagination.page - 1) * pagination.limit) + 1}</span> to{" "}
+                                Showing <span className="font-bold text-gray-900 dark:text-white">{((currentPage - 1) * itemsPerPage) + 1}</span> to{" "}
                                 <span className="font-bold text-gray-900 dark:text-white">
-                                    {Math.min(pagination.page * pagination.limit, pagination.total)}
+                                    {Math.min(currentPage * itemsPerPage, filteredJobs.length)}
                                 </span> of{" "}
-                                <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
+                                <span className="font-bold text-gray-900 dark:text-white">{filteredJobs.length}</span> <span className="hidden sm:inline">results</span>
                             </p>
                             <div className="flex items-center gap-1.5 sm:gap-2">
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handlePageChange(pagination.page - 1)}
-                                    disabled={pagination.page === 1 || loading}
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1 || loading}
                                     className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                                 >
                                     <ChevronLeft size={16} />
                                     <span className="hidden sm:inline">Previous</span>
                                 </Button>
                                 <div className="flex items-center gap-1">
-                                    {Array.from({ length: pagination.pages }, (_, i) => i + 1)
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
                                         .filter(page => {
                                             return page === 1 ||
-                                                page === pagination.pages ||
-                                                Math.abs(page - pagination.page) <= 1;
+                                                page === totalPages ||
+                                                Math.abs(page - currentPage) <= 1;
                                         })
                                         .map((page, index, array) => {
                                             const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
@@ -328,11 +328,11 @@ export default function JobsPage() {
                                                         <span className="px-1 text-gray-400 select-none">...</span>
                                                     )}
                                                     <Button
-                                                        variant={pagination.page === page ? "default" : "outline"}
+                                                        variant={currentPage === page ? "default" : "outline"}
                                                         size="sm"
                                                         onClick={() => handlePageChange(page)}
                                                         disabled={loading}
-                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
+                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${currentPage === page
                                                             ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
                                                             : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
                                                             }`}
@@ -346,8 +346,8 @@ export default function JobsPage() {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handlePageChange(pagination.page + 1)}
-                                    disabled={pagination.page === pagination.pages || loading}
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages || loading}
                                     className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                                 >
                                     <span className="hidden sm:inline">Next</span>

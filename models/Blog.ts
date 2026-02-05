@@ -37,11 +37,6 @@ const BlogSchema = new mongoose.Schema({
         type: String,
         default: 'Technology'
     },
-    status: {
-        type: String,
-        enum: ['Draft', 'Published'],
-        default: 'Draft'
-    },
     publishedAt: {
         type: Date,
         default: Date.now

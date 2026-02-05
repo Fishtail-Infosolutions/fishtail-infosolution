@@ -10,21 +10,13 @@ export async function GET(req: Request) {
     try {
         await connectDB();
 
-        // Get query parameters for pagination
-        const { searchParams } = new URL(req.url);
-        const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '10');
-        const skip = (page - 1) * limit;
-
         const jobs = await Job.find({})
             .populate({
                 path: 'category',
                 model: JobCategory,
                 select: 'name'
             })
-            .sort({ createdAt: -1 })
-            .limit(limit)
-            .skip(skip);
+            .sort({ createdAt: -1 });
 
         // Get application counts for each job
         const jobIds = jobs.map(job => job._id);
@@ -43,16 +35,8 @@ export async function GET(req: Request) {
             applicationsCount: countsMap[job._id.toString()] || 0
         }));
 
-        const total = await Job.countDocuments();
-
         return NextResponse.json({
-            jobs: jobsWithCounts,
-            pagination: {
-                total,
-                page,
-                limit,
-                pages: Math.ceil(total / limit)
-            }
+            jobs: jobsWithCounts
         });
     } catch (error) {
         console.error('Error fetching jobs:', error);

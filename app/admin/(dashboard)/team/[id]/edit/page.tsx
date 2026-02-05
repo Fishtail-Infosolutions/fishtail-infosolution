@@ -33,7 +33,6 @@ const teamMemberSchema = z.object({
     role: z.string().min(1, "Role is required"),
     description: z.string().min(1, "Description is required"),
     imageUrl: z.string().min(1, "Profile image is required"),
-    order: z.string(),
     isActive: z.boolean(),
 });
 
@@ -76,7 +75,6 @@ export default function EditTeamMemberPage() {
             role: "",
             description: "",
             imageUrl: "",
-            order: "0",
             isActive: true,
         },
     });
@@ -96,7 +94,6 @@ export default function EditTeamMemberPage() {
                 role: member.role,
                 description: member.description,
                 imageUrl: member.imageUrl || "",
-                order: member.order?.toString() || "0",
                 isActive: member.isActive,
             });
 
@@ -140,6 +137,10 @@ export default function EditTeamMemberPage() {
 
     const addSocial = () => {
         if (newSocialPlatform && newSocialUrl) {
+            if (!newSocialUrl.startsWith("https://")) {
+                toast.error("URL must start with https://");
+                return;
+            }
             setSocials([...socials, { platform: newSocialPlatform, url: newSocialUrl }]);
             setNewSocialPlatform("");
             setNewSocialUrl("");
@@ -181,7 +182,6 @@ export default function EditTeamMemberPage() {
             teamMemberFormData.append("description", values.description);
             if (imagePath) teamMemberFormData.append("imageUrl", imagePath);
             teamMemberFormData.append("socials", JSON.stringify(socials));
-            teamMemberFormData.append("order", values.order || "0");
             teamMemberFormData.append("isActive", values.isActive.toString());
 
             const res = await fetch(`/api/team/${memberId}`, {

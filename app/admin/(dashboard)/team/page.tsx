@@ -125,12 +125,8 @@ function SortableRow({ member, onDelete, children }: { member: TeamMember, onDel
 export default function TeamPage() {
     const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
     const [loading, setLoading] = useState(true);
-    const [pagination, setPagination] = useState<PaginationData>({
-        total: 0,
-        page: 1,
-        limit: 10,
-        pages: 0
-    });
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
@@ -147,14 +143,13 @@ export default function TeamPage() {
         })
     );
 
-    const fetchTeamMembers = async (page: number = 1) => {
+    const fetchTeamMembers = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`/api/team?page=${page}&limit=10`);
+            const res = await fetch(`/api/team`);
             if (!res.ok) throw new Error("Failed to fetch team members");
             const data = await res.json();
             setTeamMembers(data.teamMembers);
-            setPagination(data.pagination);
         } catch (error) {
             toast.error("Error loading team members");
         } finally {
@@ -200,7 +195,7 @@ export default function TeamPage() {
             if (!res.ok) throw new Error("Failed to update order");
         } catch (error) {
             toast.error("Failed to save new order");
-            fetchTeamMembers(pagination.page);
+            fetchTeamMembers();
         } finally {
             setIsReordering(false);
         }
@@ -221,10 +216,6 @@ export default function TeamPage() {
             setIsDeleteModalOpen(false);
             setMemberToDelete(null);
             toast.success("Team member deleted successfully");
-
-            if (teamMembers.length === 1 && pagination.page > 1) {
-                fetchTeamMembers(pagination.page - 1);
-            }
         } catch (error) {
             toast.error("Error deleting team member");
         } finally {
@@ -233,9 +224,7 @@ export default function TeamPage() {
     };
 
     const handlePageChange = (newPage: number) => {
-        if (newPage >= 1 && newPage <= pagination.pages) {
-            fetchTeamMembers(newPage);
-        }
+        setCurrentPage(newPage);
     };
 
     const filteredTeamMembers = teamMembers.filter(member => {
@@ -244,7 +233,19 @@ export default function TeamPage() {
         return nameMatch || roleMatch;
     });
 
-    if (loading && pagination.page === 1) {
+    const paginatedTeamMembers = filteredTeamMembers.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const totalPages = Math.ceil(filteredTeamMembers.length / itemsPerPage);
+
+    // Reset page to 1 if search changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery]);
+
+    if (loading) {
         return <Loader />;
     }
 
@@ -254,7 +255,7 @@ export default function TeamPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
                     <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Team Members ({pagination.total})
+                        Team Members ({filteredTeamMembers.length})
                     </h1>
                     <p className="text-gray-500 dark:text-gray-400 font-medium">
                         Manage your company team members and their profiles.
@@ -305,17 +306,17 @@ export default function TeamPage() {
                             </thead>
                             <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                                 <SortableContext
-                                    items={filteredTeamMembers.map(item => item._id)}
+                                    items={paginatedTeamMembers.map(item => item._id)}
                                     strategy={verticalListSortingStrategy}
                                 >
-                                    {filteredTeamMembers.length === 0 ? (
+                                    {paginatedTeamMembers.length === 0 ? (
                                         <tr>
                                             <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                                                 No team members found
                                             </td>
                                         </tr>
                                     ) : (
-                                        filteredTeamMembers.map((member) => (
+                                        paginatedTeamMembers.map((member) => (
                                             <SortableRow key={member._id} member={member} onDelete={() => {
                                                 setMemberToDelete(member);
                                                 setIsDeleteModalOpen(true);
@@ -462,33 +463,33 @@ export default function TeamPage() {
                 </div>
 
                 {/* Pagination */}
-                {pagination.pages > 1 && (
+                {totalPages > 1 && (
                     <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-4 bg-gray-50/30 dark:bg-gray-800/10">
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-medium">
-                                Showing <span className="font-bold text-gray-900 dark:text-white">{((pagination.page - 1) * pagination.limit) + 1}</span> to{" "}
+                                Showing <span className="font-bold text-gray-900 dark:text-white">{((currentPage - 1) * itemsPerPage) + 1}</span> to{" "}
                                 <span className="font-bold text-gray-900 dark:text-white">
-                                    {Math.min(pagination.page * pagination.limit, pagination.total)}
+                                    {Math.min(currentPage * itemsPerPage, filteredTeamMembers.length)}
                                 </span> of{" "}
-                                <span className="font-bold text-gray-900 dark:text-white">{pagination.total}</span> <span className="hidden sm:inline">results</span>
+                                <span className="font-bold text-gray-900 dark:text-white">{filteredTeamMembers.length}</span> <span className="hidden sm:inline">results</span>
                             </p>
                             <div className="flex items-center gap-1.5 sm:gap-2">
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handlePageChange(pagination.page - 1)}
-                                    disabled={pagination.page === 1 || loading}
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1 || loading}
                                     className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                                 >
                                     <ChevronLeft size={16} />
                                     <span className="hidden sm:inline">Previous</span>
                                 </Button>
                                 <div className="flex items-center gap-1">
-                                    {Array.from({ length: pagination.pages }, (_, i) => i + 1)
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1)
                                         .filter(page => {
                                             return page === 1 ||
-                                                page === pagination.pages ||
-                                                Math.abs(page - pagination.page) <= 1;
+                                                page === totalPages ||
+                                                Math.abs(page - currentPage) <= 1;
                                         })
                                         .map((page, index, array) => {
                                             const showEllipsisBefore = index > 0 && page - array[index - 1] > 1;
@@ -498,11 +499,11 @@ export default function TeamPage() {
                                                         <span className="px-1 text-gray-400 select-none">...</span>
                                                     )}
                                                     <Button
-                                                        variant={pagination.page === page ? "default" : "outline"}
+                                                        variant={currentPage === page ? "default" : "outline"}
                                                         size="sm"
                                                         onClick={() => handlePageChange(page)}
                                                         disabled={loading}
-                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${pagination.page === page
+                                                        className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${currentPage === page
                                                             ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
                                                             : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
                                                             }`}
@@ -516,8 +517,8 @@ export default function TeamPage() {
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handlePageChange(pagination.page + 1)}
-                                    disabled={pagination.page === pagination.pages || loading}
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages || loading}
                                     className="h-8 sm:h-9 px-2 sm:px-3 text-xs font-semibold gap-1 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
                                 >
                                     <span className="hidden sm:inline">Next</span>

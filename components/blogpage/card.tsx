@@ -28,23 +28,24 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
                 glareOpacity={0.3}
                 transitionDuration={900}
                 playOnce={true}
-                className="flex flex-col items-end justify-center py-8 px-6 relative"
+                className="flex flex-col items-start justify-end py-8 px-6 relative"
             >
                 <Image
                     src={blog.imageUrl}
                     alt={blog.title}
                     fill
-                    className="w-full h-full object-cover absolute top-0 left-0 opacity-60 group-hover:opacity-40 duration-900 group-hover:scale-105 transition"
+                    className="w-full h-full object-cover absolute top-0 left-0 opacity-70 group-hover:opacity-50 duration-900 group-hover:scale-105 transition"
                 />
+                <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/10 to-black/60 pointer-events-none" />
                 <div className="relative z-10 w-full pointer-events-none flex flex-col gap-4">
-                    <p className="font-medium text-white text-lg line-clamp-2">
+                    <p className="font-semibold text-white text-lg line-clamp-2">
                         {blog.title}
                     </p>
                     <div className="flex justify-between items-center w-full">
                         <p className="font-normal text-sm text-neutral-300">
                             {formattedDate}
                         </p>
-                        <div className="flex items-center gap-2 text-sm text-foreground font-medium group-hover:translate-x-1 transition-transform duration-300">
+                        <div className="flex items-center gap-2 text-sm text-white! font-medium group-hover:translate-x-1 transition-transform duration-300">
                             Read More <FaArrowRight />
                         </div>
                     </div>

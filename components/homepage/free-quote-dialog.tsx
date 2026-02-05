@@ -31,7 +31,7 @@ import { Label } from "@/components/ui/label"
 
 const formSchema = z.object({
     // Step 1
-    websiteUrl: z.string().url({ message: "Please enter a valid URL (e.g., https://example.com)" }),
+    websiteUrl: z.string().url({ message: "Please enter a valid URL" }).refine((val) => val.startsWith("https://"), { message: "URL must start with https://" }),
     seoGoals: z.string().optional(),
 
     // Step 2

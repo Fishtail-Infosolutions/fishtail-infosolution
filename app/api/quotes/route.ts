@@ -57,41 +57,15 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("admin_token")?.value;
-        const decoded = token ? await verifyToken(token) : null;
-
-        if (!decoded) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        }
-
         await connectToDatabase();
-        const { searchParams } = new URL(req.url);
-        const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '10');
-        const skip = (page - 1) * limit;
 
-        const quotes = await Quote.find()
-            .sort({ createdAt: -1 })
-            .limit(limit)
-            .skip(skip);
-
-        const total = await Quote.countDocuments();
+        const quotes = await Quote.find({}).sort({ createdAt: -1 });
 
         return NextResponse.json({
-            quotes,
-            pagination: {
-                total,
-                page,
-                limit,
-                pages: Math.ceil(total / limit)
-            }
+            quotes
         });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching quotes:', error);
-        return NextResponse.json(
-            { error: 'Internal Server Error' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: "Failed to fetch quotes" }, { status: 500 });
     }
 }

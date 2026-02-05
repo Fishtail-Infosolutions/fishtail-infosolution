@@ -75,36 +75,33 @@ export async function GET(req: Request) {
         }
 
         await connectDB();
+
         const { searchParams } = new URL(req.url);
         const jobId = searchParams.get('job');
-        const page = parseInt(searchParams.get('page') || '1');
-        const limit = parseInt(searchParams.get('limit') || '10');
-        const skip = (page - 1) * limit;
 
-        const query = jobId ? { job: jobId } : {};
+        let query = {};
+        if (jobId) {
+            query = { job: jobId };
+        }
 
         const applications = await Application.find(query)
-            .populate('job', 'title') // Populate job title from Job model if it exists
-            .sort({ createdAt: -1 })
-            .limit(limit)
-            .skip(skip);
+            .populate({
+                path: 'job',
+                select: 'title'
+            })
+            .sort({ createdAt: -1 });
 
-        const total = await Application.countDocuments(query);
+        // Map to include jobTitle for easier frontend access if populated
+        const appsWithJobTitle = applications.map((app: any) => ({
+            ...app.toObject(),
+            jobTitle: app.job?.title || app.jobTitle || "Unknown Job"
+        }));
 
         return NextResponse.json({
-            applications,
-            pagination: {
-                total,
-                page,
-                limit,
-                pages: Math.ceil(total / limit)
-            }
+            applications: appsWithJobTitle
         });
     } catch (error: any) {
-        console.error("Fetch Applications Error:", error);
-        return NextResponse.json({
-            error: "Failed to fetch applications",
-            details: error.message
-        }, { status: 500 });
+        console.error('Error fetching applications:', error);
+        return NextResponse.json({ error: "Failed to fetch applications", details: error.message }, { status: 500 });
     }
 }
