@@ -112,7 +112,8 @@ interface DashboardData {
         applications: { total: number; pending: number };
         contacts: { total: number; unread: number };
         quotes: { total: number; pending: number };
-        admins: { total: number; subAdmins: number };
+        jobs: { total: number; activeDepartments: number };
+        blogs: { total: number };
     };
     charts: {
         daily: { name: string; applications: number; contacts: number }[];
@@ -197,20 +198,20 @@ export default function AdminDashboard() {
             href: "/admin/contacts"
         },
         {
+            title: "Active Vacancies",
+            value: data?.stats?.jobs?.total ?? "0",
+            icon: <Briefcase />,
+            subtitle: `Across ${data?.stats?.jobs?.activeDepartments ?? 0} ${data?.stats?.jobs?.activeDepartments === 1 ? 'department' : 'departments'}`,
+            color: "bg-orange-600",
+            href: "/admin/jobs"
+        },
+        {
             title: "Quote Requests",
             value: data?.stats?.quotes?.total ?? "0",
             icon: <MousePointerClick />,
             subtitle: `${data?.stats?.quotes?.pending ?? 0} pending ${data?.stats?.quotes?.pending === 1 ? 'review' : 'reviews'}`,
             color: "bg-emerald-600",
             href: "/admin/quotes"
-        },
-        {
-            title: "Total Admins",
-            value: data?.stats?.admins?.total ?? "0",
-            icon: <ShieldCheck />,
-            subtitle: `${data?.stats?.admins?.subAdmins ?? 0} ${data?.stats?.admins?.subAdmins === 1 ? 'subadmin' : 'subadmins'}`,
-            color: "bg-orange-600",
-            href: "/admin/admins"
         },
     ];
 
@@ -261,16 +262,12 @@ export default function AdminDashboard() {
                         <StatsCard key={i} isLoading={true} title="" value="" color="" />
                     ))
                 ) : (
-                    cards.map((stat, i) => {
-                        const isForbidden = stat.title === "Total Admins" && data?.userRole !== 'super-admin';
-                        return (
-                            <StatsCard
-                                key={i}
-                                {...stat}
-                                isForbidden={isForbidden}
-                            />
-                        );
-                    })
+                    cards.map((stat, i) => (
+                        <StatsCard
+                            key={i}
+                            {...stat}
+                        />
+                    ))
                 )}
             </div>
 
@@ -296,6 +293,10 @@ export default function AdminDashboard() {
                                             <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.1} />
                                             <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
                                         </linearGradient>
+                                        <linearGradient id="colorQuotes" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.1} />
+                                            <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                                        </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" opacity={0.5} />
                                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} />
@@ -303,6 +304,7 @@ export default function AdminDashboard() {
                                     <Tooltip content={<CustomTooltip />} />
                                     <Area type="monotone" name="Applications" dataKey="applications" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorApps)" />
                                     <Area type="monotone" name="Inquiries" dataKey="contacts" stroke="#8b5cf6" strokeWidth={3} fillOpacity={1} fill="url(#colorContacts)" />
+                                    <Area type="monotone" name="Quotes" dataKey="quotes" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorQuotes)" />
                                 </AreaChart>
                             </ResponsiveContainer>
                         )}

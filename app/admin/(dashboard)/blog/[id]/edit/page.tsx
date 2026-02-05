@@ -103,7 +103,7 @@ export default function EditBlogPage() {
             reader.onloadend = () => {
                 const base64String = reader.result as string;
                 setImagePreview(base64String);
-                form.setValue("imageUrl", base64String);
+                form.setValue("imageUrl", base64String, { shouldValidate: true });
             };
             reader.readAsDataURL(file);
         }
@@ -111,7 +111,7 @@ export default function EditBlogPage() {
 
     const removeImage = () => {
         setImagePreview(null);
-        form.setValue("imageUrl", "");
+        form.setValue("imageUrl", "", { shouldValidate: true });
     };
 
     const onSubmit = async (values: BlogFormValues) => {

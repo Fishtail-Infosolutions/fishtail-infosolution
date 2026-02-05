@@ -101,7 +101,6 @@ export default function EditProjectPage() {
 
             setImagePreview(data.path);
             form.setValue('imageUrl', data.path, { shouldValidate: true });
-            toast.success('Image uploaded successfully');
         } catch (error) {
             toast.error('Failed to upload image');
         } finally {

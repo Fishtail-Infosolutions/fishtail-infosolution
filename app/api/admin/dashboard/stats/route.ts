@@ -4,6 +4,7 @@ import Application from "@/models/Application";
 import Contact from "@/models/Contact";
 import Quote from "@/models/Quote";
 import Job from "@/models/Job";
+import Blog from "@/models/Blog";
 import User from "@/models/User";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
@@ -29,7 +30,9 @@ export async function GET() {
             totalQuotes,
             pendingQuotes,
             totalAdmins,
-            subAdmins
+            totalJobs,
+            totalBlogs,
+            activeDepartments
         ] = await Promise.all([
             Application.countDocuments(),
             Application.countDocuments({ status: 'pending' }),
@@ -38,7 +41,9 @@ export async function GET() {
             Quote.countDocuments(),
             Quote.countDocuments({ status: 'pending' }),
             User.countDocuments({ role: { $in: ['admin', 'super-admin'] } }),
-            User.countDocuments({ role: 'admin' })
+            Job.countDocuments(),
+            Blog.countDocuments(),
+            Job.distinct('category').then(res => res.length)
         ]);
 
         // 2. Get Data for Charts (Last 7 Days)
@@ -50,15 +55,17 @@ export async function GET() {
                 const nextDate = new Date(date);
                 nextDate.setDate(nextDate.getDate() + 1);
 
-                const [apps, contacts] = await Promise.all([
+                const [apps, contacts, quotes] = await Promise.all([
                     Application.countDocuments({ createdAt: { $gte: date, $lt: nextDate } }),
-                    Contact.countDocuments({ createdAt: { $gte: date, $lt: nextDate } })
+                    Contact.countDocuments({ createdAt: { $gte: date, $lt: nextDate } }),
+                    Quote.countDocuments({ createdAt: { $gte: date, $lt: nextDate } })
                 ]);
 
                 return {
                     name: date.toLocaleDateString('en-US', { weekday: 'short' }),
                     applications: apps,
-                    contacts: contacts
+                    contacts: contacts,
+                    quotes: quotes
                 };
             })
         );
@@ -85,7 +92,8 @@ export async function GET() {
                 applications: { total: totalApplications, pending: pendingApplications },
                 contacts: { total: totalContacts, unread: unreadContacts },
                 quotes: { total: totalQuotes, pending: pendingQuotes },
-                admins: { total: totalAdmins, subAdmins: subAdmins }
+                jobs: { total: totalJobs, activeDepartments },
+                blogs: { total: totalBlogs }
             },
             charts: {
                 daily: dailyStats.reverse(),

@@ -32,7 +32,7 @@ export function ConfirmDeleteModal({
 }: ConfirmDeleteModalProps) {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 shadow-2xl">
+            <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden bg-white/80 dark:bg-[#0B0F1A]/80 border-gray-200 dark:border-gray-800 shadow-2xl backdrop-blur-xl">
                 <div className="p-6 pt-8 flex flex-col items-center text-center space-y-4">
                     <div className="w-16 h-16 rounded-full bg-red-50 dark:bg-red-900/10 flex items-center justify-center">
                         <Trash2 size={32} className="text-red-500" />

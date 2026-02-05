@@ -36,7 +36,6 @@ const RichTextEditor = ({ value, onChange, placeholder }: RichTextEditorProps) =
         "underline",
         "strike",
         "list",
-        "bullet",
         "color",
         "background",
         "blockquote",

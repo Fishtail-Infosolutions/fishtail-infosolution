@@ -321,11 +321,12 @@ export function ApplicationsList() {
                                                     <Button
                                                         variant="ghost"
                                                         className="h-9 w-9 p-0 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-lg"
+                                                        onClick={(e) => e.stopPropagation()}
                                                     >
                                                         <MoreVertical size={18} />
                                                     </Button>
                                                 </PopoverTrigger>
-                                                <PopoverContent className="w-48 p-2 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800" align="end">
+                                                <PopoverContent className="w-48 p-2 bg-white dark:bg-[#0B0F1A] border-gray-200 dark:border-gray-800 z-150" align="end">
                                                     <div className="flex flex-col gap-1">
                                                         <Button
                                                             variant="ghost"
@@ -336,7 +337,7 @@ export function ApplicationsList() {
                                                             className="w-full justify-start gap-2 h-9 text-sm font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400"
                                                         >
                                                             <Eye size={16} />
-                                                            Review
+                                                            View
                                                         </Button>
                                                         <Button
                                                             variant="ghost"

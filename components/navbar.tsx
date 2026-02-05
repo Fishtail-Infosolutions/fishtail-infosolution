@@ -170,7 +170,7 @@ const Navbar: React.FC = () => {
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-60 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-md z-60 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
