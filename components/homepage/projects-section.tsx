@@ -1,11 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import GradientBanner from '../self-made-ui/gradeint-banner';
 import { Button } from '../ui/button';
 import ScrollStack, { ScrollStackItem } from '../ui/ScrollStack';
-import { Projects } from '@/constants/projects';
 import Image from 'next/image';
 import { FaArrowRight } from "react-icons/fa6";
+import Link from 'next/link';
 
 const cardGradients = [
   'linear-gradient(135deg, rgba(90,20,20,0.85), rgba(30,10,10,0.6))',
@@ -15,9 +16,39 @@ const cardGradients = [
 ];
 
 export default function ProjectsSection() {
+  const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch('/api/projects');
+        const data = await res.json();
+        if (data.projects) {
+          setProjects(data.projects);
+        }
+      } catch (error) {
+        console.error("Failed to fetch projects", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="w-full bg-transparent sm:mt-20 mt-30 h-[600px] flex items-center justify-center">
+        <span className="animate-pulse w-full h-full bg-accent/5 rounded-3xl"></span>
+      </section>
+    );
+  }
+
+  if (projects.length === 0) return null;
+
   return (
     <section className="w-full bg-transparent sm:mt-20 mt-30 transition-colors duration-500">
-      <div className="mx-auto max-w-5xl px-4">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="flex flex-col items-center text-center">
           <GradientBanner text="Our Projects" />
 
@@ -27,9 +58,9 @@ export default function ProjectsSection() {
 
           <div className="w-full">
             <ScrollStack topOffset="2rem" itemDistance={40} itemStackDistance={45}>
-              {Projects.slice(0, 3).map((project, i) => (
+              {projects.slice(0, 3).map((project, i) => (
                 <ScrollStackItem
-                  key={project.id}
+                  key={project._id}
                   bg={cardGradients[i % cardGradients.length]}
                   minHeight="22rem"
                 >
@@ -51,13 +82,15 @@ export default function ProjectsSection() {
 
                     {/* 3. Button */}
                     <div className="flex justify-center md:justify-start md:col-start-1 md:row-start-2">
-                      <Button
-                        variant="default"
-                        className="group flex items-center gap-2 rounded-full px-6 py-4 md:px-8 md:py-6 text-sm md:text-md bg-white text-black hover:bg-white/90"
-                      >
-                        View Project
-                        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                      </Button>
+                      <Link href={project.projectUrl || '#'} target="_blank" rel="noopener noreferrer">
+                        <Button
+                          variant="default"
+                          className="group flex items-center gap-2 rounded-full px-6 py-4 md:px-8 md:py-6 text-sm md:text-md bg-white text-black hover:bg-white/90"
+                        >
+                          View Project
+                          <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </ScrollStackItem>

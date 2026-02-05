@@ -14,7 +14,7 @@ export default function Home() {
         <HeroSection />
         <ServicesSection />
         <ProjectsSection />
-        {/* <AnimatedStatistics /> */}
+        <AnimatedStatistics />
         <TestimonialsSection />
       </div>
     </div>
