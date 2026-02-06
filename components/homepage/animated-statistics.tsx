@@ -108,7 +108,7 @@ export default function AnimatedStatistics() {
             value: 30,
             suffix: "+",
             label: "Happy Clients",
-            description: "Building lasting relationships."
+            description: "Building lasting relationships and network"
         },
         {
             icon: <Calendar className="w-5 h-5 md:w-6 md:h-6" />,
@@ -119,7 +119,7 @@ export default function AnimatedStatistics() {
         },
         {
             icon: <Award className="w-5 h-5 md:w-6 md:h-6" />,
-            value: 100,
+            value: 98,
             suffix: "%",
             label: "Satisfaction Rate",
             description: "Committed to excellence and client success."
