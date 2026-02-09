@@ -8,7 +8,7 @@ import { IconCloud } from "@/components/ui/icon-cloud";
 import LogoLoop from "@/components/LogoLoop";
 import { Badge } from "@/components/ui/badge";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 import { AnimatedList } from "../ui/animated-list";
 
@@ -344,18 +344,45 @@ const features = [
     },
 ];
 
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.2
+        }
+    }
+};
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } // Using a cubic-bezier array for better type compatibility
+    }
+};
+
 export default function WhyChooseUsSection() {
     return (
-        <section className="w-full bg-background py-12 lg:py-16 transition-colors duration-500">
+        <section className="w-full bg-background pt-10 pb-20 transition-colors duration-500">
             <div className="mx-auto max-w-7xl px-4 lg:px-9">
                 <div className="flex flex-col items-center mb-12">
-                    <GradientBanner text="Why Choose Us" />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <GradientBanner text="Why Choose Us" />
+                    </motion.div>
 
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
                         className="mt-8 mb-4 text-center text-3xl font-medium tracking-tight text-foreground sm:text-3xl md:text-4xl"
                     >
                         Built for Growth, Powered by Results
@@ -372,11 +399,24 @@ export default function WhyChooseUsSection() {
                     </motion.p>
                 </div>
 
-                <BentoGrid>
-                    {features.map((feature, idx) => (
-                        <BentoCard key={idx} {...feature} />
-                    ))}
-                </BentoGrid>
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-50px" }}
+                >
+                    <BentoGrid>
+                        {features.map((feature, idx) => (
+                            <motion.div
+                                key={idx}
+                                variants={itemVariants}
+                                className={feature.className}
+                            >
+                                <BentoCard {...feature} className="h-full" />
+                            </motion.div>
+                        ))}
+                    </BentoGrid>
+                </motion.div>
             </div>
         </section>
     );

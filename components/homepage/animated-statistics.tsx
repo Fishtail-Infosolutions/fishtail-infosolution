@@ -58,9 +58,9 @@ const StatCard: React.FC<StatCardProps> = ({ icon, value, suffix, label, descrip
                 {/* Top Right Gradient Rectangle - Smooth Fade Towards Center */}
                 <div className="absolute top-0 right-0 w-[250px] h-[250px] pointer-events-none z-0">
                     {/* Main gradient background with smooth fade */}
-                    <div className="absolute inset-0 bg-gradient-to-bl from-primary/8 via-primary/3 to-transparent [mask-image:radial-gradient(ellipse_at_top_right,black_0%,rgba(0,0,0,0.6)_40%,transparent_100%)]"></div>
+                    <div className="absolute inset-0 bg-linear-to-bl from-primary/8 via-primary/3 to-transparent mask-[radial-gradient(ellipse_at_top_right,black_0%,rgba(0,0,0,0.6)_40%,transparent_100%)]"></div>
                     {/* Grid pattern overlay with smooth radial fade */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.06)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:20px_20px] [mask-image:radial-gradient(ellipse_at_top_right,black_0%,rgba(0,0,0,0.5)_40%,transparent_100%)]"></div>
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.06)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-size-[20px_20px] mask-[radial-gradient(ellipse_at_top_right,black_0%,rgba(0,0,0,0.5)_40%,transparent_100%)]"></div>
                 </div>
 
                 {/* Header */}
@@ -127,7 +127,7 @@ export default function AnimatedStatistics() {
     ];
 
     return (
-        <section className="relative w-full py-16 px-4">
+        <section className="relative w-full  pb-16 px-4">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     {stats.map((stat, index) => (

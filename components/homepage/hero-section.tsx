@@ -27,7 +27,7 @@ export default function HeroSection() {
 
   return (
     <section className="w-full">
-      <div className="h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-transparent ">
+      <div className="min-h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16">
 
         {mounted && (
           <div className={cn(
@@ -38,9 +38,10 @@ export default function HeroSection() {
               hueShift={resolvedTheme === 'light' ? 180 : 0}
               noiseIntensity={0}
               scanlineIntensity={0}
-              speed={0.5}
+              speed={1}
               scanlineFrequency={0}
               warpAmount={0}
+              baseColor={resolvedTheme === 'light' ? [0, 0, 0] : [0.035, 0.035, 0.043]}
             />
           </div>
         )}

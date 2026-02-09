@@ -1,0 +1,90 @@
+"use client"
+
+import { useCallback, useEffect, useRef, useState } from "react"
+import { Moon, Sun } from "lucide-react"
+import { flushSync } from "react-dom"
+import { useTheme } from "next-themes"
+
+import { cn } from "@/lib/utils"
+
+interface AnimatedThemeTogglerProps extends React.ComponentPropsWithoutRef<"button"> {
+  duration?: number
+}
+
+export const AnimatedThemeToggler = ({
+  className,
+  duration = 400,
+  ...props
+}: AnimatedThemeTogglerProps) => {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleTheme = useCallback(async () => {
+    if (!buttonRef.current || !mounted) return
+
+    const isDark = resolvedTheme === "dark";
+
+    // @ts-ignore - document.startViewTransition is not yet in all TS types
+    if (!document.startViewTransition) {
+      setTheme(isDark ? "light" : "dark");
+      return;
+    }
+
+    // @ts-ignore
+    await document.startViewTransition(() => {
+      flushSync(() => {
+        setTheme(isDark ? "light" : "dark")
+      })
+    }).ready
+
+    const { top, left, width, height } =
+      buttonRef.current.getBoundingClientRect()
+    const x = left + width / 2
+    const y = top + height / 2
+    const maxRadius = Math.hypot(
+      Math.max(left, window.innerWidth - left),
+      Math.max(top, window.innerHeight - top)
+    )
+
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${maxRadius}px at ${x}px ${y}px)`,
+        ],
+      },
+      {
+        duration,
+        easing: "ease-in-out",
+        pseudoElement: "::view-transition-new(root)",
+      }
+    )
+  }, [resolvedTheme, setTheme, duration, mounted])
+
+  if (!mounted) return (
+    <button
+      className={cn("w-10 h-10 flex items-center justify-center rounded-full bg-secondary/10 border border-border", className)}
+      {...props}
+    />
+  );
+
+  const isDark = resolvedTheme === "dark";
+
+  return (
+    <button
+      ref={buttonRef}
+      onClick={toggleTheme}
+      className={cn("relative w-10 h-10 flex items-center justify-center rounded-full bg-secondary/10 border border-border hover:bg-secondary/20 transition-colors", className)}
+      aria-label="Toggle theme"
+      {...props}
+    >
+      {isDark ? <Sun className="w-5 h-5 text-white" /> : <Moon className="w-5 h-5 text-[#0396FF]" />}
+      <span className="sr-only">Toggle theme</span>
+    </button>
+  )
+}

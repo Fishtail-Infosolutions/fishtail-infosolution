@@ -60,24 +60,20 @@
       background-position: 200%;
     }
   }
-
   @keyframes marquee {
-    from {
-      transform: translateX(0);
+  from {
+    transform: translateX(0);
     }
-
-    to {
-      transform: translateX(calc(-100% - var(--gap)));
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
     }
   }
-
   @keyframes marquee-vertical {
-    from {
-      transform: translateY(0);
+  from {
+    transform: translateY(0);
     }
-
-    to {
-      transform: translateY(calc(-100% - var(--gap)));
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
     }
   }
 
@@ -286,4 +282,9 @@
     scrollbar-width: thin;
     scrollbar-color: color-mix(in srgb, var(--foreground) 10%, transparent) transparent;
   }
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
 }

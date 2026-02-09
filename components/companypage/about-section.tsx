@@ -6,10 +6,22 @@ import GradientBanner from '@/components/self-made-ui/gradeint-banner';
 import Link from 'next/link';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import { Code, Sparkles, Search, Monitor, Rocket, BarChart3, ArrowRightIcon } from 'lucide-react';
+import { Spotlight } from '@/components/ui/spotlight-new';
+import Image from 'next/image';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export default function AboutSection() {
+    const { resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
-        <section className="w-full min-h-screen flex items-center relative overflow-hidden py-20">
+        <section className="w-full min-h-screen flex items-center  relative overflow-hidden pt-32 pb-20">
+            <Spotlight />
             <div className="max-w-7xl mx-auto px-8  w-full">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     {/* Left Side - Text Content */}
@@ -85,14 +97,19 @@ export default function AboutSection() {
                         className="relative flex items-center justify-center h-[350px] md:h-[500px]"
                     >
                         {/* Center Logo/Icon */}
-                        {/* <div className="absolute z-10 flex items-center justify-center">
-                            <div className="relative">
-                                <div className="absolute inset-0 bg-blue-500/20 dark:bg-blue-400/30 blur-3xl rounded-full" />
-                                <div className="relative bg-linear-to-br from-blue-500 to-purple-600 p-5 md:p-8 rounded-2xl shadow-2xl">
-                                    <Sparkles className="w-8 h-8 md:w-12 md:h-12 text-white" strokeWidth={2} />
-                                </div>
-                            </div>
-                        </div> */}
+                        {/* Center Logo/Icon */}
+                        <div className="absolute z-10 flex items-center justify-center">
+                            {mounted && (
+                                <Image
+                                    src={resolvedTheme === 'dark' ? "/logos/fishtail-icon-white.svg" : "/logos/fishtail-icon-blue.svg"}
+                                    alt="Fishtail Icon"
+                                    width={50}
+                                    height={50}
+                                    className="w-12 h-12 md:w-12 md:h-12 object-contain"
+                                    priority
+                                />
+                            )}
+                        </div>
 
                         {/* First Orbit - Inner */}
                         <OrbitingCircles radius={70} duration={20} reverse>

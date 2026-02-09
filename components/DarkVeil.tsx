@@ -17,6 +17,7 @@ uniform float uNoise;
 uniform float uScan;
 uniform float uScanFreq;
 uniform float uWarp;
+uniform vec3 uBaseColor;
 #define iTime uTime
 #define iResolution uResolution
 
@@ -69,6 +70,10 @@ void main(){
     float scanline_val=sin(gl_FragCoord.y*uScanFreq)*0.5+0.5;
     col.rgb*=1.-(scanline_val*scanline_val)*uScan;
     col.rgb+=(rand(gl_FragCoord.xy+uTime)-0.5)*uNoise;
+    
+    // Mix the animation over the dynamic background color
+    col.rgb = max(col.rgb, uBaseColor);
+    
     gl_FragColor=vec4(clamp(col.rgb,0.0,1.0),1.0);
 }
 `;
@@ -81,6 +86,7 @@ type Props = {
   scanlineFrequency?: number;
   warpAmount?: number;
   resolutionScale?: number;
+  baseColor?: number[];
 };
 
 export default function DarkVeil({
@@ -90,7 +96,8 @@ export default function DarkVeil({
   speed = 0.5,
   scanlineFrequency = 0,
   warpAmount = 0,
-  resolutionScale = 1
+  resolutionScale = 1,
+  baseColor = [0.035, 0.035, 0.043]
 }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -115,7 +122,8 @@ export default function DarkVeil({
         uNoise: { value: noiseIntensity },
         uScan: { value: scanlineIntensity },
         uScanFreq: { value: scanlineFrequency },
-        uWarp: { value: warpAmount }
+        uWarp: { value: warpAmount },
+        uBaseColor: { value: baseColor }
       }
     });
 
@@ -141,6 +149,7 @@ export default function DarkVeil({
       program.uniforms.uScan.value = scanlineIntensity;
       program.uniforms.uScanFreq.value = scanlineFrequency;
       program.uniforms.uWarp.value = warpAmount;
+      program.uniforms.uBaseColor.value = baseColor;
       renderer.render({ scene: mesh });
       frame = requestAnimationFrame(loop);
     };
@@ -151,6 +160,6 @@ export default function DarkVeil({
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
     };
-  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale]);
+  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor]);
   return <canvas ref={ref} className="w-full h-full block" />;
 }

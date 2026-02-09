@@ -77,7 +77,7 @@ export default function ServicesSection() {
   }, []);
 
   return (
-    <section className="w-full bg-transparent lg:py-7 pt-3 transition-colors duration-500">
+    <section className="w-full bg-transparent pt-10 pb-12 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-9">
         <div className="flex flex-col items-center">
           <GradientBanner text="Our Services" />
@@ -105,6 +105,7 @@ export default function ServicesSection() {
                 <MagicCard
                   className="flex-1 rounded-lg"
                   gradientColor={mounted && theme === 'light' ? "#E5E7EB" : "#262626"}
+                  backgroundClassName="bg-gray-50 dark:bg-background"
                 >
                   <div className="flex flex-col h-full p-6 sm:p-8">
                     <h3 className="mb-4 text-2xl font-bold text-foreground sm:mb-6">

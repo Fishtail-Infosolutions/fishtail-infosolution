@@ -10,7 +10,7 @@ import { StarsBackground } from "@/components/ui/stars-background";
 export default function Home() {
   return (
     <div className="relative">
-      <StarsBackground />
+      {/* <StarsBackground /> */}
       <div className="">
         <HeroSection />
         <ServicesSection />
