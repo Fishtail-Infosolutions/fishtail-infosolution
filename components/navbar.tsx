@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
     <>
       {/* Navbar with Glassmorphism */}
       <nav className="fixed top-0 left-0 w-full bg-background/40 backdrop-blur-lg border-b border-border/40 z-90">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-4.5 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/">

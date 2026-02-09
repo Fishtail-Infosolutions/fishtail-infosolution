@@ -77,14 +77,16 @@ export async function GET() {
         ]);
 
         // 4. Recent Activity
-        const [recentApps, recentContacts] = await Promise.all([
+        const [recentApps, recentContacts, recentQuotes] = await Promise.all([
             Application.find().sort({ createdAt: -1 }).limit(4).select('fullName jobTitle createdAt'),
-            Contact.find().sort({ createdAt: -1 }).limit(4).select('name subject createdAt')
+            Contact.find().sort({ createdAt: -1 }).limit(4).select('name subject createdAt'),
+            Quote.find().sort({ createdAt: -1 }).limit(4).select('name websiteUrl createdAt')
         ]);
 
         const recentActivity = [
-            ...recentApps.map(a => ({ type: 'application', title: `New application: ${a.fullName}`, subtitle: a.jobTitle, date: a.createdAt })),
-            ...recentContacts.map(c => ({ type: 'contact', title: `New message: ${c.name}`, subtitle: c.subject || 'General Inquiry', date: c.createdAt }))
+            ...recentApps.map(a => ({ type: 'application', title: `New application: ${a.fullName}`, subtitle: `Job: ${a.jobTitle}`, date: a.createdAt })),
+            ...recentContacts.map(c => ({ type: 'contact', title: `New message: ${c.name}`, subtitle: `Inquiry: ${c.subject || 'General'}`, date: c.createdAt })),
+            ...recentQuotes.map(q => ({ type: 'quote', title: `New Quote Request: ${q.name}`, subtitle: q.websiteUrl, date: q.createdAt, websiteUrl: q.websiteUrl }))
         ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
 
         return NextResponse.json({

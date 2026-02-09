@@ -10,7 +10,9 @@ import {
     Mail,
     RefreshCw,
     AlertCircle,
-    ShieldCheck
+    ShieldCheck,
+    Globe,
+    ExternalLink
 } from "lucide-react";
 import {
     LineChart,
@@ -27,6 +29,7 @@ import {
     Cell
 } from "recharts";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import toast from "react-hot-toast";
 
@@ -124,6 +127,7 @@ interface DashboardData {
         title: string;
         subtitle: string;
         date: string;
+        websiteUrl?: string;
     }[];
     userRole?: 'admin' | 'super-admin' | 'user';
 }
@@ -132,6 +136,7 @@ export default function AdminDashboard() {
     const [data, setData] = useState<DashboardData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const router = useRouter();
 
     const fetchStats = async () => {
         setLoading(true);
@@ -386,29 +391,45 @@ export default function AdminDashboard() {
                         ))
                     ) : data && data.recentActivity.length > 0 ? (
                         data.recentActivity.map((item, i) => (
-                            <Link
+                            <div
                                 key={i}
-                                href={getActivityHref(item.type)}
-                                className="flex gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl transition-all group"
+                                onClick={() => router.push(getActivityHref(item.type))}
+                                className="flex gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl transition-all group cursor-pointer"
                             >
                                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all ${item.type === 'application' ? 'bg-blue-600 text-white' :
                                     item.type === 'contact' ? 'bg-indigo-600 text-white' :
-                                        'bg-orange-600 text-white'
+                                        item.type === 'quote' ? 'bg-emerald-600 text-white' :
+                                            'bg-orange-600 text-white'
                                     }`}>
                                     {item.type === 'application' ? <Users size={20} /> :
                                         item.type === 'contact' ? <Mail size={20} /> :
-                                            <FileText size={20} />}
+                                            item.type === 'quote' ? <MousePointerClick size={20} /> :
+                                                <FileText size={20} />}
                                 </div>
                                 <div className="flex-1">
                                     <div className="flex justify-between items-start">
                                         <p className="text-sm font-bold text-gray-900 dark:text-white group-hover:text-blue-500 transition-colors">{item.title}</p>
-                                        <p className="text-[10px] text-gray-400 italic">
+                                        <p className="text-[11px] text-gray-400 italic shrink-0">
                                             {formatDistanceToNow(new Date(item.date), { addSuffix: true })}
                                         </p>
                                     </div>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 capitalize font-medium">{item.subtitle}</p>
+                                    {item.type === 'quote' && (item as any).websiteUrl ? (
+                                        <a
+                                            href={(item as any).websiteUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="text-xs text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 mt-0.5 font-medium flex items-center gap-1 group/link transition-colors"
+                                        >
+                                            <Globe size={12} className="group-hover/link:animate-pulse" />
+                                            <span className="truncate">{(item as any).websiteUrl.replace(/^https?:\/\/(www\.)?/, '')}</span>
+                                            <ExternalLink size={10} />
+                                        </a>
+                                    ) : (
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 capitalize font-medium">{item.subtitle}</p>
+                                    )}
                                 </div>
-                            </Link>
+                            </div>
                         ))
                     ) : (
                         <div className="text-center py-12">
