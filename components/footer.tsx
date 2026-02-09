@@ -33,28 +33,22 @@ export default function Footer() {
               Contact
             </h3>
 
-            <div className="space-y-3 mt-4">
+            <div className="space-y-4 mt-4">
               <div className="flex items-center group">
-                <div className="w-10 h-10 min-w-10 rounded-full flex items-center justify-center mr-4 transition-colors duration-500">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <span className="text-sm sm:text-base">+977 9806673560</span>
+                <Phone className="w-5 h-5 min-w-5 mr-3" />
+                <span className="text-base">+977 9806673560</span>
               </div>
 
-              <a href="mailto:info@fishtailinfosolutions.com/" target="_blank" rel="noopener noreferrer">
-                <div className="flex items-center group cursor-pointer">
-                  <div className="w-10 h-10 min-w-10 rounded-full flex items-center justify-center mr-4 group-hover:text-blue-500 transition-colors duration-500">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <span className="text-sm sm:text-base transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">info@fishtailinfosolutions.com</span>
+              <a href="mailto:info@fishtailinfosolutions.com/" target="_blank" rel="noopener noreferrer" className="block w-fit">
+                <div className="flex items-center group cursor-pointer w-fit">
+                  <Mail className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors duration-500" />
+                  <span className="text-base transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:to-[#0396FF]">info@fishtailinfosolutions.com</span>
                 </div>
               </a>
 
-              <div className="flex items-center group mt-2">
-                <div className="w-10 h-10 min-w-10 rounded-full flex items-center justify-center mr-4 transition-colors duration-500">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div className="text-sm sm:text-base">
+              <div className="flex items-center group">
+                <Clock className="w-5 h-5 min-w-5 mr-3" />
+                <div className="text-base">
                   <p>Sun to Fri: 9AM - 6PM</p>
                 </div>
               </div>
@@ -65,24 +59,24 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-transparent bg-clip-text bg-linear-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF]">
               Quick Links
             </h3>
-            <div className="space-y-2 mt-4">
-              <Link href="/company" className="flex items-center group text-sm sm:text-base">
+            <div className="space-y-4 mt-4">
+              <Link href="/company" className="flex items-center group text-base w-fit">
                 <Home className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Company</span>
               </Link>
-              <Link href="/career" className="flex items-center group text-sm sm:text-base">
+              <Link href="/career" className="flex items-center group text-base w-fit">
                 <Briefcase className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Career</span>
               </Link>
-              <Link href="/projects" className="flex items-center group text-sm sm:text-base">
+              <Link href="/projects" className="flex items-center group text-base w-fit">
                 <HelpCircle className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
-                <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Projects</span>
+                <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:to-[#0396FF]">Projects</span>
               </Link>
-              <Link href="/blog" className="flex items-center group text-sm sm:text-base">
+              <Link href="/blog" className="flex items-center group text-base w-fit">
                 <FileText className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Blog</span>
               </Link>
-              <Link href="/contact" className="flex items-center group text-sm sm:text-base">
+              <Link href="/contact" className="flex items-center group text-base w-fit">
                 <MessageSquare className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Contact</span>
               </Link>
@@ -94,14 +88,11 @@ export default function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-transparent bg-clip-text bg-linear-to-br from-[#3b82f6] to-[#1d4ed8] dark:from-[#ABDCFF] dark:to-[#0396FF]">
               Locations
             </h3>
-            <a href='https://www.google.com/maps/place/Fishtail+Infosolutions/@28.2211603,83.9819452,691m/data=!3m1!1e3!4m7!3m6!1s0xaf8712d0425aa3e7:0x528c4e6c8c86ffbf!4b1!8m2!3d28.2207887!4d83.9840869!16s%2Fg%2F11yq1r478s?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' target="_blank" rel="noopener noreferrer">
-              <div className="space-y-4 mt-4 hover:text-violet-500">
-                <div className="flex items-center group cursor-pointer"
-                >
-                  <div className="w-10 h-10 min-w-10 rounded-full flex items-center justify-center mr-4 group-hover:text-blue-500 transition-colors">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Pokhara 8, Bagaletole</span>
+            <a href='https://www.google.com/maps/place/Fishtail+Infosolutions/@28.2211603,83.9819452,691m/data=!3m1!1e3!4m7!3m6!1s0xaf8712d0425aa3e7:0x528c4e6c8c86ffbf!4b1!8m2!3d28.2207887!4d83.9840869!16s%2Fg%2F11yq1r478s?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' target="_blank" rel="noopener noreferrer" className="block w-fit">
+              <div className="space-y-4 mt-4 w-fit">
+                <div className="flex items-center group cursor-pointer w-fit">
+                  <MapPin className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+                  <span className="text-base transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:to-[#0396FF]">Pokhara 8, Bagaletole</span>
                 </div>
               </div>
             </a>

@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
     <>
       {/* Navbar with Glassmorphism */}
       <nav className="fixed top-0 left-0 w-full bg-background/40 backdrop-blur-lg border-b border-border/40 z-90">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 md:py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 md:py-5 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <Link href="/">
@@ -177,7 +177,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu with Glassmorphism */}
       <div
-        className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto w-72 bg-white dark:bg-black border-l border-b border-border/40 z-999 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-[73px] right-0 max-h-[calc(100vh-73px)] overflow-y-auto w-72 bg-white/70 dark:bg-black/60 backdrop-blur-2xl rounded-xl border-l border-b border-border/20 z-999 transform transition-transform duration-300 ease-out lg:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         <div className="flex flex-col p-6 space-y-2">
@@ -189,14 +189,14 @@ const Navbar: React.FC = () => {
                 href={item.path}
                 onClick={handleNavClick}
                 className={cn(
-                  "flex items-center space-x-4 px-4 py-3 rounded-lg transition-all",
+                  "flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200",
                   isActive(item.path)
-                    ? "bg-zinc-100 dark:bg-zinc-800 text-foreground border border-border/40"
-                    : "text-muted-foreground hover:text-foreground hover:bg-gray-50 dark:hover:bg-gray-900/50"
+                    ? "bg-zinc-200/50 dark:bg-zinc-800/60 text-foreground border border-black/5 dark:border-white/10 backdrop-blur-md shadow-sm"
+                    : "text-muted-foreground hover:text-foreground hover:bg-zinc-100/30 dark:hover:bg-white/5 hover:backdrop-blur-sm"
                 )}
               >
                 <Icon size={20} />
-                <span className="font-medium">{item.name}</span>
+                <span className="font-semibold text-base">{item.name}</span>
               </Link>
             );
           })}
