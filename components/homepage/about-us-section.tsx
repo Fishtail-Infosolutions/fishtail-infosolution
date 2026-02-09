@@ -2,15 +2,13 @@
 
 import { motion } from 'motion/react';
 import { OrbitingCircles } from '@/components/ui/orbiting-circles';
-import GradientBanner from '@/components/self-made-ui/gradeint-banner';
-import Link from 'next/link';
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
-import { Code, Sparkles, Search, Monitor, Rocket, BarChart3, ArrowRightIcon } from 'lucide-react';
+import GradientBanner from '../self-made-ui/gradeint-banner';
+import { Code, Sparkles, Target, Users, Zap, Trophy } from 'lucide-react';
 
-export default function AboutSection() {
+export function AboutUsSection() {
     return (
-        <section className="w-full min-h-screen flex items-center relative overflow-hidden py-20">
-            <div className="max-w-7xl mx-auto px-8  w-full">
+        <section className="w-full py-20 md:py-32 relative overflow-hidden">
+            <div className="container mx-auto px-4 md:px-6">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     {/* Left Side - Text Content */}
                     <motion.div
@@ -57,22 +55,26 @@ export default function AboutSection() {
                             look stunning—they drive real, measurable results for your business growth.
                         </motion.p>
 
+                        {/* Stats Grid */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.4 }}
-                            className="pt-6"
+                            className="grid grid-cols-3 gap-6 pt-6"
                         >
-                            <Link href="/contact">
-                                <HoverBorderGradient
-                                    as="button"
-                                    className="flex items-center justify-center gap-2 bg-black text-white dark:text-white "
-                                >
-                                    <span>Let&apos;s Connect</span>
-                                    <ArrowRightIcon className="w-4 h-4 ml-1" />
-                                </HoverBorderGradient>
-                            </Link>
+                            <div className="space-y-1">
+                                <p className="text-3xl md:text-4xl font-bold text-foreground">50+</p>
+                                <p className="text-xs md:text-sm text-muted-foreground">Projects Delivered</p>
+                            </div>
+                            <div className="space-y-1">
+                                <p className="text-3xl md:text-4xl font-bold text-foreground">98%</p>
+                                <p className="text-xs md:text-sm text-muted-foreground">Client Satisfaction</p>
+                            </div>
+                            <div className="space-y-1">
+                                <p className="text-3xl md:text-4xl font-bold text-foreground">5+</p>
+                                <p className="text-xs md:text-sm text-muted-foreground">Years Experience</p>
+                            </div>
                         </motion.div>
                     </motion.div>
 
@@ -82,48 +84,48 @@ export default function AboutSection() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.8, ease: 'easeOut' }}
-                        className="relative flex items-center justify-center h-[350px] md:h-[500px]"
+                        className="relative flex items-center justify-center h-[400px] md:h-[500px]"
                     >
                         {/* Center Logo/Icon */}
-                        {/* <div className="absolute z-10 flex items-center justify-center">
+                        <div className="absolute z-10 flex items-center justify-center">
                             <div className="relative">
                                 <div className="absolute inset-0 bg-blue-500/20 dark:bg-blue-400/30 blur-3xl rounded-full" />
-                                <div className="relative bg-linear-to-br from-blue-500 to-purple-600 p-5 md:p-8 rounded-2xl shadow-2xl">
-                                    <Sparkles className="w-8 h-8 md:w-12 md:h-12 text-white" strokeWidth={2} />
+                                <div className="relative bg-gradient-to-br from-blue-500 to-purple-600 p-6 md:p-8 rounded-2xl shadow-2xl">
+                                    <Sparkles className="w-10 h-10 md:w-12 md:h-12 text-white" strokeWidth={2} />
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         {/* First Orbit - Inner */}
-                        <OrbitingCircles radius={70} duration={20} reverse>
-                            <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-2.5 shadow-lg">
-                                <Code className="w-5 h-5 text-blue-500" strokeWidth={2} />
+                        <OrbitingCircles radius={100} duration={20} reverse>
+                            <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-3 shadow-lg">
+                                <Code className="w-6 h-6 text-blue-500" strokeWidth={2} />
                             </div>
-                            <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-2.5 shadow-lg">
-                                <Search className="w-5 h-5 text-purple-500" strokeWidth={2} />
+                            <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-3 shadow-lg">
+                                <Target className="w-6 h-6 text-purple-500" strokeWidth={2} />
                             </div>
                         </OrbitingCircles>
 
                         {/* Second Orbit - Middle */}
-                        <OrbitingCircles radius={130} duration={30}>
+                        <OrbitingCircles radius={160} duration={30}>
                             <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-3 shadow-lg">
-                                <Monitor className="w-6 h-6 text-cyan-500" strokeWidth={2} />
+                                <Zap className="w-6 h-6 text-yellow-500" strokeWidth={2} />
                             </div>
                             <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-3 shadow-lg">
-                                <BarChart3 className="w-6 h-6 text-green-500" strokeWidth={2} />
+                                <Users className="w-6 h-6 text-green-500" strokeWidth={2} />
                             </div>
                             <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-3 shadow-lg">
-                                <Rocket className="w-6 h-6 text-orange-500" strokeWidth={2} />
+                                <Trophy className="w-6 h-6 text-orange-500" strokeWidth={2} />
                             </div>
                         </OrbitingCircles>
 
                         {/* Third Orbit - Outer (Mobile hidden) */}
-                        <OrbitingCircles radius={190} duration={40} reverse className="hidden md:flex">
+                        <OrbitingCircles radius={220} duration={40} reverse className="hidden md:flex">
                             <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-2 shadow-lg">
-                                <div className="w-4 h-4 bg-linear-to-br from-pink-500 to-rose-500 rounded-full" />
+                                <div className="w-4 h-4 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full" />
                             </div>
                             <div className="flex items-center justify-center bg-background border-2 border-border rounded-full p-2 shadow-lg">
-                                <div className="w-4 h-4 bg-linear-to-br from-cyan-500 to-blue-500 rounded-full" />
+                                <div className="w-4 h-4 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full" />
                             </div>
                         </OrbitingCircles>
                     </motion.div>
@@ -132,4 +134,3 @@ export default function AboutSection() {
         </section>
     );
 }
-

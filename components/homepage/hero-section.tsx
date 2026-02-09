@@ -11,12 +11,14 @@ import { LayoutTextFlip } from '../ui/layout-text-flip';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import DarkVeil from '../DarkVeil';
 
 import { FreeQuoteDialog } from "./free-quote-dialog";
 
 export default function HeroSection() {
   const router = useRouter();
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,9 +26,26 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="w-full ">
-      <div className="h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-12 md:pt-14">
-        {mounted && theme === 'dark' && <Spotlight />}
+    <section className="w-full">
+      <div className="h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-transparent ">
+
+        {mounted && (
+          <div className={cn(
+            "absolute inset-0 w-full h-full pointer-events-none -z-20",
+            resolvedTheme === 'light' ? "invert" : ""
+          )}>
+            <DarkVeil
+              hueShift={resolvedTheme === 'light' ? 180 : 0}
+              noiseIntensity={0}
+              scanlineIntensity={0}
+              speed={0.5}
+              scanlineFrequency={0}
+              warpAmount={0}
+            />
+          </div>
+        )}
+
+
 
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -71,7 +90,7 @@ export default function HeroSection() {
               as="button"
               moving={false}
               containerClassName=" rounded-[1.75rem]"
-              className="flex items-center justify-center gap-2 w-full h-full bg-background"
+              className="flex dark:bg-black items-center justify-center gap-2 w-full h-full bg-background"
             >
               <span className="text-sm md:text-base font-medium">Learn More</span>
               <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5" />
@@ -79,6 +98,6 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
       </div>
-    </section >
+    </section>
   );
 }
