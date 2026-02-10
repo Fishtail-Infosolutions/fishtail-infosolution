@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
-import DarkVeil from '../DarkVeil';
+import DarkVeil from '../ui/DarkVeil';
 
 import { FreeQuoteDialog } from "./free-quote-dialog";
 

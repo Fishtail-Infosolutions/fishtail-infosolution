@@ -9,7 +9,7 @@ export function PublicWebsiteLoader({ message = "Loading..." }: { message?: stri
 
     useEffect(() => {
         setIsMounted(true);
-        fetch("/Run cycle recreated in Lottie Creator.json")
+        fetch("/lottie-animation/Run cycle recreated in Lottie Creator.json")
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to load animation");
                 return res.json();

@@ -22,7 +22,7 @@ export function NotFoundComponent({
 
     useEffect(() => {
         // Fetch the Lottie JSON from the public folder
-        fetch("/Error 404.json")
+        fetch("/lottie-animation/Error 404.json")
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch animation data");

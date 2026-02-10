@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
 import { Marquee } from "@/components/ui/marquee";
 import { IconCloud } from "@/components/ui/icon-cloud";
-import LogoLoop from "@/components/LogoLoop";
+import LogoLoop from "@/components/ui/LogoLoop";
 import { Badge } from "@/components/ui/badge";
 import GradientBanner from "@/components/self-made-ui/gradeint-banner";
 import { motion, Variants } from "framer-motion";
