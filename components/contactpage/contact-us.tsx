@@ -209,7 +209,7 @@ const ContactUs = () => {
                       <FormItem>
                         <FormLabel htmlFor="name">Name <span className="text-red-500">*</span></FormLabel>
                         <FormControl>
-                          <Input id="name" placeholder="Your Name" className="bg-secondary" {...field} />
+                          <Input id="name" placeholder="Your Name" className="bg-secondary dark:bg-black" {...field} />
                         </FormControl>
                         <FormMessage>{form.formState.errors.name?.message}</FormMessage>
                       </FormItem>
@@ -224,7 +224,7 @@ const ContactUs = () => {
                       <FormItem>
                         <FormLabel htmlFor="phone">Phone</FormLabel>
                         <FormControl>
-                          <Input id="phone" placeholder="Your Phone" className="bg-secondary" {...field} />
+                          <Input id="phone" placeholder="Your Phone" className="bg-secondary dark:bg-black" {...field} />
                         </FormControl>
                         <FormMessage>{form.formState.errors.phone?.message}</FormMessage>
                       </FormItem>
@@ -241,7 +241,7 @@ const ContactUs = () => {
                     <FormItem>
                       <FormLabel htmlFor="subject">Subject</FormLabel>
                       <FormControl>
-                        <Input id="subject" placeholder="Subject" className="bg-secondary" {...field} />
+                        <Input id="subject" placeholder="Subject" className="bg-secondary dark:bg-black" {...field} />
                       </FormControl>
                       <FormMessage>{form.formState.errors.subject?.message}</FormMessage>
                     </FormItem>
@@ -257,7 +257,7 @@ const ContactUs = () => {
                     <FormItem>
                       <FormLabel htmlFor="email">Email <span className="text-red-500">*</span></FormLabel>
                       <FormControl>
-                        <Input id="email" placeholder="Your Email" className="bg-secondary" {...field} />
+                        <Input id="email" placeholder="Your Email" className="bg-secondary dark:bg-black" {...field} />
                       </FormControl>
                       <FormMessage>{form.formState.errors.email?.message}</FormMessage>
                     </FormItem>
@@ -273,7 +273,7 @@ const ContactUs = () => {
                     <FormItem>
                       <FormLabel htmlFor="message">Message <span className="text-red-500">*</span></FormLabel>
                       <FormControl>
-                        <Textarea id="message" placeholder="Your Message" className="bg-secondary" {...field} />
+                        <Textarea id="message" placeholder="Your Message" className="bg-secondary dark:bg-black" {...field} />
                       </FormControl>
                       <FormMessage>{form.formState.errors.message?.message}</FormMessage>
                     </FormItem>

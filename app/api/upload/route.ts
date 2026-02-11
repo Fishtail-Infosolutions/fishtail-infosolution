@@ -21,7 +21,10 @@ export async function POST(req: Request) {
             allowedTypes = [
                 'application/pdf',
                 'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'image/jpeg',
+                'image/png',
+                'image/webp'
             ];
         }
 

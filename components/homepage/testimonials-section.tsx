@@ -74,10 +74,10 @@ export function TestimonialsSection() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative flex h-[400px] w-full flex-row items-center justify-center gap-4 md:gap-6 overflow-hidden perspective-[1000px] px-4"
       >
         <div

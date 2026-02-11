@@ -557,7 +557,7 @@ export function ApplicationsList() {
                                 </div>
                                 <div>
                                     <p className="text-sm font-bold text-gray-900 dark:text-white">Candidate Resume</p>
-                                    <p className="text-xs text-gray-500 dark:text-gray-400">PDF / DOCX Format</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">PDF / DOCX / Image Format</p>
                                 </div>
                             </div>
                             <Button

@@ -419,7 +419,7 @@ export default function AdminDashboard() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             onClick={(e) => e.stopPropagation()}
-                                            className="text-xs text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 mt-0.5 font-medium flex items-center gap-1 group/link transition-colors"
+                                            className="text-xs text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 mt-0.5 font-medium flex items-center gap-1 w-fit group/link transition-colors"
                                         >
                                             <Globe size={12} className="group-hover/link:animate-pulse" />
                                             <span className="truncate">{(item as any).websiteUrl.replace(/^https?:\/\/(www\.)?/, '')}</span>

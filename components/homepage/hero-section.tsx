@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { Button as MovingBorderButton } from '../ui/moving-border';
 import { HoverBorderGradient } from '../ui/hover-border-gradient';
 import { Spotlight } from '../ui/spotlight-new';
-import { ArrowRightIcon, ChartNoAxesColumnIncreasingIcon } from 'lucide-react';
+import { ArrowRightIcon } from 'lucide-react';
 import GradientBanner from '../self-made-ui/gradeint-banner';
 import { LayoutTextFlip } from '../ui/layout-text-flip';
 import { useRouter } from 'next/navigation';
@@ -30,20 +30,25 @@ export default function HeroSection() {
       <div className="min-h-screen w-full rounded-md flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16">
 
         {mounted && (
-          <div className={cn(
-            "absolute inset-0 w-full h-full pointer-events-none -z-20",
-            resolvedTheme === 'light' ? "invert" : ""
-          )}>
-            <DarkVeil
-              hueShift={resolvedTheme === 'light' ? 180 : 0}
+          <div className={cn("absolute inset-0 w-full h-full pointer-events-none -z-20 ", resolvedTheme === 'light' ? "invert" : "")}
+          >
+            {<DarkVeil
+              hueShift={0}
               noiseIntensity={0}
               scanlineIntensity={0}
               speed={1}
               scanlineFrequency={0}
               warpAmount={0}
               baseColor={resolvedTheme === 'light' ? [0, 0, 0] : [0.035, 0.035, 0.043]}
+              tintColor={resolvedTheme === 'light' ? [0.95, 0.55, 0.0] : [0.05, 0.45, 1.0]}
+              tintStrength={1.0}
             />
+            }
           </div>
+
+
+
+
         )}
 
 
@@ -76,21 +81,18 @@ export default function HeroSection() {
             className="mt-8 flex items-center justify-center gap-4"
           >
             <FreeQuoteDialog>
-              <MovingBorderButton
-                borderRadius="1.75rem"
-                containerClassName="h-10 w-32 md:h-12 md:w-40"
-                className="bg-slate-800 text-white border-slate-800 flex items-center gap-2"
+              <Button
+                className="h-10 md:h-12 w-35 md:w-40 rounded-full bg-linear-to-br from-blue-400 to-blue-700 text-white border-none font-medium transition-all hover:opacity-90 "
               >
-                <ChartNoAxesColumnIncreasingIcon className="w-4 h-4 md:w-5 md:h-5 text-[#0396FF]" />
-                <span className="text-sm md:text-base font-medium">Free Quote</span>
-              </MovingBorderButton>
+                <span className="text-sm md:text-base">Free Quote</span>
+              </Button>
             </FreeQuoteDialog>
 
             <HoverBorderGradient
               onClick={() => router.push('/company')}
               as="button"
               moving={false}
-              containerClassName=" rounded-[1.75rem]"
+              containerClassName="rounded-full h-10 w-35 md:h-12 md:w-40"
               className="flex dark:bg-black items-center justify-center gap-2 w-full h-full bg-background"
             >
               <span className="text-sm md:text-base font-medium">Learn More</span>

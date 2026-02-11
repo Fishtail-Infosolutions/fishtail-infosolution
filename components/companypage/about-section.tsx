@@ -79,7 +79,7 @@ export default function AboutSection() {
                             <Link href="/contact">
                                 <HoverBorderGradient
                                     as="button"
-                                    className="flex items-center justify-center gap-2 bg-black text-white dark:text-white "
+                                    className="flex items-center font-semibold justify-center gap-2 bg-black text-white dark:text-white "
                                 >
                                     <span>Let&apos;s Connect</span>
                                     <ArrowRightIcon className="w-4 h-4 ml-1" />

@@ -151,8 +151,14 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                             onBeforeNext={onBeforeNext}
                             onFinalStepCompleted={onFinalStepCompleted}
                             nextButtonText="Next"
-                            finalButtonText="Submit Quote"
+                            finalButtonText="Submit"
                             backButtonText="Back"
+                            nextButtonProps={{
+                                className: "h-10 px-7 rounded-full bg-black text-white dark:bg-white dark:text-black font-semibold transition-all hover:opacity-90 active:scale-95 shadow-md"
+                            }}
+                            backButtonProps={{
+                                className: "duration-350 rounded-full px-7 h-10 transition text-muted-foreground hover:bg-accent hover:text-foreground"
+                            }}
                             stepCircleContainerClassName="!bg-transparent !shadow-none !border-none"
                             stepContainerClassName="!p-0 !pb-6"
                             contentClassName="!px-0 !space-y-4"
@@ -174,7 +180,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                 <FormControl>
                                                     <div className="relative">
                                                         <Globe className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                        <Input placeholder="https://www.yourwebsite.com" className="pl-9 dark:bg-secondary autofill-white" {...field} />
+                                                        <Input placeholder="https://www.yourwebsite.com" className="pl-9 bg-secondary dark:bg-black autofill-white" {...field} />
                                                     </div>
                                                 </FormControl>
                                                 <FormMessage className="text-red-400 flex items-center gap-1">
@@ -193,7 +199,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                 <FormControl>
                                                     <Textarea
                                                         placeholder="Tell us about your goals or challenges..."
-                                                        className="min-h-[120px] dark:bg-secondary autofill-white"
+                                                        className="min-h-[120px] bg-secondary dark:bg-black autofill-white"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -221,7 +227,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="John Doe" className="pl-9 dark:bg-secondary autofill-white" {...field} />
+                                                            <Input placeholder="Your Name" className="pl-9 bg-secondary dark:bg-black autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage className="text-red-400" />
@@ -238,7 +244,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="john@example.com" className="pl-9 dark:bg-secondary autofill-white" {...field} />
+                                                            <Input placeholder="Your Email" className="pl-9 bg-secondary dark:bg-black autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage className="text-red-400" />
@@ -257,7 +263,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="+1 234 567 890" className="pl-9 dark:bg-secondary autofill-white" {...field} />
+                                                            <Input placeholder="Your Number" className="pl-9 bg-secondary dark:bg-black autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />
@@ -274,7 +280,7 @@ export function FreeQuoteDialog({ children }: FreeQuoteDialogProps) {
                                                     <FormControl>
                                                         <div className="relative">
                                                             <Building className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                                                            <Input placeholder="Acme Inc." className="pl-9 dark:bg-secondary autofill-white" {...field} />
+                                                            <Input placeholder="Company Name" className="pl-9 bg-secondary dark:bg-black autofill-white" {...field} />
                                                         </div>
                                                     </FormControl>
                                                     <FormMessage />

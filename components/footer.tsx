@@ -1,6 +1,4 @@
-
 import { Socials } from '@/constants/socials';
-import { Phone, Mail, Clock, MapPin, Home, Info, Briefcase, HelpCircle, FileText, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
@@ -34,20 +32,17 @@ export default function Footer() {
             </h3>
 
             <div className="space-y-4 mt-4">
-              <div className="flex items-center group">
-                <Phone className="w-5 h-5 min-w-5 mr-3" />
+              <div className="group">
                 <span className="text-base">+977 9806673560</span>
               </div>
 
               <a href="mailto:info@fishtailinfosolutions.com/" target="_blank" rel="noopener noreferrer" className="block w-fit">
-                <div className="flex items-center group cursor-pointer w-fit">
-                  <Mail className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors duration-500" />
+                <div className="group cursor-pointer w-fit">
                   <span className="text-base transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:to-[#0396FF]">info@fishtailinfosolutions.com</span>
                 </div>
               </a>
 
-              <div className="flex items-center group">
-                <Clock className="w-5 h-5 min-w-5 mr-3" />
+              <div className="group">
                 <div className="text-base">
                   <p>Sun to Fri: 9AM - 6PM</p>
                 </div>
@@ -60,24 +55,23 @@ export default function Footer() {
               Quick Links
             </h3>
             <div className="space-y-4 mt-4">
-              <Link href="/company" className="flex items-center group text-base w-fit">
-                <Home className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+              <Link href="/company" className="group text-base w-fit block">
+
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Company</span>
               </Link>
-              <Link href="/career" className="flex items-center group text-base w-fit">
-                <Briefcase className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+              <Link href="/career" className="group text-base w-fit block">
+
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Career</span>
               </Link>
-              <Link href="/projects" className="flex items-center group text-base w-fit">
-                <HelpCircle className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+              <Link href="/projects" className="group text-base w-fit block">
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:to-[#0396FF]">Projects</span>
               </Link>
-              <Link href="/blog" className="flex items-center group text-base w-fit">
-                <FileText className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+              <Link href="/blog" className="group text-base w-fit block">
+
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Blog</span>
               </Link>
-              <Link href="/contact" className="flex items-center group text-base w-fit">
-                <MessageSquare className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+              <Link href="/contact" className="group text-base w-fit block">
+
                 <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:group-hover:to-[#0396FF]">Contact</span>
               </Link>
             </div>
@@ -90,8 +84,7 @@ export default function Footer() {
             </h3>
             <a href='https://www.google.com/maps/place/Fishtail+Infosolutions/@28.2211603,83.9819452,691m/data=!3m1!1e3!4m7!3m6!1s0xaf8712d0425aa3e7:0x528c4e6c8c86ffbf!4b1!8m2!3d28.2207887!4d83.9840869!16s%2Fg%2F11yq1r478s?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' target="_blank" rel="noopener noreferrer" className="block w-fit">
               <div className="space-y-4 mt-4 w-fit">
-                <div className="flex items-center group cursor-pointer w-fit">
-                  <MapPin className="w-5 h-5 min-w-5 mr-3 group-hover:text-blue-500 transition-colors" />
+                <div className="group cursor-pointer w-fit">
                   <span className="text-base transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-br group-hover:from-[#3b82f6] group-hover:to-[#1d4ed8] dark:group-hover:from-[#ABDCFF] dark:to-[#0396FF]">Pokhara 8, Bagaletole</span>
                 </div>
               </div>

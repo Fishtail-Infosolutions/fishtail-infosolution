@@ -18,6 +18,8 @@ uniform float uScan;
 uniform float uScanFreq;
 uniform float uWarp;
 uniform vec3 uBaseColor;
+uniform vec3 uTintColor;
+uniform float uTintStrength;
 #define iTime uTime
 #define iResolution uResolution
 
@@ -70,10 +72,15 @@ void main(){
     float scanline_val=sin(gl_FragCoord.y*uScanFreq)*0.5+0.5;
     col.rgb*=1.-(scanline_val*scanline_val)*uScan;
     col.rgb+=(rand(gl_FragCoord.xy+uTime)-0.5)*uNoise;
-    
-    // Mix the animation over the dynamic background color
+
+    // Remap colors through tint color using luminance
+    float lum = dot(col.rgb, vec3(0.299, 0.587, 0.114));
+    vec3 tinted = uTintColor * lum * 2.5;
+    col.rgb = mix(col.rgb, tinted, uTintStrength);
+
+    // Mix the animation over the base color
     col.rgb = max(col.rgb, uBaseColor);
-    
+
     gl_FragColor=vec4(clamp(col.rgb,0.0,1.0),1.0);
 }
 `;
@@ -87,6 +94,8 @@ type Props = {
   warpAmount?: number;
   resolutionScale?: number;
   baseColor?: number[];
+  tintColor?: number[];
+  tintStrength?: number;
 };
 
 export default function DarkVeil({
@@ -97,7 +106,9 @@ export default function DarkVeil({
   scanlineFrequency = 0,
   warpAmount = 0,
   resolutionScale = 1,
-  baseColor = [0.035, 0.035, 0.043]
+  baseColor = [0, 0, 0],
+  tintColor = [0, 0, 0],
+  tintStrength = 0
 }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -123,7 +134,9 @@ export default function DarkVeil({
         uScan: { value: scanlineIntensity },
         uScanFreq: { value: scanlineFrequency },
         uWarp: { value: warpAmount },
-        uBaseColor: { value: baseColor }
+        uBaseColor: { value: baseColor },
+        uTintColor: { value: tintColor },
+        uTintStrength: { value: tintStrength }
       }
     });
 
@@ -150,6 +163,8 @@ export default function DarkVeil({
       program.uniforms.uScanFreq.value = scanlineFrequency;
       program.uniforms.uWarp.value = warpAmount;
       program.uniforms.uBaseColor.value = baseColor;
+      program.uniforms.uTintColor.value = tintColor;
+      program.uniforms.uTintStrength.value = tintStrength;
       renderer.render({ scene: mesh });
       frame = requestAnimationFrame(loop);
     };
@@ -160,6 +175,6 @@ export default function DarkVeil({
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
     };
-  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor]);
+  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor, tintColor, tintStrength]);
   return <canvas ref={ref} className="w-full h-full block" />;
 }

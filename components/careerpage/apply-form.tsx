@@ -140,7 +140,13 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                 onFinalStepCompleted={handleSubmit(onSubmit)}
                 backButtonText="Previous"
                 nextButtonText="Next"
-                finalButtonText={isSubmitting ? "Submitting..." : "Submit Application"}
+                finalButtonText={isSubmitting ? "Submitting..." : "Submit"}
+                nextButtonProps={{
+                    className: " h-10 px-7 rounded-full bg-black text-white dark:bg-white dark:text-black font-semibold transition-all hover:opacity-90 active:scale-95"
+                }}
+                backButtonProps={{
+                    className: "duration-350 rounded-full px-7 h-10 transition text-muted-foreground hover:bg-accent hover:text-foreground"
+                }}
                 stepCircleContainerClassName="!bg-background !border-border"
                 stepContainerClassName="!bg-background"
                 contentClassName="m-9"
@@ -156,8 +162,8 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Label htmlFor="fullName" className="text-muted-foreground">Full Name <span className="text-red-500">*</span></Label>
                             <Input
                                 id="fullName"
-                                placeholder="John Doe"
-                                className="bg-secondary"
+                                placeholder="Your Full Name"
+                                className="bg-secondary dark:bg-black"
                                 {...register("fullName")}
                             />
                             {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message as string}</p>}
@@ -168,8 +174,8 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="john@example.com"
-                                className="bg-secondary"
+                                placeholder="Your Email"
+                                className="bg-secondary dark:bg-black"
                                 {...register("email")}
                             />
                             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message as string}</p>}
@@ -179,8 +185,8 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Label htmlFor="phone" className="text-muted-foreground">Phone Number</Label>
                             <Input
                                 id="phone"
-                                placeholder="+1 (555) 000-0000"
-                                className="bg-secondary"
+                                placeholder="Your Number"
+                                className="bg-secondary dark:bg-black"
                                 {...register("phone")}
                             />
                             {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message as string}</p>}
@@ -190,8 +196,8 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Label htmlFor="address" className="text-muted-foreground">Address <span className="text-red-500">*</span></Label>
                             <Input
                                 id="address"
-                                placeholder="City, Country"
-                                className="bg-secondary"
+                                placeholder="Your Address"
+                                className="bg-secondary dark:bg-black"
                                 {...register("address")}
                             />
                             {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message as string}</p>}
@@ -232,8 +238,8 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Label htmlFor="expectedSalary" className="text-muted-foreground">Expected Salary</Label>
                             <Input
                                 id="expectedSalary"
-                                placeholder="e.g. $50k - $70k"
-                                className="bg-secondary"
+                                placeholder="Your expected salary"
+                                className="bg-secondary dark:bg-black"
                                 {...register("expectedSalary")}
                             />
                         </div>
@@ -242,7 +248,7 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Input
                                 id="portfolioLink"
                                 placeholder="https://..."
-                                className="bg-secondary"
+                                className="bg-secondary dark:bg-black"
                                 {...register("portfolioLink")}
                             />
                             {errors.portfolioLink && <p className="text-red-500 text-xs mt-1">{errors.portfolioLink.message as string}</p>}
@@ -252,7 +258,7 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Input
                                 id="githubLink"
                                 placeholder="https://github.com/..."
-                                className="bg-secondary"
+                                className="bg-secondary dark:bg-black"
                                 {...register("githubLink")}
                             />
                             {errors.githubLink && <p className="text-red-500 text-xs mt-1">{errors.githubLink.message as string}</p>}
@@ -262,8 +268,8 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             <Input
                                 id="cv"
                                 type="file"
-                                accept=".pdf,.doc,.docx"
-                                className="cursor-pointer bg-secondary"
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
+                                className="cursor-pointer bg-secondary dark:bg-black"
                                 {...register("cv")}
                             />
                             {errors.cv && <p className="text-red-500 text-xs mt-1">{errors.cv.message as string}</p>}
@@ -276,7 +282,7 @@ export default function ApplyForm({ jobId, jobTitle }: ApplyFormProps) {
                             id="coverLetter"
                             rows={4}
                             placeholder="Tell us why you're a great fit..."
-                            className="bg-secondary"
+                            className="bg-secondary dark:bg-black"
                             {...register("coverLetter")}
                         />
                     </div>
