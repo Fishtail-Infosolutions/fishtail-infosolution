@@ -214,7 +214,7 @@ export default function NewTeamMemberPage() {
                                     ) : (
                                         <div className="flex items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
                                             <div className="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-white dark:border-gray-800 shadow-md">
-                                                <Image src={imagePreview || ""} alt="Image preview" fill className="object-cover" />
+                                                <Image src={imagePreview || ""} alt="Image preview" fill className="object-cover" unoptimized />
                                             </div>
                                             <div className="flex-1 space-y-1">
                                                 <p className="text-sm font-semibold text-gray-900 dark:text-white">

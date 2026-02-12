@@ -77,6 +77,7 @@ export default function ProjectsSection() {
                         alt={project.title}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-700"
+                        unoptimized
                       />
                     </div>
 

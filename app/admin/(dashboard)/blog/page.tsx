@@ -178,6 +178,7 @@ export default function BlogManagementPage() {
                                                         alt={blog.title}
                                                         fill
                                                         className="object-cover"
+                                                        unoptimized
                                                     />
                                                 </div>
                                                 <div className="min-w-0">

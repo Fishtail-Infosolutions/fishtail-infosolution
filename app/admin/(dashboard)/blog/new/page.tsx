@@ -280,6 +280,7 @@ export default function NewBlogPage() {
                                                             alt="Blog preview"
                                                             fill
                                                             className="object-cover"
+                                                            unoptimized
                                                         />
                                                         {/* Desktop Hover Overlay */}
                                                         <div className="hidden md:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">

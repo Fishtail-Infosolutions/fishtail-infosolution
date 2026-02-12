@@ -85,6 +85,7 @@ export const TeamCard = ({ member, icon = <User2 className="h-6 w-6 text-foregro
                                     alt={member.name}
                                     fill
                                     className="object-cover"
+                                    unoptimized
                                 />
                             </div>
                         ) : (

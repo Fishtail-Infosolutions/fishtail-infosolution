@@ -102,6 +102,7 @@ export default function CareerPostPage() {
                                 width={80}
                                 height={80}
                                 className="w-full h-full object-cover"
+                                unoptimized
                             />
                         ) : (
                             <span className="text-3xl font-bold text-foreground">

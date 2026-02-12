@@ -35,6 +35,7 @@ export const BlogCard = ({ blog }: BlogCardProps) => {
                     alt={blog.title}
                     fill
                     className="w-full h-full object-cover absolute top-0 left-0 opacity-70 group-hover:opacity-50 duration-900 group-hover:scale-105 transition"
+                    unoptimized
                 />
                 <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/10 to-black/60 pointer-events-none" />
                 <div className="relative z-10 w-full pointer-events-none flex flex-col gap-4">

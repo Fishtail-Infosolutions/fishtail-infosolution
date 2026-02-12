@@ -55,7 +55,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                         <div className="absolute inset-0 pointer-events-none">
                             <DotPattern
                                 className={cn(
-                                    "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]",
+                                    "mask-[radial-gradient(300px_circle_at_center,white,transparent)]",
                                     "opacity-20 dark:opacity-10 text-blue-500 dark:text-white"
                                 )}
                             />
@@ -72,6 +72,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                                                 alt={job.title}
                                                 fill
                                                 className="object-cover"
+                                                unoptimized
                                             />
                                         ) : (
                                             <span className="uppercase">{job.title.charAt(0)}</span>
@@ -92,7 +93,7 @@ export default function CareerCard({ job }: CareerCardProps) {
                             </div>
 
                             {/* Description */}
-                            <div className="flex-grow">
+                            <div className="grow">
                                 <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-6">
                                     {job.description}
                                 </p>

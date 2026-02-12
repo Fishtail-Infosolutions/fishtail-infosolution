@@ -212,7 +212,7 @@ export default function NewProjectPage() {
                                     ) : (
                                         <div className="flex flex-col sm:flex-row items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">
                                             <div className="relative aspect-square w-full sm:w-48 rounded-xl overflow-hidden border-2 border-white dark:border-gray-800 shadow-md group shrink-0">
-                                                <Image src={imagePreview} alt="Project preview" fill className="object-cover" />
+                                                <Image src={imagePreview} alt="Project preview" fill className="object-cover" unoptimized />
                                             </div>
                                             <div className="flex-1 space-y-2 text-center sm:text-left">
                                                 <p className="text-sm font-semibold text-gray-900 dark:text-white">

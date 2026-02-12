@@ -330,6 +330,7 @@ export default function TeamPage() {
                                                                     alt={member.name}
                                                                     fill
                                                                     className="object-cover"
+                                                                    unoptimized
                                                                 />
                                                             </div>
                                                         ) : (

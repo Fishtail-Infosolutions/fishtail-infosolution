@@ -177,6 +177,7 @@ export default function ProjectsPage() {
                                                         alt={project.title}
                                                         fill
                                                         className="object-cover"
+                                                        unoptimized
                                                     />
                                                 </div>
                                                 <div className="min-w-0">
