@@ -78,7 +78,7 @@ const brandColors = ["6366f1", "a855f7", "ec4899", "f59e0b", "10b981", "3b82f6"]
 const MaskedLogo = ({ src, alt, colorClass }: { src: string; alt: string; colorClass: string }) => (
     <div
         className={cn(
-            "h-12 w-32 transition-all duration-300",
+            "h-20 w-40 transition-all duration-300",
             colorClass
         )}
         style={{
