@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '../ui/button';
 import { HoverBorderGradient } from '../ui/hover-border-gradient';
-import { ArrowRightIcon, Code2, Users, TrendingUp, CheckCircle2, Sparkles, Globe } from 'lucide-react';
+import { ArrowRightIcon, Code2, Users, TrendingUp, CheckCircle2, Sparkles, Globe, Search } from 'lucide-react';
 import GradientBanner from '../self-made-ui/gradeint-banner';
 import { LayoutTextFlip } from '../ui/layout-text-flip';
 import { useRouter } from 'next/navigation';
@@ -110,15 +110,15 @@ export default function HeroSection() {
                   transition={{ duration: 0.6, delay: 0.5 }}
                   whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
-                    "flex-[2] p-5 rounded-2xl shadow-xl",
+                    "flex-2 p-5 rounded-2xl shadow-xl",
                     "bg-white/40 dark:bg-gray-900/40",
-                    "backdrop-blur-[40px] backdrop-saturate-150",
+                    "backdrop-blur-2xl backdrop-saturate-150",
                     "border border-white/60 dark:border-gray-700/60",
                     "hover:bg-white/50 dark:hover:bg-gray-900/50 transition-all duration-300"
                   )}
                 >
                   <div className="flex flex-col items-center text-center mb-4">
-                    <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 mb-3 w-fit backdrop-blur-sm">
+                    <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 mb-3 w-fit backdrop-blur-sm border border-white/20 dark:border-white/10">
                       <Users className="w-5 h-5 text-blue-500" />
                     </div>
                     <div className="text-3xl font-bold bg-linear-to-r from-blue-400 to-blue-600 text-transparent bg-clip-text">
@@ -126,7 +126,7 @@ export default function HeroSection() {
                     </div>
                     <div className="text-xs text-muted-foreground font-medium">Partners</div>
                   </div>
-                  <div className="text-sm font-semibold text-foreground mb-1 text-center">Affiliate Network</div>
+                  <div className="text-sm font-bold text-foreground mb-1 text-center">Affiliate Network</div>
                   <div className="text-xs text-muted-foreground text-center">Growing partnerships worldwide</div>
                 </motion.div>
 
@@ -137,18 +137,18 @@ export default function HeroSection() {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
-                    "flex-[1] p-4 rounded-2xl shadow-xl",
+                    "flex-1 p-4 rounded-2xl shadow-xl",
                     "bg-white/35 dark:bg-gray-900/35",
-                    "backdrop-blur-[35px] backdrop-saturate-150",
+                    "backdrop-blur-xl backdrop-saturate-150",
                     "border border-white/50 dark:border-gray-700/50",
                     "hover:bg-white/45 dark:hover:bg-gray-900/45 transition-all duration-300"
                   )}
                 >
-                  <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 mb-2 w-fit backdrop-blur-sm">
+                  <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 mb-2 w-fit backdrop-blur-sm border border-white/20 dark:border-white/10">
                     <Globe className="w-5 h-5 text-blue-500" />
                   </div>
                   <div className="text-xs font-medium text-muted-foreground mb-1">Global Reach</div>
-                  <div className="text-lg font-bold text-foreground">Worldwide</div>
+                  <div className="text-md font-bold text-foreground">Worldwide</div>
                 </motion.div>
               </div>
 
@@ -161,7 +161,7 @@ export default function HeroSection() {
                 className={cn(
                   "w-full sm:w-48 lg:w-56 h-full p-6 rounded-3xl shadow-2xl",
                   "bg-white/40 dark:bg-gray-900/40",
-                  "backdrop-blur-[40px] backdrop-saturate-150",
+                  "backdrop-blur-2xl backdrop-saturate-150",
                   "border border-white/60 dark:border-gray-700/60",
                   "hover:bg-white/50 dark:hover:bg-gray-900/50 transition-all duration-300"
                 )}
@@ -169,11 +169,15 @@ export default function HeroSection() {
                 <div className="flex flex-col h-full">
                   <div className="mb-6">
                     <div className="flex -space-x-3 mb-4">
-                      <div className="w-12 h-12 rounded-full border-2 border-white dark:border-gray-900 bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-xl">
-                        <Users className="w-6 h-6 text-white" />
+                      <div className="w-12 h-12 rounded-full bg-[#d4e4ff] dark:bg-[#173363] backdrop-blur-md flex items-center justify-center shadow-lg relative z-30">
+                        <Users className="w-6 h-6 text-blue-600 dark:text-blue-300" />
                       </div>
-                      <div className="w-12 h-12 rounded-full border-2 border-white dark:border-gray-900 bg-linear-to-br from-purple-400 to-purple-600 shadow-xl"></div>
-                      <div className="w-12 h-12 rounded-full border-2 border-white dark:border-gray-900 bg-linear-to-br from-cyan-400 to-cyan-600 shadow-xl"></div>
+                      <div className="w-12 h-12 rounded-full bg-[#ead6ff] dark:bg-[#3e2263] backdrop-blur-md flex items-center justify-center shadow-lg relative z-20">
+                        <TrendingUp className="w-6 h-6 text-purple-600 dark:text-purple-300" />
+                      </div>
+                      <div className="w-12 h-12 rounded-full bg-[#caeff7] dark:bg-[#0b455a] backdrop-blur-md flex items-center justify-center shadow-lg relative z-10">
+                        <Search className="w-6 h-6 text-cyan-600 dark:text-cyan-300" />
+                      </div>
                     </div>
                     <h3 className="text-lg font-bold text-foreground mb-2">Search Growth Experts</h3>
                     <p className="text-xs text-muted-foreground">SEO & affiliate specialists</p>
@@ -181,7 +185,7 @@ export default function HeroSection() {
 
                   <div className="space-y-4 flex-1">
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 backdrop-blur-sm">
+                      <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 backdrop-blur-sm border border-white/20 dark:border-white/10">
                         <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
                       </div>
                       <div>
@@ -190,7 +194,7 @@ export default function HeroSection() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-purple-500/20 dark:bg-purple-500/30 backdrop-blur-sm">
+                      <div className="p-2 rounded-lg bg-purple-500/20 dark:bg-purple-500/30 backdrop-blur-sm border border-white/10 dark:border-white/5">
                         <CheckCircle2 className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
                       </div>
                       <div>
@@ -199,7 +203,7 @@ export default function HeroSection() {
                     </div>
 
                     <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-cyan-500/20 dark:bg-cyan-500/30 backdrop-blur-sm">
+                      <div className="p-2 rounded-lg bg-cyan-500/20 dark:bg-cyan-500/30 backdrop-blur-sm border border-white/20 dark:border-white/10">
                         <CheckCircle2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
                       </div>
                       <div>
@@ -219,15 +223,15 @@ export default function HeroSection() {
                   transition={{ duration: 0.6, delay: 0.7 }}
                   whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
-                    "flex-[1] p-4 rounded-2xl shadow-xl",
+                    "flex-1 p-4 rounded-2xl shadow-xl",
                     "bg-white/35 dark:bg-gray-900/35",
-                    "backdrop-blur-[35px] backdrop-saturate-150",
+                    "backdrop-blur-xl backdrop-saturate-150",
                     "border border-white/50 dark:border-gray-700/50",
                     "hover:bg-white/45 dark:hover:bg-gray-900/45 transition-all duration-300"
                   )}
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 backdrop-blur-sm">
+                    <div className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 backdrop-blur-sm border border-white/20 dark:border-white/10">
                       <Code2 className="w-5 h-5 text-blue-500" />
                     </div>
                     <div>
@@ -236,9 +240,9 @@ export default function HeroSection() {
                     </div>
                   </div>
                   <div className="flex gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-sm"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500 shadow-sm"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-sm"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/35 dark:bg-red-500/45 backdrop-blur-sm border border-red-500/30 shadow-sm"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/35 dark:bg-yellow-500/45 backdrop-blur-sm border border-yellow-500/30 shadow-sm"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/35 dark:bg-green-500/45 backdrop-blur-sm border border-green-500/30 shadow-sm"></div>
                   </div>
                 </motion.div>
 
@@ -249,9 +253,9 @@ export default function HeroSection() {
                   transition={{ duration: 0.6, delay: 0.8 }}
                   whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
-                    "flex-[2] p-5 rounded-2xl shadow-xl",
-                    "bg-gradient-to-br from-blue-50/50 to-white/50 dark:from-blue-950/30 dark:to-gray-900/40",
-                    "backdrop-blur-[40px] backdrop-saturate-150",
+                    "flex-2 p-5 rounded-2xl shadow-xl",
+                    "bg-linear-to-br from-blue-50/50 to-white/50 dark:from-blue-950/30 dark:to-gray-900/40",
+                    "backdrop-blur-2xl backdrop-saturate-150",
                     "border border-blue-200/60 dark:border-blue-800/50",
                     "hover:from-blue-50/60 hover:to-white/60 dark:hover:from-blue-950/40 dark:hover:to-gray-900/50 transition-all duration-300"
                   )}
@@ -260,20 +264,20 @@ export default function HeroSection() {
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                      className="p-2 rounded-lg bg-blue-500/30 dark:bg-blue-500/40 backdrop-blur-sm"
+                      className="p-2 rounded-lg bg-blue-500/20 dark:bg-blue-500/30 backdrop-blur-sm border border-white/20 dark:border-white/10"
                     >
                       <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </motion.div>
                     <span className="text-sm font-bold text-foreground">What We Build</span>
                   </div>
                   <div className="flex gap-2 flex-wrap mb-4">
-                    <span className="px-3 py-1.5 bg-blue-500/25 dark:bg-blue-500/35 text-blue-700 dark:text-blue-300 text-xs rounded-full font-semibold backdrop-blur-sm border border-blue-300/30 dark:border-blue-600/30">
+                    <span className="px-3 py-1.5 bg-blue-500/20 dark:bg-blue-500/30 text-blue-700 dark:text-blue-300 text-xs rounded-full font-semibold backdrop-blur-sm border border-blue-300/20 dark:border-blue-600/20">
                       Authority Sites
                     </span>
-                    <span className="px-3 py-1.5 bg-purple-500/25 dark:bg-purple-500/35 text-purple-700 dark:text-purple-300 text-xs rounded-full font-semibold backdrop-blur-sm border border-purple-300/30 dark:border-purple-600/30">
+                    <span className="px-3 py-1.5 bg-purple-500/20 dark:bg-purple-500/30 text-purple-700 dark:text-purple-300 text-xs rounded-full font-semibold backdrop-blur-sm border border-purple-300/20 dark:border-purple-600/20">
                       SEO Content
                     </span>
-                    <span className="px-3 py-1.5 bg-cyan-500/25 dark:bg-cyan-500/35 text-cyan-700 dark:text-cyan-300 text-xs rounded-full font-semibold backdrop-blur-sm border border-cyan-300/30 dark:border-cyan-600/30">
+                    <span className="px-3 py-1.5 bg-cyan-500/20 dark:bg-cyan-500/30 text-cyan-700 dark:text-cyan-300 text-xs rounded-full font-semibold backdrop-blur-sm border border-cyan-300/20 dark:border-cyan-600/20">
                       Affiliate Systems
                     </span>
                   </div>
