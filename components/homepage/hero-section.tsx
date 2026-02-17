@@ -45,13 +45,7 @@ export default function HeroSection() {
             />
             }
           </div>
-
-
-
-
         )}
-
-
 
         <motion.div
           initial={{ opacity: 0, y: 25 }}
@@ -71,7 +65,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="mt-4 md:mt-6 max-w-2xl text-md md:text-lg text-muted-foreground mx-auto">
-            We build SEO, web, and marketing strategies that drive measurable growth—clear, focused, and performance-driven.
+            We build SEO, web, and marketing strategies that drive measurable growth focused, and performance driven.
           </p>
 
           <motion.div

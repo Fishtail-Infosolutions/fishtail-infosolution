@@ -36,7 +36,7 @@ export async function uploadFile(
     const {
         folder = 'general',
         maxSizeMB = 5,
-        allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml']
+        allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml', 'image/avif']
     } = options;
 
     // Validate file type

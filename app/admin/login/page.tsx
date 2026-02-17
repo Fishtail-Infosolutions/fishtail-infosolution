@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -27,6 +27,23 @@ export default function LoginPage() {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema),
     });
+
+    // Check if user is already authenticated
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const res = await fetch('/api/auth/verify');
+                if (res.ok) {
+                    // User is already authenticated, redirect to dashboard
+                    router.push('/admin/dashboard');
+                }
+            } catch (error) {
+                // User is not authenticated, stay on login page
+            }
+        };
+
+        checkAuth();
+    }, [router]);
 
     const onSubmit = async (data: FormData) => {
         setIsLoading(true);

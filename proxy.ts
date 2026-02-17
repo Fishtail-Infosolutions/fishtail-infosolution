@@ -5,14 +5,22 @@ import { verifyToken } from './lib/auth';
 export async function proxy(req: NextRequest) {
     // Only run on admin routes
     if (req.nextUrl.pathname.startsWith('/admin')) {
+        const token = req.cookies.get('admin_token')?.value;
 
-        // Ignore login page
+        // If user is on login page and already authenticated, redirect to dashboard
         if (req.nextUrl.pathname === '/admin/login') {
+            if (token) {
+                const payload = await verifyToken(token);
+                if (payload) {
+                    // User is authenticated, redirect to dashboard
+                    return NextResponse.redirect(new URL('/admin/dashboard', req.url));
+                }
+            }
+            // Not authenticated, allow access to login page
             return NextResponse.next();
         }
 
-        const token = req.cookies.get('admin_token')?.value;
-
+        // For all other admin routes, check authentication
         if (!token) {
             return NextResponse.redirect(new URL('/admin/login', req.url));
         }
