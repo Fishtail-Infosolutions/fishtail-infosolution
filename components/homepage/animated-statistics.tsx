@@ -119,10 +119,10 @@ export default function AnimatedStatistics() {
         },
         {
             icon: <Award className="w-5 h-5 md:w-6 md:h-6" />,
-            value: 98,
-            suffix: "%",
-            label: "Satisfaction Rate",
-            description: "Committed to excellence and client success."
+            value: 10,
+            suffix: "+",
+            label: "Affiliate Partners",
+            description: "Strong partnerships driving mutual growth."
         },
     ];
 

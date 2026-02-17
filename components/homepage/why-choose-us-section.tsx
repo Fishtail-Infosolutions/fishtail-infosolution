@@ -25,7 +25,7 @@ interface MicroChartProps {
 const seoMetrics: MicroChartProps[] = [
     {
         label: "Organic Traffic",
-        value: "+245%",
+        value: "+97%",
         data: [20, 35, 45, 60, 75, 90, 100],
         type: "line",
         color: "emerald",

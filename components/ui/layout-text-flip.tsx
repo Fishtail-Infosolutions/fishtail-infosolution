@@ -34,7 +34,7 @@ export const LayoutTextFlip = ({
       {/* Minimal wrapper (no bg, no border, no padding) */}
       <motion.span
         layout
-        className="relative inline-grid grid-cols-1 grid-rows-1 overflow-hidden ml-0 md:ml-4 text-center md:text-left justify-items-center md:justify-items-start leading-inherit w-full md:w-fit"
+        className="relative inline-grid grid-cols-1 grid-rows-1 overflow-hidden text-center md:text-left justify-items-center md:justify-items-start leading-inherit w-full md:w-fit"
       >
         {/* Invisible placeholders to maintain consistent width of the longest word */}
         {words.map((w, i) => (
