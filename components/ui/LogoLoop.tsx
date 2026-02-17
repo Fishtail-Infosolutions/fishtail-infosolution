@@ -2,21 +2,21 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export type LogoItem =
   | {
-      node: React.ReactNode;
-      href?: string;
-      title?: string;
-      ariaLabel?: string;
-    }
+    node: React.ReactNode;
+    href?: string;
+    title?: string;
+    ariaLabel?: string;
+  }
   | {
-      src: string;
-      alt?: string;
-      href?: string;
-      title?: string;
-      srcSet?: string;
-      sizes?: string;
-      width?: number;
-      height?: number;
-    };
+    src: string;
+    alt?: string;
+    href?: string;
+    title?: string;
+    srcSet?: string;
+    sizes?: string;
+    width?: number;
+    height?: number;
+  };
 
 export interface LogoLoopProps {
   logos: LogoItem[];
@@ -278,9 +278,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         ({
           '--logoloop-gap': `${gap}px`,
           '--logoloop-logoHeight': `${logoHeight}px`,
-          ...(fadeOutColor && { '--logoloop-fadeColor': fadeOutColor })
         }) as React.CSSProperties,
-      [gap, logoHeight, fadeOutColor]
+      [gap, logoHeight]
     );
 
     const rootClasses = useMemo(
@@ -290,8 +289,6 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           isVertical ? 'overflow-hidden h-full inline-block' : 'overflow-x-hidden',
           '[--logoloop-gap:32px]',
           '[--logoloop-logoHeight:28px]',
-          '[--logoloop-fadeColorAuto:#ffffff]',
-          'dark:[--logoloop-fadeColorAuto:#0b0b0b]',
           scaleOnHover && 'py-[calc(var(--logoloop-logoHeight)*0.1)]',
           className
         ),
@@ -311,8 +308,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           return (
             <li
               className={cx(
-                'flex-none text-[length:var(--logoloop-logoHeight)] leading-[1]',
-                isVertical ? 'mb-[var(--logoloop-gap)]' : 'mr-[var(--logoloop-gap)]',
+                'flex-none text-(length:--logoloop-logoHeight) leading-none',
+                isVertical ? 'mb-(--logoloop-gap)' : 'mr-(--logoloop-gap)',
                 scaleOnHover && 'overflow-visible group/item'
               )}
               key={key}
@@ -331,7 +328,7 @@ export const LogoLoop = React.memo<LogoLoopProps>(
               'inline-flex items-center',
               'motion-reduce:transition-none',
               scaleOnHover &&
-                'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
+              'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
             )}
             aria-hidden={!!(item as any).href && !(item as any).ariaLabel}
           >
@@ -340,12 +337,12 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         ) : (
           <img
             className={cx(
-              'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
+              'h-(--logoloop-logoHeight) w-auto block object-contain',
               '[-webkit-user-drag:none] pointer-events-none',
               '[image-rendering:-webkit-optimize-contrast]',
               'motion-reduce:transition-none',
               scaleOnHover &&
-                'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
+              'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
             )}
             src={(item as any).src}
             srcSet={(item as any).srcSet}
@@ -386,8 +383,8 @@ export const LogoLoop = React.memo<LogoLoopProps>(
         return (
           <li
             className={cx(
-              'flex-none text-[length:var(--logoloop-logoHeight)] leading-[1]',
-              isVertical ? 'mb-[var(--logoloop-gap)]' : 'mr-[var(--logoloop-gap)]',
+              'flex-none text-(length:--logoloop-logoHeight) leading-none',
+              isVertical ? 'mb-(--logoloop-gap)' : 'mr-(--logoloop-gap)',
               scaleOnHover && 'overflow-visible group/item'
             )}
             key={key}
@@ -430,50 +427,23 @@ export const LogoLoop = React.memo<LogoLoopProps>(
     );
 
     return (
-      <div ref={containerRef} className={rootClasses} style={containerStyle} role="region" aria-label={ariaLabel}>
-        {fadeOut && (
-          <>
-            {isVertical ? (
-              <>
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-x-0 top-0 z-10',
-                    'h-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_bottom,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-x-0 bottom-0 z-10',
-                    'h-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_top,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-              </>
-            ) : (
-              <>
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-y-0 left-0 z-10',
-                    'w-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_right,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-y-0 right-0 z-10',
-                    'w-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_left,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-              </>
-            )}
-          </>
-        )}
+      <div
+        ref={containerRef}
+        className={rootClasses}
+        style={{
+          ...containerStyle,
+          ...(fadeOut ? {
+            maskImage: isVertical
+              ? 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
+              : 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+            WebkitMaskImage: isVertical
+              ? 'linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)'
+              : 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)',
+          } : {})
+        }}
+        role="region"
+        aria-label={ariaLabel}
+      >
 
         <div
           className={cx(

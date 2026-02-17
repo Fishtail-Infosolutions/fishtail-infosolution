@@ -75,24 +75,35 @@ const slugs = [
 
 const brandColors = ["6366f1", "a855f7", "ec4899", "f59e0b", "10b981", "3b82f6"];
 
+const MaskedLogo = ({ src, alt, colorClass }: { src: string; alt: string; colorClass: string }) => (
+    <div
+        className={cn(
+            "h-12 w-32 transition-all duration-300",
+            colorClass
+        )}
+        style={{
+            maskImage: `url(${src})`,
+            WebkitMaskImage: `url(${src})`,
+            maskSize: 'contain',
+            WebkitMaskSize: 'contain',
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            maskPosition: 'center',
+        }}
+        aria-label={alt}
+    />
+);
+
 const brandLogos = [
-    { name: "Abstract", slug: "abstract" },
-    { name: "Airtable", slug: "airtable" },
-    { name: "Algolia", slug: "algolia" },
-    { name: "Apollo", slug: "apollographql" },
-    { name: "Auth0", slug: "auth0" },
-    { name: "CircleCI", slug: "circleci" },
-    { name: "Cloudflare", slug: "cloudflare" },
-    { name: "Docker", slug: "docker" },
-    { name: "Figma", slug: "figma" },
-    { name: "GraphQL", slug: "graphql" },
-    { name: "Prisma", slug: "prisma" },
-    { name: "Vercel", slug: "vercel" },
-].map((brand, idx) => ({
-    src: `https://cdn.simpleicons.org/${brand.slug}/${brandColors[idx % brandColors.length]}`,
-    alt: brand.name,
-    title: brand.name
-}));
+    { node: <MaskedLogo src="/brand-that-trust-us/logo2.png" alt="Partner Logo 2" colorClass="bg-blue-500 dark:bg-blue-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo3.png" alt="Partner Logo 3" colorClass="bg-emerald-500 dark:bg-emerald-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo4.png" alt="Partner Logo 4" colorClass="bg-purple-500 dark:bg-purple-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo5.png" alt="Partner Logo 5" colorClass="bg-amber-500 dark:bg-amber-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo2.png" alt="Partner Logo 2" colorClass="bg-blue-500 dark:bg-blue-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo3.png" alt="Partner Logo 3" colorClass="bg-emerald-500 dark:bg-emerald-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo4.png" alt="Partner Logo 4" colorClass="bg-purple-500 dark:bg-purple-400" /> },
+    { node: <MaskedLogo src="/brand-that-trust-us/logo5.png" alt="Partner Logo 5" colorClass="bg-amber-500 dark:bg-amber-400" /> },
+];
 
 const MicroChart = ({ label, value, data, type, color }: MicroChartProps) => {
     const colorClasses = {
