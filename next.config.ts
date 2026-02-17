@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "fishtailinfosolutions.com",
+      },
+      {
+        protocol: "https",
         hostname: "www.fishtailinfosolutions.com",
       },
     ],

@@ -34,6 +34,7 @@ export async function POST(req: Request) {
             success: true,
             path: filePath
         });
+
     } catch (error: any) {
         console.error('Upload error:', error);
         return NextResponse.json(
