@@ -11,6 +11,7 @@ interface Project {
   title: string;
   imageUrl: string;
   projectUrl: string;
+  description: string;
 }
 
 export default function ProjectsPage() {
@@ -91,6 +92,7 @@ export default function ProjectsPage() {
                 <ProjectCard
                   imageUrl={project.imageUrl}
                   title={project.title}
+                  description={project.description}
                   projectUrl={project.projectUrl}
                   className="w-full"
                 />

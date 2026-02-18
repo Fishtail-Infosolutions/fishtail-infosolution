@@ -17,7 +17,7 @@ export interface TeamMember {
     _id: string;
     name: string;
     role: string;
-    description: string;
+    description?: string;
     imageUrl?: string;
     socials?: Social[];
     order: number;
@@ -60,7 +60,7 @@ interface TeamCardProps {
 
 export const TeamCard = ({ member, icon = <User2 className="h-6 w-6 text-foreground/60 dark:text-neutral-400" />, className, disableHover = false }: TeamCardProps) => {
     return (
-        <div className="min-h-[14rem] h-full w-full max-w-sm mx-auto">
+        <div className="min-h-56 h-full w-full max-w-sm mx-auto">
             <motion.div
                 className={cn("relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-gray-50/50 dark:bg-zinc-900/30 border-border", className)}
                 whileHover={disableHover ? undefined : { scale: 1.05 }}
@@ -115,11 +115,13 @@ export const TeamCard = ({ member, icon = <User2 className="h-6 w-6 text-foregro
                         </div>
 
                         {/* 4. Description */}
-                        <div className="text-center">
-                            <h2 className="font-sans text-sm text-muted-foreground/80 line-clamp-2">
-                                {member.description}
-                            </h2>
-                        </div>
+                        {member.description && (
+                            <div className="text-center">
+                                <h2 className="font-sans text-sm text-muted-foreground/80 line-clamp-2">
+                                    {member.description}
+                                </h2>
+                            </div>
+                        )}
                     </div>
                 </div>
             </motion.div>

@@ -65,24 +65,17 @@ export default function ProjectsSection() {
                   minHeight="22rem"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-[0.8fr_1.2fr] gap-6 md:gap-8 items-center h-auto md:h-full">
-                    {/* 1. Title */}
-                    <h3 className="text-2xl md:text-4xl font-semibold text-white tracking-tight text-center md:text-left md:col-start-1 md:row-start-1">
-                      {project.title}
-                    </h3>
+                    {/* Left Content */}
+                    <div className="flex flex-col items-center md:items-start gap-7 order-2 md:order-1">
 
-                    {/* 2. Image */}
-                    <div className="relative w-full aspect-4/3 md:aspect-square lg:aspect-4/3 rounded-2xl overflow-hidden shadow-2xl md:col-start-2 md:row-start-1 md:row-span-2">
-                      <Image
-                        src={project.imageUrl}
-                        alt={project.title}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-700"
-                        unoptimized
-                      />
-                    </div>
+                      <h3 className="text-2xl md:text-4xl font-semibold text-white tracking-tight text-center md:text-left">
+                        {project.title}
+                      </h3>
 
-                    {/* 3. Button */}
-                    <div className="flex justify-center md:justify-start md:col-start-1 md:row-start-2">
+                      <p className="text-gray-300 dark:text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3 text-center md:text-left">
+                        {project.description}
+                      </p>
+
                       <Link href={project.projectUrl || '#'} target="_blank" rel="noopener noreferrer">
                         <Button
                           variant="default"
@@ -92,6 +85,17 @@ export default function ProjectsSection() {
                           <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
                         </Button>
                       </Link>
+                    </div>
+
+                    {/* Right Image */}
+                    <div className="relative w-full aspect-4/3 md:aspect-square lg:aspect-4/3 rounded-2xl overflow-hidden shadow-2xl order-1 md:order-2">
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.title}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-700"
+                        unoptimized
+                      />
                     </div>
                   </div>
                 </ScrollStackItem>

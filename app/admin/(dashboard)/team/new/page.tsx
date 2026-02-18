@@ -30,7 +30,7 @@ const socialPlatforms = ['LinkedIn', 'Twitter', 'Facebook', 'GitHub', 'Instagram
 const teamMemberSchema = z.object({
     name: z.string().min(1, "Name is required"),
     role: z.string().min(1, "Role is required"),
-    description: z.string().min(1, "Description is required"),
+
     imageUrl: z.string().min(1, "Profile image is required"),
     isActive: z.boolean(),
 });
@@ -56,7 +56,7 @@ export default function NewTeamMemberPage() {
         defaultValues: {
             name: "",
             role: "",
-            description: "",
+
             imageUrl: "",
             isActive: true,
         },
@@ -127,7 +127,7 @@ export default function NewTeamMemberPage() {
             const teamMemberFormData = new FormData();
             teamMemberFormData.append("name", values.name);
             teamMemberFormData.append("role", values.role);
-            teamMemberFormData.append("description", values.description);
+
             if (imagePath) teamMemberFormData.append("imageUrl", imagePath);
             teamMemberFormData.append("socials", JSON.stringify(socials));
             teamMemberFormData.append("isActive", values.isActive.toString());
@@ -300,27 +300,7 @@ export default function NewTeamMemberPage() {
                                 )}
                             />
 
-                            {/* Description */}
-                            <FormField
-                                control={form.control}
-                                name="description"
-                                render={({ field }) => (
-                                    <FormItem className="space-y-2">
-                                        <FormLabel className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-                                            <FileText size={14} className="text-blue-500" />
-                                            Description <span className="text-red-500 font-bold">*</span>
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Textarea
-                                                {...field}
-                                                placeholder="Brief bio or description of the team member..."
-                                                className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[120px]"
-                                            />
-                                        </FormControl>
-                                        <FormMessage className="text-xs" />
-                                    </FormItem>
-                                )}
-                            />
+
                         </div>
 
                         {/* Social Links Section */}

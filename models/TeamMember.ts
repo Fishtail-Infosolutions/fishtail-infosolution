@@ -13,7 +13,7 @@ const TeamMemberSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [true, 'Please provide team member description'],
+        trim: true,
     },
     imageUrl: {
         type: String,

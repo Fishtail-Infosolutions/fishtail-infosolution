@@ -23,11 +23,11 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="w-full">
-      <div className="min-h-screen w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-6">
+    <section className="w-full ">
+      <div className="min-h-screen w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-7">
 
         {mounted && (
-          <div className={cn("absolute inset-0 w-full h-full pointer-events-none -z-20", resolvedTheme === 'light' ? "invert" : "")}>
+          <div className={cn("absolute inset-0 w-full h-full pointer-events-none -z-20", resolvedTheme === 'light' ? "invert opacity-40" : "opacity-50")}>
             <DarkVeil
               hueShift={0}
               noiseIntensity={0}
@@ -42,7 +42,7 @@ export default function HeroSection() {
           </div>
         )}
 
-        <div className="relative z-10 max-w-7xl w-full mx-auto">
+        <div className="relative z-10 max-w-7xl w-full mx-auto ">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 min-h-[450px]">
 
             {/* Left Side - Content */}

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Upload, X, Type, Globe, ImageIcon, Home } from "lucide-react";
+import { Loader2, Upload, X, Type, Globe, ImageIcon, Home, FileText } from "lucide-react";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import {
@@ -17,6 +17,7 @@ import Link from "next/link";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -26,6 +27,7 @@ const projectSchema = z.object({
     title: z.string().min(1, "Title is required"),
     imageUrl: z.string().min(1, "Image is required"),
     projectUrl: z.string().min(1, "Project link is required").url("Must be a valid URL"),
+    description: z.string().min(1, "Description is required"),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
@@ -43,6 +45,7 @@ export default function NewProjectPage() {
             title: "",
             imageUrl: "",
             projectUrl: "",
+            description: "",
         },
     });
 
@@ -182,6 +185,28 @@ export default function NewProjectPage() {
                                             {...field}
                                             placeholder="https://..."
                                             className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl"
+                                        />
+                                    </FormControl>
+                                    <FormMessage className="text-xs" />
+                                </FormItem>
+                            )}
+                        />
+
+                        {/* Description */}
+                        <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                                <FormItem className="space-y-2">
+                                    <FormLabel className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                                        <FileText size={14} className="text-blue-500" />
+                                        Short Description <span className="text-red-500 font-bold">*</span>
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            {...field}
+                                            placeholder="Brief description of the project (1-2 lines)..."
+                                            className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 focus:ring-blue-500/20 rounded-xl min-h-[80px]"
                                         />
                                     </FormControl>
                                     <FormMessage className="text-xs" />
