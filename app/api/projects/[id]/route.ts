@@ -40,6 +40,12 @@ export async function PATCH(
         const { id } = await params;
         const body = await req.json();
 
+        // Never let a regular edit accidentally reset the order field
+        // unless the caller deliberately sends it (e.g. reorder endpoint)
+        if (body.order === undefined) {
+            delete body.order;
+        }
+
         const project = await Project.findByIdAndUpdate(
             id,
             { $set: body },

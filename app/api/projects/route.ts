@@ -4,11 +4,13 @@ import Project from "@/models/Project";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
     try {
         await connectDB();
 
-        const projects = await Project.find({}).sort({ createdAt: -1 });
+        const projects = await Project.find({}).sort({ order: 1, createdAt: 1 });
 
         return NextResponse.json({
             projects,
@@ -38,12 +40,17 @@ export async function POST(req: Request) {
         await connectDB();
         const body = await req.json();
 
+        // Assign next order so new projects append at the end
+        const lastProject = await Project.findOne().sort({ order: -1 }).select('order');
+        const nextOrder = lastProject ? (lastProject.order + 1) : 0;
+
         const project = await Project.create({
             title: body.title,
             imageUrl: body.imageUrl,
             projectUrl: body.projectUrl,
             category: body.category || 'Development',
             description: body.description || '',
+            order: nextOrder,
         });
 
         return NextResponse.json(project, { status: 201 });

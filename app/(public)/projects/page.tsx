@@ -21,10 +21,10 @@ export default function ProjectsPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("/api/projects?limit=50");
+        const res = await fetch("/api/public/projects");
         if (!res.ok) throw new Error("Failed to fetch projects");
         const data = await res.json();
-        setProjects(data.projects);
+        setProjects(data);
       } catch (error) {
         console.error("Error loading projects:", error);
       } finally {

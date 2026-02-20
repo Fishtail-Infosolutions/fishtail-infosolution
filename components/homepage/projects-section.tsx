@@ -22,10 +22,10 @@ export default function ProjectsSection() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch('/api/projects');
+        const res = await fetch('/api/public/projects');
         const data = await res.json();
-        if (data.projects) {
-          setProjects(data.projects);
+        if (Array.isArray(data)) {
+          setProjects(data);
         }
       } catch (error) {
         console.error("Failed to fetch projects", error);

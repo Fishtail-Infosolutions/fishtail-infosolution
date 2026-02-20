@@ -56,7 +56,9 @@ export async function PUT(
             role: formData.get('role'),
             description: formData.get('description'),
             socials: socials,
-            order: parseInt(formData.get('order') as string || '0'),
+            order: formData.get('order') !== null
+                ? parseInt(formData.get('order') as string)
+                : currentTeamMember.order,
             isActive: formData.get('isActive') === 'true',
         };
 

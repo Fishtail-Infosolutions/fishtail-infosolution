@@ -44,7 +44,7 @@ export async function POST(req: Request) {
         const teamMember = await TeamMember.create({
             name: formData.get('name'),
             role: formData.get('role'),
-            description: formData.get('description'),
+
             imageUrl: formData.get('imageUrl'),
             socials: socials,
             order: nextOrder,

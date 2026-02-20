@@ -115,13 +115,7 @@ export const TeamCard = ({ member, icon = <User2 className="h-6 w-6 text-foregro
                         </div>
 
                         {/* 4. Description */}
-                        {member.description && (
-                            <div className="text-center">
-                                <h2 className="font-sans text-sm text-muted-foreground/80 line-clamp-2">
-                                    {member.description}
-                                </h2>
-                            </div>
-                        )}
+
                     </div>
                 </div>
             </motion.div>
