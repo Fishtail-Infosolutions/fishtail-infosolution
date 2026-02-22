@@ -48,7 +48,7 @@ export default function EditProjectPage() {
     const [loading, setLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const form = useForm<ProjectFormValues>({
         resolver: zodResolver(projectSchema),
@@ -86,31 +86,18 @@ export default function EditProjectPage() {
         }
     };
 
-    const handleImageChange = async (newFiles: File[]) => {
+    const handleImageChange = (newFiles: File[]) => {
         const file = newFiles[0];
         if (!file) return;
 
-        try {
-            setIsUploading(true);
-            const uploadFormData = new FormData();
-            uploadFormData.append('file', file);
-            uploadFormData.append('folder', 'projects');
-
-            const res = await fetch('/api/upload', {
-                method: 'POST',
-                body: uploadFormData
-            });
-
-            if (!res.ok) throw new Error('Upload failed');
-            const data = await res.json();
-
-            setImagePreview(data.path);
-            form.setValue('imageUrl', data.path, { shouldValidate: true });
-        } catch (error) {
-            toast.error('Failed to upload image');
-        } finally {
-            setIsUploading(false);
-        }
+        setImageFile(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const result = reader.result as string;
+            setImagePreview(result);
+            form.setValue('imageUrl', result, { shouldValidate: true });
+        };
+        reader.readAsDataURL(file);
     };
 
     const removeImage = () => {
@@ -122,10 +109,31 @@ export default function EditProjectPage() {
         setIsSubmitting(true);
 
         try {
+            let finalImageUrl = values.imageUrl;
+
+            // Upload image if a new file was selected
+            if (imageFile) {
+                const uploadFormData = new FormData();
+                uploadFormData.append('file', imageFile);
+                uploadFormData.append('folder', 'projects');
+
+                const uploadRes = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: uploadFormData
+                });
+
+                if (!uploadRes.ok) throw new Error('Image upload failed');
+                const uploadData = await uploadRes.json();
+                finalImageUrl = uploadData.path;
+            }
+
             const res = await fetch(`/api/projects/${projectId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values),
+                body: JSON.stringify({
+                    ...values,
+                    imageUrl: finalImageUrl
+                }),
             });
 
             if (!res.ok) {
@@ -271,12 +279,7 @@ export default function EditProjectPage() {
                                         Project Thumbnail <span className="text-red-500 font-bold">*</span>
                                     </FormLabel>
 
-                                    {isUploading ? (
-                                        <div className="w-full max-w-md aspect-square border border-dashed border-neutral-200 dark:border-neutral-800 rounded-2xl flex flex-col items-center justify-center gap-3 bg-gray-50/50 dark:bg-gray-900/20">
-                                            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-                                            <p className="text-sm text-gray-500 font-medium">Updating image...</p>
-                                        </div>
-                                    ) : !imagePreview ? (
+                                    {!imagePreview ? (
                                         <div className="w-full max-w-md border border-dashed bg-white dark:bg-gray-900/50 border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
                                             <FileUpload onChange={handleImageChange} className="p-6" />
                                         </div>
@@ -290,7 +293,7 @@ export default function EditProjectPage() {
                                                     Project Preview Image
                                                 </p>
                                                 <p className="text-xs text-gray-500">
-                                                    Current Project Image
+                                                    {imageFile ? `${(imageFile.size / (1024 * 1024)).toFixed(2)} MB` : "Current Project Image"}
                                                 </p>
                                                 <Button
                                                     type="button"
@@ -306,7 +309,7 @@ export default function EditProjectPage() {
                                         </div>
                                     )}
 
-                                    {!imagePreview && !isUploading && (
+                                    {!imagePreview && (
                                         <div className="text-xs text-gray-500 dark:text-gray-400">
                                             PNG, JPG up to 5MB are supported. Recommended size: 1080x1080px (1:1 Aspect Ratio).
                                         </div>
@@ -330,7 +333,7 @@ export default function EditProjectPage() {
                         </Button>
                         <Button
                             type="submit"
-                            disabled={isSubmitting || isUploading}
+                            disabled={isSubmitting}
                             className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20 h-11 px-8 rounded-xl font-semibold"
                         >
                             {isSubmitting ? (

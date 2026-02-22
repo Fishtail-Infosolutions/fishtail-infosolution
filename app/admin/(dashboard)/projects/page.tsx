@@ -314,11 +314,15 @@ export default function ProjectsPage() {
                                                             <p className="font-semibold text-gray-900 dark:text-white truncate">
                                                                 {project.title}
                                                             </p>
-                                                            {project.category && (
+                                                            {project.description ? (
+                                                                <p className="text-xs text-gray-400 dark:text-gray-500 truncate max-w-xs mt-0.5">
+                                                                    {project.description}
+                                                                </p>
+                                                            ) : project.category ? (
                                                                 <span className="text-xs text-gray-400 dark:text-gray-500">
                                                                     {project.category}
                                                                 </span>
-                                                            )}
+                                                            ) : null}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -442,8 +446,8 @@ export default function ProjectsPage() {
                                                         onClick={() => setCurrentPage(page)}
                                                         disabled={loading}
                                                         className={`h-8 w-8 sm:h-9 sm:w-9 p-0 text-xs sm:text-sm font-bold transition-all ${currentPage === page
-                                                                ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
-                                                                : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
+                                                            ? "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20"
+                                                            : "bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 hover:border-blue-500"
                                                             }`}
                                                     >
                                                         {page}

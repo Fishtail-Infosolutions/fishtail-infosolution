@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Blog from "@/models/Blog";
+import { deleteFile } from "@/lib/upload";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
 
@@ -40,11 +41,16 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
             return NextResponse.json({ error: "Blog not found" }, { status: 404 });
         }
 
+        // Delete old image if a new one is being set
+        if (body.imageUrl && body.imageUrl !== currentBlog.imageUrl && currentBlog.imageUrl) {
+            await deleteFile(currentBlog.imageUrl);
+        }
+
         const updates: any = {
             title: body.title,
             slug: body.slug,
             content: body.content,
-            imageUrl: body.imageUrl,
+            imageUrl: body.imageUrl ?? currentBlog.imageUrl,
         };
 
         const blog = await Blog.findByIdAndUpdate(
@@ -79,6 +85,11 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
         if (!blog) {
             return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+        }
+
+        // Delete associated image file
+        if (blog.imageUrl) {
+            await deleteFile(blog.imageUrl);
         }
 
         return NextResponse.json({ message: "Blog deleted successfully" });

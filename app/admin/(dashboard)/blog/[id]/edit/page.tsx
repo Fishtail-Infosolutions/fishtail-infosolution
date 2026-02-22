@@ -59,6 +59,7 @@ export default function EditBlogPage() {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
+    const [imageFile, setImageFile] = useState<File | null>(null);
     const form = useForm<BlogFormValues>({
         resolver: zodResolver(blogSchema),
         defaultValues: {
@@ -99,17 +100,19 @@ export default function EditBlogPage() {
     const handleImageChange = (files: File[]) => {
         if (files.length > 0) {
             const file = files[0];
+            setImageFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
-                const base64String = reader.result as string;
-                setImagePreview(base64String);
-                form.setValue("imageUrl", base64String, { shouldValidate: true });
+                const result = reader.result as string;
+                setImagePreview(result);
+                form.setValue("imageUrl", result, { shouldValidate: true });
             };
             reader.readAsDataURL(file);
         }
     };
 
     const removeImage = () => {
+        setImageFile(null);
         setImagePreview(null);
         form.setValue("imageUrl", "", { shouldValidate: true });
     };
@@ -117,10 +120,32 @@ export default function EditBlogPage() {
     const onSubmit = async (values: BlogFormValues) => {
         try {
             setSaving(true);
+
+            let finalImageUrl = values.imageUrl;
+
+            // Upload image if a new file was selected
+            if (imageFile) {
+                const uploadFormData = new FormData();
+                uploadFormData.append('file', imageFile);
+                uploadFormData.append('folder', 'blogs');
+
+                const uploadRes = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: uploadFormData
+                });
+
+                if (!uploadRes.ok) throw new Error('Image upload failed');
+                const uploadData = await uploadRes.json();
+                finalImageUrl = uploadData.path;
+            }
+
             const res = await fetch(`/api/blogs/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(values),
+                body: JSON.stringify({
+                    ...values,
+                    imageUrl: finalImageUrl
+                }),
             });
 
             if (!res.ok) {

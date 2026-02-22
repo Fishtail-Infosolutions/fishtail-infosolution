@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import Project from "@/models/Project";
+import { deleteFile } from "@/lib/upload";
 import { verifyToken } from "@/lib/auth";
 import { cookies } from "next/headers";
 
@@ -46,6 +47,16 @@ export async function PATCH(
             delete body.order;
         }
 
+        const currentProject = await Project.findById(id);
+        if (!currentProject) {
+            return NextResponse.json({ error: "Project not found" }, { status: 404 });
+        }
+
+        // Delete old image if a new one is being set
+        if (body.imageUrl && body.imageUrl !== currentProject.imageUrl && currentProject.imageUrl) {
+            await deleteFile(currentProject.imageUrl);
+        }
+
         const project = await Project.findByIdAndUpdate(
             id,
             { $set: body },
@@ -81,6 +92,11 @@ export async function DELETE(
 
         if (!project) {
             return NextResponse.json({ error: "Project not found" }, { status: 404 });
+        }
+
+        // Delete associated image file
+        if (project.imageUrl) {
+            await deleteFile(project.imageUrl);
         }
 
         return NextResponse.json({ message: "Project deleted successfully" });
