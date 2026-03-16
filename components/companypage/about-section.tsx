@@ -66,7 +66,7 @@ export default function AboutSection() {
                             className="text-base md:text-lg text-muted-foreground leading-relaxed"
                         >
                             From startups to enterprises, we craft digital experiences that don't just
-                            look stunning—they drive real, measurable results for your business growth.
+                            look stunning they drive real, measurable results for your business growth.
                         </motion.p>
 
                         <motion.div

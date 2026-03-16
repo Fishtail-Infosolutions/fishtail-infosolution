@@ -47,7 +47,7 @@ export default function ProjectsSection() {
   if (projects.length === 0) return null;
 
   return (
-    <section className="w-full bg-transparent pt-10 pb-3 md:pb-0 transition-colors duration-500">
+    <section className="w-full bg-transparent pt-16 pb-12 transition-colors duration-500">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex flex-col items-center text-center">
           <GradientBanner text="Our Projects" />

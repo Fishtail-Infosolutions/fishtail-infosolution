@@ -127,7 +127,7 @@ export default function AnimatedStatistics() {
     ];
 
     return (
-        <section className="relative w-full  pb-16 px-4">
+        <section className="relative w-full pt-10 pb-12 px-4">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     {stats.map((stat, index) => (

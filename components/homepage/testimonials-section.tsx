@@ -57,7 +57,7 @@ export function TestimonialsSection() {
   const thirdRow = TestimonialsData.slice(4, 5).concat(TestimonialsData.slice(0, 1));
 
   return (
-    <section className="flex flex-col items-center gap-8 mt-10 pb-20 overflow-hidden">
+    <section className="flex flex-col items-center gap-8 pt-16 pb-12 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ export function TestimonialsSection() {
         <div className="flex justify-center">
           <GradientBanner text="Testimonials" />
         </div>
-        <h2 className="mt-6 mb-6 text-3xl font-medium tracking-tight text-foreground sm:text-3xl md:text-5xl">
+        <h2 className="mt-6 mb-6 text-3xl font-medium tracking-tight text-foreground sm:text-3xl md:text-4xl">
           What Clients Say About Us
         </h2>
       </motion.div>

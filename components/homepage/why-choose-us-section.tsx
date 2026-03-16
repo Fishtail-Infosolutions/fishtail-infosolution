@@ -377,7 +377,7 @@ const itemVariants: Variants = {
 
 export default function WhyChooseUsSection() {
     return (
-        <section className="w-full bg-background pt-10 pb-20 transition-colors duration-500">
+        <section className="w-full bg-background pt-10 pb-12 transition-colors duration-500">
             <div className="mx-auto max-w-7xl px-4 lg:px-9">
                 <div className="flex flex-col items-center mb-12">
                     <motion.div
