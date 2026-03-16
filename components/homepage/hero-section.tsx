@@ -27,12 +27,12 @@ export default function HeroSection() {
       <div className="min-h-screen w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-7">
 
         {mounted && (
-          <div className={cn("absolute inset-0 w-full h-full pointer-events-none -z-20", resolvedTheme === 'light' ? "invert opacity-40" : "opacity-50")}>
+          <div className={cn("absolute inset-0 w-full h-full pointer-events-none -z-20", resolvedTheme === 'light' ? "invert opacity-20" : "opacity-30")}>
             <DarkVeil
               hueShift={0}
               noiseIntensity={0}
               scanlineIntensity={0}
-              speed={1}
+              speed={1.2}
               scanlineFrequency={0}
               warpAmount={0}
               baseColor={resolvedTheme === 'light' ? [0, 0, 0] : [0.035, 0.035, 0.043]}
