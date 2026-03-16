@@ -62,7 +62,7 @@ export const TeamCard = ({ member, icon = <User2 className="h-6 w-6 text-foregro
     return (
         <div className="min-h-56 h-full w-full max-w-sm mx-auto">
             <motion.div
-                className={cn("relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-gray-50/50 dark:bg-zinc-900/30 border-border", className)}
+                className={cn("relative h-full rounded-2xl border p-2 md:rounded-3xl md:p-3 bg-[#f9fafb] dark:bg-[#0e0e0f] border-border", className)}
                 whileHover={disableHover ? undefined : { scale: 1.05 }}
                 transition={{ duration: 0.3 }}
             >

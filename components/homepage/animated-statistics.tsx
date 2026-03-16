@@ -50,7 +50,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, value, suffix, label, descrip
                 className={cn(
                     "relative z-10 h-full",
                     // Light mode: white bg with shadow, Dark mode: dark bg with subtle backdrop
-                    "bg-white dark:bg-neutral-900/50 backdrop-blur-sm border border-neutral-200/80 dark:border-neutral-800 rounded-xl p-4 md:p-6",
+                    "bg-[#f9fafb] dark:bg-[#0e0e0f] backdrop-blur-sm border border-border rounded-xl p-4 md:p-6",
                     "hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300",
                     "flex flex-col justify-between overflow-hidden shadow-lg shadow-neutral-200/50 dark:shadow-none hover:shadow-xl hover:shadow-neutral-300/50 dark:hover:shadow-none"
                 )}

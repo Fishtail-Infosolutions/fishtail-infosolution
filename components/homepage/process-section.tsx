@@ -85,7 +85,7 @@ export default function ProcessSection() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group h-full"
             >
-              <div className="relative flex flex-col items-start justify-start w-full h-full p-8 overflow-hidden rounded-3xl bg-background dark:bg-zinc-950/50 border border-transparent shadow-sm">
+              <div className="relative flex flex-col items-start justify-start w-full h-full p-8 overflow-hidden rounded-3xl bg-[#f9fafb] dark:bg-[#0e0e0f] border border-border shadow-sm">
                 <ShineBorder
                   shineColor={SHINE_COLORS}
                   borderWidth={1}

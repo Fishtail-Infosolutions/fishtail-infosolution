@@ -103,9 +103,9 @@ export default function ServicesSection() {
             {servicesData.map((service, index) => (
               <motion.div key={index} variants={itemVariants} className="flex">
                 <MagicCard
-                  className="flex-1 rounded-lg"
+                  className="flex-1 rounded-lg border border-border"
                   gradientColor={mounted && theme === 'light' ? "#E5E7EB" : "#262626"}
-                  backgroundClassName="bg-gray-50 dark:bg-background"
+                  backgroundClassName="bg-[#f9fafb] dark:bg-[#0e0e0f]"
                 >
                   <div className="flex flex-col h-full p-6 sm:p-8">
                     <h3 className="mb-4 text-2xl font-bold text-foreground sm:mb-6">

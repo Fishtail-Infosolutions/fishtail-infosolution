@@ -84,8 +84,8 @@ const CaseStudyCard = ({
     <div
       className={cn(
         "relative flex w-[19rem] cursor-pointer flex-col gap-3 overflow-hidden rounded-2xl border p-5 ",
-        "border-gray-950/[.1] bg-gray-950/[.02] hover:bg-gray-950/[.05]",
-        "dark:border-gray-50/[.1] dark:bg-gray-50/[.05] dark:hover:bg-gray-50/[.10]",
+        "border-border bg-[#f9fafb] hover:bg-gray-950/[.05]",
+        "dark:border-border dark:bg-[#0e0e0f] dark:hover:bg-gray-50/[.10]",
         "transition-all duration-300 group"
       )}
     >
