@@ -38,11 +38,11 @@ const seoSteps = [
   },
 ];
 
-const SHINE_COLORS = ["#A07CFE", "#FE8FB5", "#FFBE7B"];
+const SHINE_COLORS = ["#A07CFE"];
 
 export default function ProcessSection() {
   return (
-    <section className="relative w-full  pb-12 bg-transparent overflow-hidden">
+    <section className="relative w-full pb-12 bg-transparent overflow-hidden">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="flex flex-col items-center mb-16 text-center">
           <motion.div
@@ -88,8 +88,8 @@ export default function ProcessSection() {
               <div className="relative flex flex-col items-start justify-start w-full h-full p-8 overflow-hidden rounded-3xl bg-[#f9fafb] dark:bg-[#0e0e0f] border border-border shadow-sm">
                 <ShineBorder
                   shineColor={SHINE_COLORS}
-                  borderWidth={1}
-                  duration={14}
+                  borderWidth={0.5}
+                  duration={16}
                   className="rounded-3xl"
                 />
 

@@ -225,6 +225,10 @@
   .dark textarea.autofill-white:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 1000px var(--secondary) inset !important;
   }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;}
+  .maplibregl-popup-tip {
+    @apply hidden!;}
 }
 
 @layer base {

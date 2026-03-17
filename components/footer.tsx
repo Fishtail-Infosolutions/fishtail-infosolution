@@ -118,8 +118,16 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="pt-6 mt-6 border-t border-border/50 text-center text-xs sm:text-sm text-muted-foreground/60">
-          <p>© 2026 Fishtail Infosolutions. All rights reserved.</p>
+        <div className="pt-6 mt-6 border-t border-border/50 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs sm:text-sm text-muted-foreground/60">
+          <p>© {new Date().getFullYear()} Fishtail Infosolutions. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <Link href="/privacy-policy" className="hover:text-foreground transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-service" className="hover:text-foreground transition-colors">
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

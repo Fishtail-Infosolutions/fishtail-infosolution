@@ -22,8 +22,41 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Fishtail Infosolutions",
-  description: "Your Digital Growth Partner",
+  title: {
+    template: "%s | Fishtail Infosolutions",
+    default: "Fishtail Infosolutions - Your Digital Growth Partner",
+  },
+  description: "Fishtail Infosolutions is your premier partner for digital growth, offering end-to-end technology solutions from development to digital strategy.",
+  keywords: ["Fishtail Infosolutions", "Digital Growth", "Web Development", "App Development", "Software Solutions", "Nepal IT Company"],
+  authors: [{ name: "Fishtail Team" }],
+  creator: "Fishtail Infosolutions",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://fishtailinfosolutions.com",
+    siteName: "Fishtail Infosolutions",
+    title: "Fishtail Infosolutions - Your Digital Growth Partner",
+    description: "Your premier partner for digital growth, offering end-to-end technology solutions.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fishtail Infosolutions",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fishtail Infosolutions - Your Digital Growth Partner",
+    description: "Your premier partner for digital growth, offering end-to-end technology solutions.",
+    images: ["/og-image.png"],
+    creator: "@fishtailinfo",
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  metadataBase: new URL("https://fishtailinfosolutions.com"),
 };
 
 export default function RootLayout({
