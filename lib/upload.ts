@@ -40,7 +40,10 @@ export async function uploadFile(
     } = options;
 
     // Validate file type
-    if (!allowedTypes.includes(file.type)) {
+    const isImageAllowed = allowedTypes.some(t => t.startsWith('image/'));
+    const isValidType = allowedTypes.includes(file.type) || (isImageAllowed && file.type.startsWith('image/'));
+
+    if (!isValidType) {
         throw new Error(`Invalid file type. Allowed types: ${allowedTypes.join(', ')}`);
     }
 

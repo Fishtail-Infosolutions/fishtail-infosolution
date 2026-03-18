@@ -98,6 +98,10 @@ export default function NewJobPage() {
     const handleIconChange = (newFiles: File[]) => {
         const file = newFiles[0];
         if (file) {
+            if (!file.type.startsWith("image/")) {
+                toast.error("Please select a valid image file");
+                return;
+            }
             setIconFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -220,7 +224,7 @@ export default function NewJobPage() {
 
                             {!iconPreview ? (
                                 <div className="w-full max-w-sm border border-dashed bg-white dark:bg-gray-900/50 border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden">
-                                    <FileUpload onChange={handleIconChange} className="p-6" />
+                                    <FileUpload onChange={handleIconChange} className="p-6" imagesOnly={true} />
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl border border-blue-100 dark:border-blue-900/30">

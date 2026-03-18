@@ -100,6 +100,10 @@ export default function EditBlogPage() {
     const handleImageChange = (files: File[]) => {
         if (files.length > 0) {
             const file = files[0];
+            if (!file.type.startsWith("image/")) {
+                toast.error("Please select a valid image file");
+                return;
+            }
             setImageFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -326,7 +330,7 @@ export default function EditBlogPage() {
                                         <FormControl>
                                             {!imagePreview ? (
                                                 <div className="border-2 border-dashed border-gray-200 dark:border-gray-800 rounded-2xl p-4 transition-all hover:border-blue-500/50">
-                                                    <FileUpload onChange={handleImageChange} className="p-6" />
+                                                    <FileUpload onChange={handleImageChange} className="p-6" imagesOnly={true} />
                                                 </div>
                                             ) : (
                                                 <div className="space-y-3">

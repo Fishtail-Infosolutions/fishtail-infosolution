@@ -50,6 +50,7 @@ export const FileUpload = ({
   const { getRootProps, isDragActive } = useDropzone({
     multiple: false,
     noClick: true,
+    accept: imagesOnly ? { 'image/*': [] } : undefined,
     onDrop: handleFileChange,
     onDropRejected: (error) => {
       console.log(error);
