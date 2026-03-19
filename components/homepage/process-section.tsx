@@ -94,7 +94,7 @@ export default function ProcessSection() {
                 />
 
                 <div className="relative z-10 w-full">
-                  <span className="text-5xl font-black transition-colors duration-300 opacity-10 font-outfit text-foreground group-hover:opacity-20 block mb-6">
+                  <span className="text-5xl font-black transition-all duration-500 ease-in-out opacity-10 font-outfit text-foreground group-hover:text-[#A07CFE] group-hover:opacity-40 block mb-6">
                     {step.number}
                   </span>
 
