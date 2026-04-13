@@ -1,0 +1,9 @@
+<svg width="117" height="117" viewBox="0 0 117 117" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- THE FIX: Solid white circle background, but the corners of the SVG are still transparent -->
+  <circle cx="58.5" cy="58.5" r="58.5" fill="white"/>
+  
+  <circle cx="75.5" cy="69.5" r="13.5" fill="black"/>
+  <path d="M50 23H92L88 48H33L36 33.5L50 23Z" fill="#262164"/>
+  <path d="M32 52H57L49 93H24L32 52Z" fill="#262164"/>
+  <path d="M117 58.5C117 90.8087 90.8087 117 58.5 117C26.1913 117 0 90.8087 0 58.5C0 26.1913 26.1913 0 58.5 0C90.8087 0 117 26.1913 117 58.5ZM4.4092 58.5C4.4092 88.3735 28.6265 112.591 58.5 112.591C88.3735 112.591 112.591 88.3735 112.591 58.5C112.591 28.6265 88.3735 4.4092 58.5 4.4092C28.6265 4.4092 4.4092 28.6265 4.4092 58.5Z" fill="black"/>
+</svg>

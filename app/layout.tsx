@@ -53,10 +53,8 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
     creator: "@fishtailinfo",
   },
-  icons: {
-    icon: "/favicon.ico",
-  },
-  metadataBase: new URL("https://fishtailinfosolutions.com"),
+
+   metadataBase: new URL("https://fishtailinfosolutions.com"),
 };
 
 export default function RootLayout({
