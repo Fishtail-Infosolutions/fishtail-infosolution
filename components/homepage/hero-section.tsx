@@ -13,6 +13,11 @@ import { cn } from '@/lib/utils';
 import DarkVeil from '../ui/DarkVeil';
 import { FreeQuoteDialog } from "./free-quote-dialog";
 
+const LIGHT_BASE_COLOR = [0, 0, 0];
+const DARK_BASE_COLOR = [0.035, 0.035, 0.043];
+const LIGHT_TINT_COLOR = [0.95, 0.55, 0.0];
+const DARK_TINT_COLOR = [0.05, 0.45, 1.0];
+
 export default function HeroSection() {
   const router = useRouter();
   const { resolvedTheme } = useTheme();
@@ -35,8 +40,8 @@ export default function HeroSection() {
               speed={1.2}
               scanlineFrequency={0}
               warpAmount={0}
-              baseColor={resolvedTheme === 'light' ? [0, 0, 0] : [0.035, 0.035, 0.043]}
-              tintColor={resolvedTheme === 'light' ? [0.95, 0.55, 0.0] : [0.05, 0.45, 1.0]}
+              baseColor={resolvedTheme === 'light' ? LIGHT_BASE_COLOR : DARK_BASE_COLOR}
+              tintColor={resolvedTheme === 'light' ? LIGHT_TINT_COLOR : DARK_TINT_COLOR}
               tintStrength={1.0}
             />
           </div>

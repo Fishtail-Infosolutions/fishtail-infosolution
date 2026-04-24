@@ -111,6 +111,11 @@ export default function DarkVeil({
   tintStrength = 0
 }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const propsRef = useRef({ hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor, tintColor, tintStrength });
+  
+  // Keep ref up to date with the latest props without triggering effect
+  propsRef.current = { hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor, tintColor, tintStrength };
+
   useEffect(() => {
     const canvas = ref.current as HTMLCanvasElement;
     const parent = canvas.parentElement as HTMLElement;
@@ -145,7 +150,8 @@ export default function DarkVeil({
     const resize = () => {
       const w = parent.clientWidth,
         h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
+      const currentScale = propsRef.current.resolutionScale;
+      renderer.setSize(w * currentScale, h * currentScale);
       program.uniforms.uResolution.value.set(w, h);
     };
 
@@ -156,15 +162,16 @@ export default function DarkVeil({
     let frame = 0;
 
     const loop = () => {
-      program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
-      program.uniforms.uHueShift.value = hueShift;
-      program.uniforms.uNoise.value = noiseIntensity;
-      program.uniforms.uScan.value = scanlineIntensity;
-      program.uniforms.uScanFreq.value = scanlineFrequency;
-      program.uniforms.uWarp.value = warpAmount;
-      program.uniforms.uBaseColor.value = baseColor;
-      program.uniforms.uTintColor.value = tintColor;
-      program.uniforms.uTintStrength.value = tintStrength;
+      const p = propsRef.current;
+      program.uniforms.uTime.value = ((performance.now() - start) / 1000) * p.speed;
+      program.uniforms.uHueShift.value = p.hueShift;
+      program.uniforms.uNoise.value = p.noiseIntensity;
+      program.uniforms.uScan.value = p.scanlineIntensity;
+      program.uniforms.uScanFreq.value = p.scanlineFrequency;
+      program.uniforms.uWarp.value = p.warpAmount;
+      program.uniforms.uBaseColor.value = p.baseColor;
+      program.uniforms.uTintColor.value = p.tintColor;
+      program.uniforms.uTintStrength.value = p.tintStrength;
       renderer.render({ scene: mesh });
       frame = requestAnimationFrame(loop);
     };
@@ -174,7 +181,10 @@ export default function DarkVeil({
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
+      // Clean up WebGL resources if the component unmounts
+      const ext = gl.getExtension('WEBGL_lose_context');
+      if (ext) ext.loseContext();
     };
-  }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor, tintColor, tintStrength]);
+  }, []);
   return <canvas ref={ref} className="w-full h-full block" />;
 }

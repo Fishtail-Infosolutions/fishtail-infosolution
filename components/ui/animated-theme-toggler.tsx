@@ -30,7 +30,8 @@ export const AnimatedThemeToggler = ({
     const isDark = resolvedTheme === "dark";
 
     // @ts-ignore - document.startViewTransition is not yet in all TS types
-    if (!document.startViewTransition) {
+    // Disable view transitions on mobile to prevent GPU crashes on Safari/iOS
+    if (!document.startViewTransition || window.innerWidth < 768) {
       setTheme(isDark ? "light" : "dark");
       return;
     }
