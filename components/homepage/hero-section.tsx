@@ -31,11 +31,10 @@ export default function HeroSection() {
     <section className="w-full ">
       <div className="min-h-screen w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-7">
 
-        {/* DarkVeil is always rendered (never unmounted) to prevent WebGL context recreation on scroll.
-            We use CSS opacity to hide it before hydration instead of conditional rendering. */}
+        {/* ── Desktop only: full WebGL DarkVeil — always in DOM, never unmounted ── */}
         <div
           className={cn(
-            "absolute inset-0 w-full h-full pointer-events-none -z-20 transition-opacity duration-500",
+            "hidden lg:block absolute inset-0 w-full h-full pointer-events-none -z-20 transition-opacity duration-500",
             resolvedTheme === 'light' ? "invert opacity-20" : "opacity-30",
             !mounted && "opacity-0"
           )}
