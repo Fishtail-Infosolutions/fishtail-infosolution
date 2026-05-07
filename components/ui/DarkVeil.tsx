@@ -117,15 +117,20 @@ export default function DarkVeil({
   propsRef.current = { hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, baseColor, tintColor, tintStrength };
 
   useEffect(() => {
-    const canvas = ref.current as HTMLCanvasElement;
-    const parent = canvas.parentElement as HTMLElement;
+    const canvas = ref.current;
+    if (!canvas) return;
+    const parent = canvas.parentElement;
+    if (!parent) return;
 
+    // Cap dpr to 1 on mobile to cut GPU memory usage in half
+    const isMobile = window.innerWidth < 768;
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
       canvas
     });
 
     const gl = renderer.gl;
+    let isContextLost = false;
     const geometry = new Triangle(gl);
 
     const program = new Program(gl, {
@@ -162,6 +167,7 @@ export default function DarkVeil({
     let frame = 0;
 
     const loop = () => {
+      if (isContextLost) return; // stop rendering if GPU context was reclaimed
       const p = propsRef.current;
       program.uniforms.uTime.value = ((performance.now() - start) / 1000) * p.speed;
       program.uniforms.uHueShift.value = p.hueShift;
@@ -176,12 +182,27 @@ export default function DarkVeil({
       frame = requestAnimationFrame(loop);
     };
 
+    // Gracefully handle the browser reclaiming the WebGL context (common on mobile)
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      isContextLost = true;
+      cancelAnimationFrame(frame);
+    };
+    const handleContextRestored = () => {
+      isContextLost = false;
+      loop();
+    };
+    canvas.addEventListener('webglcontextlost', handleContextLost);
+    canvas.addEventListener('webglcontextrestored', handleContextRestored);
+
     loop();
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
-      // Clean up WebGL resources if the component unmounts
+      canvas.removeEventListener('webglcontextlost', handleContextLost);
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+      // Release GPU memory when the component unmounts
       const ext = gl.getExtension('WEBGL_lose_context');
       if (ext) ext.loseContext();
     };

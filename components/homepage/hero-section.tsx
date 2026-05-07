@@ -31,21 +31,27 @@ export default function HeroSection() {
     <section className="w-full ">
       <div className="min-h-screen w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-7">
 
-        {mounted && (
-          <div className={cn("absolute inset-0 w-full h-full pointer-events-none -z-20", resolvedTheme === 'light' ? "invert opacity-20" : "opacity-30")}>
-            <DarkVeil
-              hueShift={0}
-              noiseIntensity={0}
-              scanlineIntensity={0}
-              speed={1.2}
-              scanlineFrequency={0}
-              warpAmount={0}
-              baseColor={resolvedTheme === 'light' ? LIGHT_BASE_COLOR : DARK_BASE_COLOR}
-              tintColor={resolvedTheme === 'light' ? LIGHT_TINT_COLOR : DARK_TINT_COLOR}
-              tintStrength={1.0}
-            />
-          </div>
-        )}
+        {/* DarkVeil is always rendered (never unmounted) to prevent WebGL context recreation on scroll.
+            We use CSS opacity to hide it before hydration instead of conditional rendering. */}
+        <div
+          className={cn(
+            "absolute inset-0 w-full h-full pointer-events-none -z-20 transition-opacity duration-500",
+            resolvedTheme === 'light' ? "invert opacity-20" : "opacity-30",
+            !mounted && "opacity-0"
+          )}
+        >
+          <DarkVeil
+            hueShift={0}
+            noiseIntensity={0}
+            scanlineIntensity={0}
+            speed={1.2}
+            scanlineFrequency={0}
+            warpAmount={0}
+            baseColor={resolvedTheme === 'light' ? LIGHT_BASE_COLOR : DARK_BASE_COLOR}
+            tintColor={resolvedTheme === 'light' ? LIGHT_TINT_COLOR : DARK_TINT_COLOR}
+            tintStrength={1.0}
+          />
+        </div>
 
         <div className="relative z-10 max-w-7xl w-full mx-auto ">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 min-h-[450px]">
