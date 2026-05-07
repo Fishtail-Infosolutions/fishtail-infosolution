@@ -122,8 +122,11 @@ export default function DarkVeil({
     const parent = canvas.parentElement;
     if (!parent) return;
 
-    // Cap dpr to 1 on mobile to cut GPU memory usage in half
-    const isMobile = window.innerWidth < 768;
+    // Skip WebGL entirely on mobile — the parent div is CSS-hidden anyway
+    // but rAF would still burn GPU cycles without this guard
+    if (window.innerWidth < 1024) return;
+
+    const isMobile = false; // only reached on desktop now
     const renderer = new Renderer({
       dpr: isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
       canvas

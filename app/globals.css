@@ -294,6 +294,14 @@
     scrollbar-width: thin;
     scrollbar-color: color-mix(in srgb, var(--foreground) 10%, transparent) transparent;
   }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 ::view-transition-old(root), ::view-transition-new(root) {

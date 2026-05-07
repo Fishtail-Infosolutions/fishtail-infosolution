@@ -37,7 +37,7 @@ const coreValues = [
     icon: <Trophy className="w-6 h-6 text-amber-400" />,
     title: 'Excellence',
     description:
-      'We set the bar high. Mediocrity is never an option — quality and craftsmanship define our work.',
+      'We set the bar high. Mediocrity is never an option, quality and craftsmanship define our work.',
     link: '#',
   },
   {

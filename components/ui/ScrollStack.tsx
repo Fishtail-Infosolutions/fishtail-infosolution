@@ -263,6 +263,13 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   }, [updateCardTransforms]);
 
   const setupLenis = useCallback(() => {
+    // ── Mobile: skip Lenis entirely — native touch scroll is smoother ──
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      lenisUsesWindowRef.current = true;
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return undefined;
+    }
+
     const defaultOpts = {
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -411,6 +418,8 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     return () => {
       window.removeEventListener('resize', updateCardTransforms);
       window.removeEventListener('orientationchange', updateCardTransforms);
+      // clean up the mobile native scroll listener if it was attached
+      window.removeEventListener('scroll', handleScroll);
 
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);

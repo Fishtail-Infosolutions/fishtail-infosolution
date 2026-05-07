@@ -118,11 +118,10 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
-                  whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
                     "flex-2 p-5 rounded-2xl shadow-xl",
                     "bg-white/40 dark:bg-gray-900/40",
-                    "backdrop-blur-2xl backdrop-saturate-150",
+                    "lg:backdrop-blur-2xl lg:backdrop-saturate-150",
                     "border border-white/60 dark:border-gray-700/60",
                     "hover:bg-white/50 dark:hover:bg-gray-900/50 transition-all duration-300"
                   )}
@@ -145,11 +144,10 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
                     "flex-1 p-4 rounded-2xl shadow-xl",
                     "bg-white/35 dark:bg-gray-900/35",
-                    "backdrop-blur-xl backdrop-saturate-150",
+                    "lg:backdrop-blur-xl lg:backdrop-saturate-150",
                     "border border-white/50 dark:border-gray-700/50",
                     "hover:bg-white/45 dark:hover:bg-gray-900/45 transition-all duration-300"
                   )}
@@ -167,11 +165,10 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.4 }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 className={cn(
                   "w-full sm:w-48 lg:w-56 h-full p-6 rounded-3xl shadow-2xl",
                   "bg-white/40 dark:bg-gray-900/40",
-                  "backdrop-blur-2xl backdrop-saturate-150",
+                  "lg:backdrop-blur-2xl lg:backdrop-saturate-150",
                   "border border-white/60 dark:border-gray-700/60",
                   "hover:bg-white/50 dark:hover:bg-gray-900/50 transition-all duration-300"
                 )}
@@ -231,11 +228,10 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.7 }}
-                  whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
                     "flex-1 p-4 rounded-2xl shadow-xl",
                     "bg-white/35 dark:bg-gray-900/35",
-                    "backdrop-blur-xl backdrop-saturate-150",
+                    "lg:backdrop-blur-xl lg:backdrop-saturate-150",
                     "border border-white/50 dark:border-gray-700/50",
                     "hover:bg-white/45 dark:hover:bg-gray-900/45 transition-all duration-300"
                   )}
@@ -261,11 +257,10 @@ export default function HeroSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
-                  whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
                   className={cn(
                     "flex-2 p-5 rounded-2xl shadow-xl",
                     "bg-linear-to-br from-blue-50/50 to-white/50 dark:from-blue-950/30 dark:to-gray-900/40",
-                    "backdrop-blur-2xl backdrop-saturate-150",
+                    "lg:backdrop-blur-2xl lg:backdrop-saturate-150",
                     "border border-blue-200/60 dark:border-blue-800/50",
                     "hover:from-blue-50/60 hover:to-white/60 dark:hover:from-blue-950/40 dark:hover:to-gray-900/50 transition-all duration-300"
                   )}
