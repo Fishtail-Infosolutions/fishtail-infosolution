@@ -29,7 +29,7 @@ export default function HeroSection() {
 
   return (
     <section className="w-full ">
-      <div className="min-h-screen w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-7">
+      <div className="min-h-[100dvh] w-full flex items-center justify-center antialiased relative overflow-hidden bg-transparent pt-32 pb-16 px-7">
 
         {/* ── Desktop only: full WebGL DarkVeil — always in DOM, never unmounted ── */}
         <div
@@ -119,7 +119,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                   className={cn(
-                    "flex-2 p-5 rounded-2xl shadow-xl",
+                    "flex-2 p-5 rounded-2xl shadow-lg lg:shadow-xl",
                     "bg-white/40 dark:bg-gray-900/40",
                     "lg:backdrop-blur-2xl lg:backdrop-saturate-150",
                     "border border-white/60 dark:border-gray-700/60",
@@ -166,7 +166,7 @@ export default function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.4 }}
                 className={cn(
-                  "w-full sm:w-48 lg:w-56 h-full p-6 rounded-3xl shadow-2xl",
+                  "w-full sm:w-48 lg:w-56 h-full p-6 rounded-3xl shadow-lg lg:shadow-2xl",
                   "bg-white/40 dark:bg-gray-900/40",
                   "lg:backdrop-blur-2xl lg:backdrop-saturate-150",
                   "border border-white/60 dark:border-gray-700/60",
@@ -258,7 +258,7 @@ export default function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.8 }}
                   className={cn(
-                    "flex-2 p-5 rounded-2xl shadow-xl",
+                    "flex-2 p-5 rounded-2xl shadow-lg lg:shadow-xl",
                     "bg-linear-to-br from-blue-50/50 to-white/50 dark:from-blue-950/30 dark:to-gray-900/40",
                     "lg:backdrop-blur-2xl lg:backdrop-saturate-150",
                     "border border-blue-200/60 dark:border-blue-800/50",
