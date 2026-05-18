@@ -105,8 +105,8 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
             {/* Mobile Navbar */}
             <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 z-50 flex items-center justify-between px-4">
                 <Link href="/" className="flex items-center gap-2">
-                    <img src="/logos/fishtail-logo-blue.svg" alt="Fishtail Logo" className="h-8 w-auto block dark:hidden" />
-                    <img src="/logos/fishtail-logo-white.svg" alt="Fishtail Logo" className="h-8 w-auto hidden dark:block" />
+                    <img src="/logos/Fishtail infosolutions logo.png" alt="Fishtail Logo" className="h-8 w-auto block dark:hidden" />
+                    <img src="/logos/Fishtail infosolutions logo white.png" alt="Fishtail Logo" className="h-8 w-auto hidden dark:block" />
                 </Link>
                 <div className="flex items-center gap-4">
                     <ThemeToggle />
@@ -137,12 +137,12 @@ export function AdminSidebar({ user }: { user: { email: string; role: string } }
                     <div className="flex items-center justify-center gap-3">
                         <Link href="/" className="flex items-center gap-2">
                             <img
-                                src="/logos/fishtail-logo-blue.svg"
+                                src="/logos/Fishtail infosolutions logo.png"
                                 alt="Fishtail Logo"
                                 className="h-9 w-auto block dark:hidden"
                             />
                             <img
-                                src="/logos/fishtail-logo-white.svg"
+                                src="/logos/Fishtail infosolutions logo white.png"
                                 alt="Fishtail Logo"
                                 className="h-9 w-auto hidden dark:block"
                             />

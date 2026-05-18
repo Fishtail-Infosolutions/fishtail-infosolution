@@ -133,6 +133,7 @@ export default function DarkVeil({
     });
 
     const gl = renderer.gl;
+    if (!gl) return;
     let isContextLost = false;
     const geometry = new Triangle(gl);
 
@@ -205,9 +206,9 @@ export default function DarkVeil({
       window.removeEventListener('resize', resize);
       canvas.removeEventListener('webglcontextlost', handleContextLost);
       canvas.removeEventListener('webglcontextrestored', handleContextRestored);
-      // Release GPU memory when the component unmounts
-      const ext = gl.getExtension('WEBGL_lose_context');
-      if (ext) ext.loseContext();
+      // Release GPU memory when the component unmounts - commented out to prevent WebGL compilation errors on page navigation
+      // const ext = gl.getExtension('WEBGL_lose_context');
+      // if (ext) ext.loseContext();
     };
   }, []);
   return <canvas ref={ref} className="w-full h-full block" />;

@@ -102,10 +102,10 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-3">
             <Link href="/">
               <Image
-                src={mounted && theme === 'light' ? "/logos/fishtail-logo-blue.svg" : "/logos/fishtail-logo-white.svg"}
+                src={mounted && theme === 'light' ? "/logos/Fishtail infosolutions logo.png" : "/logos/Fishtail infosolutions logo white.png"}
                 alt="Logo"
-                width={50}
-                height={50}
+                width={160}
+                height={40}
                 className="w-40 h-10 object-contain"
               />
             </Link>

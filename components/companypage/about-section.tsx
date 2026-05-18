@@ -101,7 +101,7 @@ export default function AboutSection() {
                         <div className="absolute z-10 flex items-center justify-center">
                             {mounted && (
                                 <Image
-                                    src={resolvedTheme === 'dark' ? "/logos/fishtail-icon-white.svg" : "/logos/fishtail-icon-blue.svg"}
+                                    src={resolvedTheme === 'dark' ? "/logos/Fishtail infosolutions favicon white.png" : "/logos/Fishtail infosolutions favicon logo.png"}
                                     alt="Fishtail Icon"
                                     width={50}
                                     height={50}
