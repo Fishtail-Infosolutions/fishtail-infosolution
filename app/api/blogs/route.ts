@@ -8,10 +8,21 @@ export async function GET(req: Request) {
     try {
         await connectDB();
 
-        const blogs = await Blog.find({}).sort({ updatedAt: -1 });
+        const url = new URL(req.url);
+        const limitParam = url.searchParams.get("limit");
+        const pageParam = url.searchParams.get("page");
+
+        const limit = limitParam ? parseInt(limitParam, 10) : 0;
+        const page = pageParam ? parseInt(pageParam, 10) : 1;
+        const skip = limit > 0 ? (page - 1) * limit : 0;
+
+        const blogs = await Blog.find({}).sort({ updatedAt: -1 }).skip(skip).limit(limit);
+        const total = await Blog.countDocuments({});
 
         return NextResponse.json({
-            blogs
+            blogs,
+            total,
+            hasMore: limit > 0 ? total > skip + limit : false
         });
     } catch (error) {
         console.error('Error fetching blogs:', error);

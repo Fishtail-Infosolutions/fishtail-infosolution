@@ -57,7 +57,7 @@ export default function BlogPostPage() {
     if (!blog) return notFound();
 
     return (
-        <div className="min-h-screen bg-background text-foreground font-sans pt-26 md:pt-32 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500">
+        <div className="min-h-screen bg-background text-foreground font-sans pt-26 md:pt-32 pb-20 px-6 sm:px-8 md:px-12 lg:px-20 transition-colors duration-500 overflow-x-hidden">
             <div className="max-w-4xl mx-auto">
                 {/* Header Section */}
                 <div className="space-y-6 mb-10">
@@ -115,13 +115,13 @@ export default function BlogPostPage() {
                         <img
                             src={blog.imageUrl}
                             alt={blog.title}
-                            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                            className="absolute inset-0 w-full h-full object-cover block transform hover:scale-105 transition-transform duration-700 !m-0"
                         />
                     </div>
 
                     {/* Blog Content */}
                     <div
-                        className="rich-text-content prose-headings:font-bold prose-headings:text-foreground prose-p:text-muted-foreground prose-p:leading-relaxed prose-li:text-muted-foreground prose-strong:text-foreground prose-code:text-foreground prose-img:rounded-2xl"
+                        className="rich-text-content w-full [&_*]:!break-words [&_p]:!whitespace-pre-wrap prose-headings:font-bold prose-headings:text-foreground prose-p:text-muted-foreground prose-p:leading-relaxed prose-li:text-muted-foreground prose-strong:text-foreground prose-code:text-foreground prose-img:rounded-2xl prose-img:max-w-full prose-img:h-auto prose-img:object-contain prose-img:mx-auto prose-img:shadow-lg prose-img:my-8"
                         dangerouslySetInnerHTML={{ __html: blog.content }}
                     />
                 </article>

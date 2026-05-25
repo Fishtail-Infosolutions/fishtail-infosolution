@@ -20,14 +20,18 @@ interface Blog {
 const BlogPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch("/api/blogs?limit=10");
+        const res = await fetch(`/api/blogs?limit=10&page=1`);
         if (!res.ok) throw new Error("Failed to fetch blogs");
         const data = await res.json();
         setBlogs(data.blogs);
+        setHasMore(data.hasMore);
       } catch (error) {
         console.error("Error loading blogs:", error);
       } finally {
@@ -38,9 +42,27 @@ const BlogPage = () => {
     fetchBlogs();
   }, []);
 
+  const handleLoadMore = async () => {
+    if (loadingMore || !hasMore) return;
+    setLoadingMore(true);
+    try {
+      const nextPage = page + 1;
+      const res = await fetch(`/api/blogs?limit=10&page=${nextPage}`);
+      if (!res.ok) throw new Error("Failed to fetch more blogs");
+      const data = await res.json();
+      setBlogs((prev) => [...prev, ...data.blogs]);
+      setHasMore(data.hasMore);
+      setPage(nextPage);
+    } catch (error) {
+      console.error("Error loading more blogs:", error);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
+
   if (loading) return <PublicWebsiteLoader message="Loading blogs..." />;
 
-  if (!blogs) notFound()
+  if (!blogs) notFound();
 
   return (
     <main className="min-h-screen bg-background antialiased pt-32 transition-colors duration-500 pb-20">
@@ -87,23 +109,44 @@ const BlogPage = () => {
             <p className="text-gray-500 font-medium italic">No articles published yet. Stay tuned!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
-            {blogs.map((blog, index) => (
-              <motion.div
-                key={blog._id}
-                className="w-full"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  ease: "easeOut"
-                }}
-              >
-                <BlogCard blog={blog} />
-              </motion.div>
-            ))}
+          <div className="flex flex-col gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
+              {blogs.map((blog, index) => (
+                <motion.div
+                  key={blog._id}
+                  className="w-full"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: (index % 10) * 0.1,
+                    ease: "easeOut"
+                  }}
+                >
+                  <BlogCard blog={blog} />
+                </motion.div>
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                  className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                >
+                  {loadingMore ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Loading...
+                    </>
+                  ) : (
+                    "Load More"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
