@@ -39,17 +39,19 @@ export default function HeroSection() {
             !mounted && "opacity-0"
           )}
         >
-          <DarkVeil
-            hueShift={0}
-            noiseIntensity={0}
-            scanlineIntensity={0}
-            speed={1.2}
-            scanlineFrequency={0}
-            warpAmount={0}
-            baseColor={resolvedTheme === 'light' ? LIGHT_BASE_COLOR : DARK_BASE_COLOR}
-            tintColor={resolvedTheme === 'light' ? LIGHT_TINT_COLOR : DARK_TINT_COLOR}
-            tintStrength={1.0}
-          />
+          {mounted && (
+            <DarkVeil
+              hueShift={0}
+              noiseIntensity={0}
+              scanlineIntensity={0}
+              speed={1.2}
+              scanlineFrequency={0}
+              warpAmount={0}
+              baseColor={resolvedTheme === 'light' ? LIGHT_BASE_COLOR : DARK_BASE_COLOR}
+              tintColor={resolvedTheme === 'light' ? LIGHT_TINT_COLOR : DARK_TINT_COLOR}
+              tintStrength={1.0}
+            />
+          )}
         </div>
 
         <div className="relative z-10 max-w-7xl w-full mx-auto ">

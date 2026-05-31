@@ -127,10 +127,27 @@ export default function DarkVeil({
     if (window.innerWidth < 1024) return;
 
     const isMobile = false; // only reached on desktop now
-    const renderer = new Renderer({
-      dpr: isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
-      canvas
-    });
+    
+    let renderer;
+    const originalConsoleError = console.error;
+    try {
+      // Temporarily suppress the "unable to create webgl context" console.error from OGL
+      console.error = (...args) => {
+        if (typeof args[0] === 'string' && args[0].includes('webgl context')) return;
+        originalConsoleError.apply(console, args);
+      };
+
+      renderer = new Renderer({
+        dpr: isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
+        canvas
+      });
+    } catch (error) {
+      // Just fail silently if context limit is reached
+      return;
+    } finally {
+      // Restore console.error immediately
+      console.error = originalConsoleError;
+    }
 
     const gl = renderer.gl;
     if (!gl) return;
@@ -206,6 +223,7 @@ export default function DarkVeil({
       window.removeEventListener('resize', resize);
       canvas.removeEventListener('webglcontextlost', handleContextLost);
       canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+      
       // Release GPU memory when the component unmounts - commented out to prevent WebGL compilation errors on page navigation
       // const ext = gl.getExtension('WEBGL_lose_context');
       // if (ext) ext.loseContext();
